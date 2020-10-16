@@ -15,6 +15,7 @@ namespace Спектры_версия_2._0
 
         public long compression(long[,] osob, long ew1) {
 
+            int a = 5;
             long ew = ew1;
 
             for (int i = 0; i < ew - 1; i++)
