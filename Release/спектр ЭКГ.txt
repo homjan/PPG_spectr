@@ -1,0 +1,16 @@
+
+Спектр ЭКГ
+HFav NaN%
+LFav NaN%
+
+VLFav NaN%
+
+UVLFav NaN%
+
+(LF/HF)av NaN
+
+ТР 0мс2
+
+UHF NaN%
+
+
