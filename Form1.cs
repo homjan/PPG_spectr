@@ -204,33 +204,56 @@ namespace Спектры_версия_2._0
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 adres = fbd.SelectedPath;
-
                 datapath = Path.Combine(Application.StartupPath);
-
-                FileInfo f1 = new FileInfo(Path.Combine(Application.StartupPath, "test3.txt"));
-                f1.CopyTo(Path.Combine(adres, "test.txt"), true);
-
+               
+               FileInfo f1 = new FileInfo(Path.Combine(Application.StartupPath, "test3.txt"));
+               if (f1.Exists)
+                {
+                    f1.CopyTo(Path.Combine(adres, "test.txt"), true);
+                }
+                   
                 FileInfo f2 = new FileInfo(Path.Combine(Application.StartupPath, "Расчетные данные гистограмм.txt"));
-                f2.CopyTo(Path.Combine(adres, "Расчетные данные гистограмм.txt"), true);
+                if (f2.Exists)
+                {
+                    f2.CopyTo(Path.Combine(adres, "Расчетные данные гистограмм.txt"), true);
+                }                
 
                 FileInfo f3 = new FileInfo(Path.Combine(Application.StartupPath, "Расчетные данные спектра.txt"));
-                f3.CopyTo(Path.Combine(adres, "Расчетные данные спектра.txt"), true);
+                if (f3.Exists)
+                {
+                    f3.CopyTo(Path.Combine(adres, "Расчетные данные спектра.txt"), true);
+                }                
 
                 FileInfo f4 = new FileInfo(Path.Combine(Application.StartupPath, "Информация о пациенте.txt"));
-                f4.CopyTo(Path.Combine(adres, "Информация о пациенте.txt"), true);
+                if (f4.Exists)
+                {
+                    f4.CopyTo(Path.Combine(adres, "Информация о пациенте.txt"), true);
+                }               
 
                 FileInfo f5 = new FileInfo(Path.Combine(Application.StartupPath, "Точки гистограмм.txt"));
-                f5.CopyTo(Path.Combine(adres, "Точки гистограмм.txt"), true);
+                if (f5.Exists)
+                {
+                    f5.CopyTo(Path.Combine(adres, "Точки гистограмм.txt"), true);
+                }                
 
                 FileInfo f6 = new FileInfo(Path.Combine(Application.StartupPath, "Точки спектра.txt"));
-                f6.CopyTo(Path.Combine(adres, "Точки спектра.txt"), true);
+                if (f6.Exists)
+                {
+                    f6.CopyTo(Path.Combine(adres, "Точки спектра.txt"), true);
+                }                
 
                 FileInfo f7 = new FileInfo(Path.Combine(Application.StartupPath, "Особые точки - построение.txt"));
-                f7.CopyTo(Path.Combine(adres, "Особые точки - построение.txt"), true);
+
+                if (f7.Exists)
+                {
+                    f7.CopyTo(Path.Combine(adres, "Особые точки - построение.txt"), true);
+                }               
 
                 FileInfo f8 = new FileInfo(Path.Combine(Application.StartupPath, "Особые точки чистые.txt"));
-                f8.CopyTo(Path.Combine(adres, "Особые точки чистые.txt"), true);
-
+                if (f8.Exists)
+                {
+                    f8.CopyTo(Path.Combine(adres, "Особые точки чистые.txt"), true);
+                }
 
             }
         }
@@ -490,6 +513,8 @@ namespace Спектры_версия_2._0
             init_data.row2_calculate();
             init_data.row3_average_kanal_reg();
             init_data.row4_smoothing_ekg();
+
+            init_data.row1_2_write_in_file();
 
             usergraph = new UseZedgraph(zedGraph1, init_data);
             usergraph.clearAll();//Очищаем полотно
@@ -1281,15 +1306,8 @@ namespace Спектры_версия_2._0
 
             int ew = b;
 
-            Gistogramma.Gistogramma_EKG gisto = new Gistogramma.Gistogramma_EKG(osob, ew);
-            gisto.set_diffrence();
-            gisto.delete_probel_diffrence(300000);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
-            gisto.pilliars_gisto(this.textBox5.Text);
-
-            double[] r0 = gisto.get_diffrence();
-            double[] r1 = gisto.get_diffrence_3();
+            double[] r0;
+            double[] r1;
 
             Gistogramma.Gistogramma_B2B2 gisto8 = new Gistogramma.Gistogramma_B2B2(osob, ew);
             gisto8.set_diffrence();
@@ -1299,6 +1317,25 @@ namespace Спектры_версия_2._0
             gisto8.pilliars_gisto(this.textBox5.Text);
                       
             double[] r8 = gisto8.get_diffrence_3();
+
+            
+                r0 = new double[r8.Length];
+                r1 = new double[r8.Length];
+           
+           Gistogramma.Gistogramma_EKG gisto = new Gistogramma.Gistogramma_EKG(osob, ew);
+            if (checkBox1.Checked)
+            {
+
+            
+            gisto.set_diffrence();
+            gisto.delete_probel_diffrence(300000);
+            gisto.convert_diffrence_2_3();
+            gisto.find_diffrence_max_min();
+            gisto.pilliars_gisto(this.textBox5.Text);
+
+            r0 = gisto.get_diffrence();
+            r1 = gisto.get_diffrence_3();
+            }
 
             Gistogramma.Gistogramma_VRPR gisto2 = new Gistogramma.Gistogramma_VRPR(osob, ew);
             gisto2.set_diffrence();
@@ -1370,7 +1407,7 @@ namespace Спектры_версия_2._0
             GIST_point.WriteLine("i" + "\t" + "ВРПР" + "\t" + "ЭКГ" + "\t" + "ВРПВ" + "\t" + "Аан" + "\t" + "ДИ" +
                 "\t" + "ИО" + "\t" + "ИЖ" + "\t" + "ИВВ" + "\t" + "В2В2" + "\n");
 
-            for (int i = 0; i < r0.Length; i++)
+            for (int i = 0; i < r2.Length; i++)
             {
                 GIST_point.WriteLine(i + "\t" + Math.Round(r0[i], 4) + "\t" + Math.Round(r1[i], 4) + "\t" +
                       Math.Round(r2[i], 4) + "\t" + Math.Round(r3[i], 4) + "\t" + Math.Round(r4[i], 4) + "\t" +
@@ -1382,9 +1419,12 @@ namespace Спектры_версия_2._0
 
             progressBar1.Value = 2;
 
+            if (checkBox1.Checked)
+            {
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, true);
             data_gisto.calculate_all_parameters();
             data_gisto.write_result_EKG_in_file("Расчетные данные гистограмм.txt", false);
+            }           
 
             Gistogramma.Data_gistogramm data_gisto2 = new Gistogramma.Data_gistogramm(gisto2, true);
             data_gisto2.calculate_all_parameters();
@@ -1417,22 +1457,7 @@ namespace Спектры_версия_2._0
 
             progressBar1.Value = 3;
 
-            Spectr.Spectr_EKG spectr = new Spectr.Spectr_EKG(osob, b, radbutton_spectr);
-
-            spectr.set_diffrence();
-            spectr.delete_probel_diffrence();
-            spectr.delete_0_value();
-            spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
-            spectr.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, false, "Спектр ЭКГ");
-
-            double[] s1 = spectr.get_Amp_spectr_pow();
-            double[] s01 = new double[110];
-            if (s1.Length==0) {
-                s1 = s01;
-
-            }
+          
 
             Spectr.Spectr_B2B2 spectr8 = new Spectr.Spectr_B2B2(osob, b, radbutton_spectr);
 
@@ -1442,16 +1467,36 @@ namespace Спектры_версия_2._0
             spectr8.set_amp_spectr();
             spectr8.calculate_amp_cpectr();
             spectr8.calculate_amp_spectr_pow();
-            spectr8.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр ЭКГ");
+           // spectr8.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр B2B2");
 
-            double[] s8 = spectr.get_Amp_spectr_pow();
-            double[] s08 = new double[110];
+            double[] s8 = spectr8.get_Amp_spectr_pow();
+            double[] s08 = new double[5000];
             if (s8.Length == 0)
             {
                 s8 = s08;
             }
 
+            double[] s1 = new double[5000];
+            Spectr.Spectr_EKG spectr = new Spectr.Spectr_EKG(osob, b, radbutton_spectr);
 
+            if (checkBox1.Checked)
+            {
+
+            spectr.set_diffrence();
+            spectr.delete_probel_diffrence();
+            spectr.delete_0_value();
+            spectr.set_amp_spectr();
+            spectr.calculate_amp_cpectr();
+            spectr.calculate_amp_spectr_pow();
+         //   spectr.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, false, "Спектр ЭКГ");
+            s1 = spectr.get_Amp_spectr_pow();
+            }  
+           
+            
+            if (s1.Length==0 || s1 == null) {
+                double[] s01 = new double[s8.Length];
+                s1 = s01;
+            }
             Spectr.Spectr_VRPR spectr2 = new Spectr.Spectr_VRPR(osob, b, radbutton_spectr);
 
             spectr2.set_diffrence();
@@ -1459,7 +1504,7 @@ namespace Спектры_версия_2._0
             spectr2.set_amp_spectr();
             spectr2.calculate_amp_cpectr();
             spectr2.calculate_amp_spectr_pow();
-            spectr2.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр ВРПР");
+          //  spectr2.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр ВРПР");
 
             double[] s2 = spectr2.get_Amp_spectr_pow();
 
@@ -1471,7 +1516,7 @@ namespace Спектры_версия_2._0
             spectr3.calculate_amp_cpectr();
             spectr3.calculate_amp_spectr_pow();
          
-            spectr3.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Анакроты");
+           // spectr3.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Анакроты");
 
             double[] s3 = spectr3.get_Amp_spectr_pow();
 
@@ -1483,7 +1528,7 @@ namespace Спектры_версия_2._0
             spectr4.set_amp_spectr();
             spectr4.calculate_amp_cpectr();
             spectr4.calculate_amp_spectr_pow();
-            spectr4.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Дикротического индекса");
+           // spectr4.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Дикротического индекса");
 
             double[] s4 = spectr4.get_Amp_spectr_pow();
 
@@ -1495,7 +1540,7 @@ namespace Спектры_версия_2._0
             spectr5.calculate_amp_cpectr();
             spectr5.calculate_amp_spectr_pow();
           
-            spectr5.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Индекса отражения");
+         //   spectr5.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Индекса отражения");
 
             double[] s5 = spectr5.get_Amp_spectr_pow();
 
@@ -1507,7 +1552,7 @@ namespace Спектры_версия_2._0
             spectr6.set_amp_spectr();
             spectr6.calculate_amp_cpectr();
             spectr6.calculate_amp_spectr_pow();
-            spectr6.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр индекса жесткости");
+         //   spectr6.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр индекса жесткости");
 
             double[] s6 = spectr6.get_Amp_spectr_pow();
 
@@ -1518,9 +1563,9 @@ namespace Спектры_версия_2._0
             spectr7.set_amp_spectr();
             spectr7.calculate_amp_cpectr();
             spectr7.calculate_amp_spectr_pow();
-            spectr7.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Индекса восходящей волны");
+          //  spectr7.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Индекса восходящей волны");
 
-            double[] s7 = spectr6.get_Amp_spectr_pow();
+            double[] s7 = spectr7.get_Amp_spectr_pow();
 
             double w = spectr7.get_DW();
 
@@ -1528,18 +1573,51 @@ namespace Спектры_версия_2._0
 
             richTextBox2.Clear();
 
-            double N_point_spectr = System.Convert.ToDouble(this.textBox17.Text);
+            // double N_point_spectr = System.Convert.ToDouble(this.textBox17.Text);
+            int min_length_spectr = s8.Length;
+
+            if (min_length_spectr>s1.Length)
+            {
+                min_length_spectr = s1.Length;
+            }
+            if (min_length_spectr > s2.Length)
+            {
+                min_length_spectr = s2.Length;
+            }
+            if (min_length_spectr > s3.Length)
+            {
+                min_length_spectr = s3.Length;
+            }
+            if (min_length_spectr > s4.Length)
+            {
+                min_length_spectr = s4.Length;
+            }
+            if (min_length_spectr > s5.Length)
+            {
+                min_length_spectr = s5.Length;
+            }
+            if (min_length_spectr > s6.Length)
+            {
+                min_length_spectr = s6.Length;
+            }
+            if (min_length_spectr > s7.Length)
+            {
+                min_length_spectr = s7.Length;
+            }
+
+
+            int N_point_spectr = min_length_spectr;
 
             StreamWriter SPECTR_point = new StreamWriter("Точки спектра.txt");
 
             SPECTR_point.WriteLine("Частота, Гц" + "\t" + "Спектр ЭКГ"
-                  + "\t" + "Спектр 7" + "\t" + "Спектр Аан"
+                  + "\t" + "Спектр ВРПВ" + "\t" + "Спектр Аан"
                   + "\t" + "Спектр ИДВ" + "\t" + "Спектр ИО"
                   + "\t" + "Спектр ИЖ" + "\t" + "Спектр ИВВ" + "\t" + "Спектр B2B2" + "\n");
 
             for (int i = 0; i < N_point_spectr; i++)
             {
-                SPECTR_point.WriteLine(Math.Round(w * (i + 1), 3) + "\t" + Math.Round(s1[i], 3)
+                SPECTR_point.WriteLine(Math.Round(w * (i + 1)/(2*PI_), 3) + "\t" + Math.Round(s1[i], 3)
                     + "\t" + Math.Round(s2[i], 3) + "\t" + Math.Round(s3[i], 3)
                     + "\t" + Math.Round(s4[i], 3) + "\t" + Math.Round(s5[i], 3)
                     + "\t" + Math.Round(s6[i], 3) + "\t" + Math.Round(s7[i], 3)
@@ -1818,13 +1896,15 @@ namespace Спектры_версия_2._0
             pane.CurveList.Clear();
 
             PointPairList f1_list = new PointPairList();
+            StreamWriter writer = new StreamWriter("Фурье_канал.txt");
  
             for (int j = 1; j < b / 2; j++)
             {
                 f1_list.Add(Math.Round((DW * (j))/(4*3.14), 3), DT*sp_dft[j].Abs);
+                writer.WriteLine(Math.Round((DW * (j)) / (4 * 3.14), 3) +"\t"+ DT* sp_dft[j].Abs);
             }
             LineItem f1_curve = pane.AddCurve("Канал 1", f1_list, Color.Blue, SymbolType.None);
-
+            writer.Close();
             zedGraph1.AxisChange();
 
             // Обновляем график
@@ -2058,101 +2138,6 @@ namespace Спектры_версия_2._0
           
 
         }
-
-        private void button36_Click(object sender, EventArgs e)//Считывание старых данных
-        {
-            Inizial();
-            N_shift_axis = 0;
-            progressBar1.Value = 0;
-
-            int reg = System.Convert.ToInt32(this.textBox13.Text);
-            int ekg = System.Convert.ToInt32(this.textBox2.Text);
-
-
-            Initial_data init_data = new Initial_data("Данные порезанные на периоды.txt", reg, ekg, true);
-                    
-            //Разделяем 
-            Initial_processing.Divided_by_periods_data divided_row = new Initial_processing.Divided_by_periods_data(init_data, this.comboBox3.Text);
-
-            divided_row.set_period(init_data.get_row_divided());
-
-            divided_row.delete_zero_at_end();
-
-            Special_point osob_point = new Special_point(divided_row, init_data);
-
-            long[,] osob = null;
-            if (radioButton8.Checked)
-            {
-                osob_point.return_osob_point(this.comboBox3.Text);
-            }
-            if (radioButton7.Checked)
-            {
-                osob_point.return_osob_point_neural_network_2();
-            }
-            if (radioButton4.Checked)
-            {
-                osob_point.return_osob_point_statistic_num_2();
-            }
-
-            if (checkBox1.Checked)
-            {
-                osob_point.return_point_EKG(this.comboBox3.Text);
-
-                osob_point.delete_zero_in_data();
-            }
-            osob = osob_point.get_spec_point();
-
-            int arre = osob.Length;
-            int ew = arre / 15;//счетчик найденных максимумов
-
-
-            /////////////////////////
-            /////////////////////////
-            // новое
-            //ЭКГ мах -     0
-            //ЭКГ мах -х -  1
-            // В1, В5 -     2
-            // В1x, В5x -   3
-            // В2 -         4
-            // В2x -        5
-            // В3 -         6
-            // В3x -        7
-            // В4 -         8  
-            // В4x -        9
-            //osob_10  -    Изначальная высота
-
-            ////////////////////////
-
-            long[,] osob_x = new long[5, ew];// список особых точек для вывода на график
-            long[,] osob_y = new long[5, ew];
-
-            for (int i = 0; i < ew - 1; i++)
-            {
-                osob_x[0, i] = osob[1, i];
-                osob_y[0, i] = osob[0, i];
-
-                osob_x[1, i] = osob[3, i];
-                osob_y[1, i] = osob[2, i];
-
-                osob_x[2, i] = osob[5, i];
-                osob_y[2, i] = osob[4, i] + osob[10, i];
-
-                osob_x[3, i] = osob[7, i];
-                osob_y[3, i] = osob[6, i] + osob[10, i];
-
-                osob_x[4, i] = osob[9, i];
-                osob_y[4, i] = osob[8, i] + osob[10, i];
-
-            }
-      
-            Save_data save_data = new Save_data();
-
-            save_data.save_osob_point_postr(osob, ew);
-            /////////////////////////////////////////
-
-            osob = osob_point.shift_osob_point(osob, ew);
-
-            save_data.save_osob_point_clear(osob, ew);
-        }
+               
     }
 }

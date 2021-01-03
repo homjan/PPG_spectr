@@ -144,7 +144,27 @@ namespace Спектры_версия_2._0
 
             rw2.Close();
             }
-       
+
+        public void row1_2_write_in_file()
+        {
+            StreamWriter rw2 = new StreamWriter("сигнал-производная");
+            for (int j = 3; j < b; j++)
+            {
+                rw2.Write(System.Convert.ToString(row1[j, 0]));
+
+                
+                    rw2.Write(System.Convert.ToString("\t"));
+                    rw2.Write(System.Convert.ToString(row1[j, REG]));
+                rw2.Write(System.Convert.ToString("\t"));
+                rw2.Write(System.Convert.ToString(row2[j, REG-1]));
+
+
+                rw2.WriteLine();
+            }
+
+            rw2.Close();
+        }
+
 
         //Геттеры
         public long[,] get_row1() {

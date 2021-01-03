@@ -15,9 +15,7 @@ namespace Спектры_версия_2._0
         const int potok2 = 12;
         private String combobox_3;
         private int reg1;
-        private int ekg1;
-
-        
+        private int ekg1;        
 
         public Form2()
         {
@@ -111,23 +109,18 @@ namespace Спектры_версия_2._0
                 {
                     if (i < maximum_i && i > minimum_i)
                     {
-
                         for (int z = 1; z <= potok2; z++)
                         {
                             row_11new[i, z] = 0;
                         }
-
                     }
                     else
                     {
-
                         for (int z = 1; z <= potok2; z++)
                         {
                             row_11new[i, z] = row_1new[i, z];
                         }
-
                     }
-
                 }
                               
                 init_data.set_row1(row_11new);
@@ -148,7 +141,6 @@ namespace Спектры_версия_2._0
                 {
                     if (i < minimum_i)
                     {
-
                         for (int z = 1; z <= potok2; z++)
                         {
                             row_11new[i, z] = row_1new[i, z];
@@ -161,18 +153,13 @@ namespace Спектры_версия_2._0
                         {
                             row_11new[i, z] = row_1new[i+diff_i, z];
                         }
-
-                    }                 
-
+                    } 
                 }
 
                 init_data.set_row1(row_11new);
                 init_data.set_b(b_new_del);
                 init_data.row1_write_in_file("test3.txt");
-
-            }
-
-            
+            }            
         }
 
         private void button2_Click(object sender, EventArgs e)//Редактировать. Особые точки
@@ -308,8 +295,37 @@ namespace Спектры_версия_2._0
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
+            int total_minimum = Convert.ToInt32(Convert.ToDouble(this.textBox7.Text));
+            int total_maximum = Convert.ToInt32(Convert.ToDouble(this.textBox8.Text));
+
             int minimum_delete_period = Convert.ToInt32(Convert.ToDouble(this.textBox6.Text));
             int maximum_delete_period = Convert.ToInt32(Convert.ToDouble(this.textBox5.Text));
+
+            if (minimum_delete_period<total_minimum)
+            {
+                minimum_delete_period = total_minimum;
+            }
+
+            if (minimum_delete_period> total_maximum)
+            {
+                minimum_delete_period = total_maximum;
+            }
+
+            if (maximum_delete_period<total_minimum)
+            {
+                maximum_delete_period = total_minimum;
+            }
+
+            if (maximum_delete_period> total_maximum)
+            {
+                maximum_delete_period = total_maximum;
+            }
+
+
+            if (maximum_delete_period<minimum_delete_period)
+            {
+                maximum_delete_period = minimum_delete_period;
+            }
 
             int minimum_i = 0;
             int maximum_i = 0;
