@@ -42,7 +42,10 @@ namespace Спектры_версия_2._0.Initial_processing
             this.combobox_3 = text;
         }
 
-        public void return_data_in_period()
+        /// <summary>
+        /// Перевести данные в массив пульсовых циклов
+        /// </summary>
+        public void Calculate_Data_In_Period()
         {
             int b = init_data.get_b();
 
@@ -164,10 +167,14 @@ namespace Спектры_версия_2._0.Initial_processing
                 }
 
 
-            }///////Конец else
-        } //Заполняем период данными
+            }
+        } 
 
-        public long[] period_in_data()
+        /// <summary>
+        /// Переводим в одномерный массив
+        /// </summary>
+        /// <returns></returns>
+        public long[] Reverse_Period_In_Data()
         {
 
             int length_massiv = 0;
@@ -190,17 +197,16 @@ namespace Спектры_версия_2._0.Initial_processing
                 }
 
             }
-
             return period_all;
+        }
 
-        }//Переводим в одномерный массив
-
-        public void delete_zero_in_period()
+        /// <summary>
+        /// Удаляем нули из периода
+        /// </summary>
+        public void Delete_Zero_In_Period()
         {
-
             for (int i = 1; i < period.Length; i++)
             {
-
                 if (period[i].Length == 0)
                 {
                     for (int j = i; j < period.Length - 1; i++)
@@ -228,14 +234,14 @@ namespace Спектры_версия_2._0.Initial_processing
                 period_new[i] = period[i];
             }
 
-            set_period(period_new);
+            set_period(period_new);          
 
-          
+        }
 
-        }//Удаляем нули из периода
-
-
-        public void delete_zero_at_end() {
+        /// <summary>
+        /// Удаляем нули в конце пульсовых циклов
+        /// </summary>
+        public void Delete_Zero_At_End() {
 
             long[][] period_new = new long[period.Length][];
 
@@ -248,7 +254,6 @@ namespace Спектры_версия_2._0.Initial_processing
 
                         k--;
                     }
-
                 }
 
                 period_new[i] = new long[k];
@@ -256,17 +261,17 @@ namespace Спектры_версия_2._0.Initial_processing
                 for(int l = 0; l<k; l++)
                 {
                     period_new[i][l] = period[i][l];
-                }
-                
-                
+                }  
             }
-
             set_period(period_new);
-
 
         }
 
-        public long period_in_data_length()//Возвращаем число элементов периода
+        /// <summary>
+        /// Возвращаем число элементов
+        /// </summary>
+        /// <returns></returns>
+        public long Find_Length_Period_In_Data()
         {
             int length_massiv = 0;
             for (int i = 0; i < period.Length; i++)
@@ -290,7 +295,11 @@ namespace Спектры_версия_2._0.Initial_processing
             return k;
         }
 
-        public long[,] return_periods_1000()//Дополняем все массивы периода нулями до 1000 
+        /// <summary>
+        /// Дополняем все массивы периода нулями до 1000 
+        /// </summary>
+        /// <returns></returns>
+        public long[,] Return_Periods_1000()
         {
 
             long[,] period1000 = new long[period.Length, 1000];
@@ -305,8 +314,13 @@ namespace Спектры_версия_2._0.Initial_processing
 
             return period1000;
         }
-
-        public long return_length_x_zero(int i, int j)
+        /// <summary>
+        /// Вернуть номер элементая с координатами i-j
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns></returns>
+        public long Return_Length_X_Zero(int i, int j)
         {
 
             long a = System.Convert.ToInt64(j);
@@ -319,7 +333,12 @@ namespace Спектры_версия_2._0.Initial_processing
             return a;
         }
 
-        public long period_in_data_length(long[][] period)
+        /// <summary>
+        /// Вернуть число элементов периода
+        /// </summary>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        public long Return_Period_In_Data_Length(long[][] period)
         {
 
             int length_massiv = 0;
@@ -336,16 +355,13 @@ namespace Спектры_версия_2._0.Initial_processing
 
                 for (int j = 0; j < period[i].Length; j++)
                 {
-
                     period_all[k] = period[i][j];
                     k++;
                 }
-
             }
-
             return k;
 
-        }//Возвращает число элементов периода
+        }
 
 
     }

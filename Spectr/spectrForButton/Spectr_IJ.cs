@@ -12,7 +12,11 @@ namespace Спектры_версия_2._0.Spectr
 
         }
 
-        public void set_diffrence(String textbox )//Считаем разницу используемую для построения гистогорамм
+        /// <summary>
+        /// Рассчитать разницу используемую для построения гистогорамм
+        /// </summary>
+        /// <param name="textbox"></param>
+        public void set_diffrence(String textbox )//
         {
             double rost = System.Convert.ToDouble(textbox) / 100;
 
@@ -20,14 +24,16 @@ namespace Спектры_версия_2._0.Spectr
             {
                 if ((osob_s[3, i + 1] - osob_s[3, i]) > 300000)
                 {
-
                     diffrence[i - 2] = osob_s[3, i + 1] - osob_s[3, i];
                     diffrence_2[i - 2] = rost * 1000000 / (System.Convert.ToDouble(osob_s[9, i]) - System.Convert.ToDouble(osob_s[5, i]));
                 }
             }
         }
 
-        public override void delete_probel_diffrence()
+        /// <summary>
+        /// Удалить промежутки нулевой длительности
+        /// </summary>
+        public override void Delete_Zero_Diffrence()
         {
             int ze = 0;
             for (int i = 0; i < N_line - 1; i++)

@@ -11,23 +11,25 @@ namespace Спектры_версия_2._0.Spectr
         public Spectr_IVV(long[,] osob, int b1, int nudft) : base(osob, b1, nudft) {
 
         }
-
-        public override void set_diffrence()//Считаем разницу используемую для построения гистогорамм
-        {
-           
-
+        /// <summary>
+        /// Рассчитать разницу используемую для построения гистогорамм
+        /// </summary>
+        public override void Set_Diffrence()
+        {  
             for (int i = 1; i < N_line - 1; i++)
             {
                 if ((osob_s[3, i + 1] - osob_s[3, i]) > 300000)
                 {
-
                     diffrence[i - 1] = osob_s[3, i + 1] - osob_s[3, i];
                     diffrence_2[i - 1] = (System.Convert.ToDouble(osob_s[5, i]) - System.Convert.ToDouble(osob_s[3, i])) / (System.Convert.ToDouble(osob_s[3, i + 1]) - System.Convert.ToDouble(osob_s[3, i]));
                 }
             }
         }
 
-        public override void delete_probel_diffrence()
+        /// <summary>
+        /// Удалить промежутки нулевой длительности
+        /// </summary>
+        public override void Delete_Zero_Diffrence()
         {
             int ze = 0;
             for (int i = 0; i < N_line - 1; i++)
@@ -47,8 +49,7 @@ namespace Спектры_версия_2._0.Spectr
                     break;
                 }
 
-            }
-            //Пересчитываем ew
+            }         
             N_line_new = N_line - ze + 1;
         }
     }

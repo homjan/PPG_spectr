@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Спектры_версия_2._0.Gistogramma
 {
-    class Gistogramma_Ana : Gistogramma_numeric
+    class Gistogramma_Ana : Gistogramma_Numeric
     {
         public Gistogramma_Ana (long[,] osob, int b1) : base(osob, b1) {
 
         }
 
-        public override void set_diffrence()
+        public override void Set_Diffrence()
         {
             for (int i = 1; i < N_line - 1; i++)
             {
@@ -23,7 +23,7 @@ namespace Спектры_версия_2._0.Gistogramma
             }
         }
 
-        public override void convert_diffrence_2_3()
+        public override void Convert_Diffrence_2_3_To_Double()
         {
             double diff_pro_100 = diffrence_2[1];
 
@@ -45,7 +45,7 @@ namespace Спектры_версия_2._0.Gistogramma
         }
 
 
-        public override void pilliars_gisto(string textbox5)
+        public override void Pilliars_Gisto(string textbox5)
         {
             int gist = 0;
             GIST_SUM = 0;

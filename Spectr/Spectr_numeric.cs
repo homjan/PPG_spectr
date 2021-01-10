@@ -37,30 +37,30 @@ namespace Спектры_версия_2._0.Spectr
        protected double[] Amp_spectr;
        protected double[] Amp_spectr_pow;
 
-        public long[] get_diffrence()
+        public long[] Get_Diffrence()
         {
             return diffrence;
         }
 
-        public double[] get_diffrence_2()
+        public double[] Get_Diffrence_2()
         {
             return diffrence_2;
         }
 
-        public double[] get_diffrence_3()
+        public double[] Get_Diffrence_3()
         {
             return diffrence_3;
         }
 
-        public double get_DW() {
+        public double Get_DW() {
             return DW;
         }
 
-        public double get_DT() {
+        public double Get_DT() {
             return DT;
         }
 
-        public double[] get_Amp_spectr_pow() {
+        public double[] Get_Amplitude_Spectr_Pow() {
             return Amp_spectr_pow;
         }
 
@@ -72,8 +72,10 @@ namespace Спектры_версия_2._0.Spectr
 
 
         }
-
-        public virtual void set_diffrence()//Считаем разницу используемую для построения гистогорамм
+        /// <summary>
+        /// Считать разницу используемую для построения гистогорамм
+        /// </summary>
+        public virtual void Set_Diffrence()
         {
 
             for (int i = 1; i < N_line - 1; i++)
@@ -85,8 +87,10 @@ namespace Спектры_версия_2._0.Spectr
                 }
             }
         }
-
-        public virtual void delete_probel_diffrence()//Удаляем возможные нули
+        /// <summary>
+        /// Удалить возможные нули
+        /// </summary>
+        public virtual void Delete_Zero_Diffrence()//
         {
             int ze = 0;
             for (int i = 0; i < N_line - 1; i++)
@@ -110,8 +114,10 @@ namespace Спектры_версия_2._0.Spectr
             //Пересчитываем ew
             N_line_new = N_line - ze + 1;
         }
-
-        public virtual void delete_0_value()
+        /// <summary>
+        /// Удалить нулевые значения
+        /// </summary>
+        public virtual void Delete_Zero_Value()
         {
             for (int r = 0; r < N_line_new - 1; r++)
             {
@@ -125,8 +131,10 @@ namespace Спектры_версия_2._0.Spectr
         }
 
 
-
-        public void set_amp_spectr() {
+        /// <summary>
+        /// Получить Амплитуду спектра из Splain_numeric
+        /// </summary>
+        public void Set_Amplitude_Spectr() {
                      
             if (nf == 0)
             {
@@ -136,11 +144,11 @@ namespace Спектры_версия_2._0.Spectr
 
             if(nf==1 || nf==2) {
                  Spectr.Splain_numeric splain = new Spectr.Splain_numeric(diffrence, diffrence_2, N_line_new, nf);
-                 splain.calculate_all();
+                 splain.Calculate_All();
 
-                 diffrence_x = splain.get_Diffrence_final();
-                 diffrence_2_x = splain.get_Diffrence_2_final();
-                 N_line_splain = splain.get_N_line_1_final();
+                 diffrence_x = splain.Get_Diffrence_Final();
+                 diffrence_2_x = splain.Get_Diffrence_2_Final();
+                 N_line_splain = splain.Get_N_Line_1_Final();
                  N_line_new = N_line_splain;
                  Amp_spectr = new double[N_line_splain];
                  Amp_spectr_pow = new double[N_line_splain];
@@ -148,35 +156,44 @@ namespace Спектры_версия_2._0.Spectr
             }
         }
 
-        public virtual void calculate_amp_cpectr() {
-            Spectr.Fourier_fast fo;
+        /// <summary>
+        /// Рассщитать Амплитуду спектра
+        /// </summary>
+        public virtual void Calculate_Amplitude_Spectr() {
+            Spectr.Fourier_Fast fo;
             if (nf == 0)
             {
-                fo = new Spectr.Fourier_fast(diffrence, diffrence_2, N_line_new);
+                fo = new Spectr.Fourier_Fast(diffrence, diffrence_2, N_line_new);
             }
             else
             {
-                 fo = new Spectr.Fourier_fast(diffrence_x, diffrence_2_x, N_line_splain);
+                 fo = new Spectr.Fourier_Fast(diffrence_x, diffrence_2_x, N_line_splain);
                 N_line_new = N_line_splain;
             }
-            fo.calculate_all();
+            fo.Calculate_All();
             fo.Spectr_09();
 
-            Amp_spectr = fo.get_amplituda_spectr();
-            DW = fo.get_DW();
-            DT = fo.get_DT();
+            Amp_spectr = fo.Get_Amplituda_Spectr();
+            DW = fo.Get_DW();
+            DT = fo.Get_DT();
 
         }
-
-        public virtual void calculate_amp_spectr_pow() {
+        /// <summary>
+        /// Рассщитать мощность спектра
+        /// </summary>
+        public virtual void Calculate_Amplitude_Spectr_Pow() {
             for (int i = 0; i < N_line_new - 1; i++)
             {
                 Amp_spectr_pow[i] = Amp_spectr[i] * Amp_spectr[i];
             }
 
         }
-
-        public void get_data_in_richtextbox(System.Windows.Forms.RichTextBox richtext, int radbutton) {
+        /// <summary>
+        /// Получить данные для вывода в RichTextBox
+        /// </summary>
+        /// <param name="richtext"></param>
+        /// <param name="radbutton"></param>
+        public void Get_Data_From_Richtextbox(System.Windows.Forms.RichTextBox richtext, int radbutton) {
 
             if (radbutton == 0)
             {
@@ -201,7 +218,11 @@ namespace Спектры_версия_2._0.Spectr
                 }
             }
         }
-        public void write_in_file() {
+
+        /// <summary>
+        /// Записать данные в файл "Проверка 1"
+        /// </summary>
+        public void Write_In_File() {
             StreamWriter POWER = new StreamWriter("Проверка 1.txt");
             for (int i = 0; i < N_line_new - 1; i++)
             {
@@ -213,10 +234,16 @@ namespace Спектры_версия_2._0.Spectr
             POWER.Close();
 
         }
-
-        public void Spectr_out_text(string tete, System.Windows.Forms.RichTextBox richtext, bool x, string zaglav)
+        /// <summary>
+        /// Рассщитать мощности компонент спектра и записать их в RichTextBox и в файл fileName
+        /// </summary>
+        /// <param name="fileName">Имя файла</param>
+        /// <param name="richtext">Имя RichTextBox</param>
+        /// <param name="x"></param>
+        /// <param name="zaglav">Заглавие</param>
+        public void Spectr_Out_Text(string fileName, System.Windows.Forms.RichTextBox richtext, bool x, string zaglav)
         {
-            StreamWriter sw = new StreamWriter(tete, x);
+            StreamWriter sw = new StreamWriter(fileName, x);
             double ULF_border = 0.015;// Верхняя граница сверхнизкой частоты
             double VLF_border = 0.04;// Верхняя граница очень низкой частоты
             double LF_border = 0.15;// Верхняя граница низкой частоты

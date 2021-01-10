@@ -33,7 +33,11 @@ namespace Спектры_версия_2._0
 
         }
 
-        public void return_point_EKG(String combobox3) {
+        /// <summary>
+        /// Вернуть точки ЭКГ
+        /// </summary>
+        /// <param name="combobox3">Данные регулировки</param>
+        public void Return_Point_EKG(String combobox3) {
 
             int b = initial_data.get_b();
 
@@ -88,27 +92,7 @@ namespace Спектры_версия_2._0
                 }
                 est = est + 200;
                 N_propusk++;
-
-           /*    if (N_propusk == 10) {
-                    b0 = b0 - (200 * 10);
-                    est = est - 2000;
-                    mass = mass-3;
-
-                    N_propusk = 0;
-
-                    dtr = true;
-                }
-
-                if (dtr) {
-                    dtch++;
-                }
-
-                if (dtch == 10) {
-                    dtr = false;
-                    mass = 10;
-                    dtch = 0;
-                }*/
-
+                           
             }
 
             ////////////////////////////////////////////////////////////////
@@ -154,14 +138,11 @@ namespace Спектры_версия_2._0
                 {
                     osob_x[i, w] = 1;
                     osob_y[i, w] = 512;
-                }
-         
+                }         
 
                 EKG_max[w] = 512;
                 EKG_max_x[w] = 0;
             }
-
-
 
             for (int w = 2; w < ew - 1; w++)//перебираем пики
             {
@@ -178,17 +159,18 @@ namespace Спектры_версия_2._0
                 }             
             }
 
-
             for (int w = 1; w < ew - 1; w++)//перебираем пики
             {
                 spec_point[0, w] = EKG_max[w];
                 spec_point[1, w] = EKG_max_x[w];
-            }
-              
+            }              
 
         }
 
-        public void delete_zero_in_data()
+        /// <summary>
+        /// Удалить нули из данных об особых точках
+        /// </summary>
+        public void Delete_Zero_From_Data()
         {
             int arre = spec_point.Length;
             int ew = arre / 15;
@@ -232,15 +214,16 @@ namespace Спектры_версия_2._0
 
             set_spec_point(period_new);
 
-        }//Удаляем нули из периода
+        }
 
-
+        /// <summary>
+        /// Рассчитать особые точки
+        /// </summary>
+        /// <param name="combobox3">Данные регулировки</param>
         public void return_osob_point(String combobox3)
-        {
-          
+        {        
 
             int b = initial_data.get_b();
-
             long[,] row1 = initial_data.get_row1();
 
             long[,] row2 = initial_data.get_row2();
@@ -264,9 +247,8 @@ namespace Спектры_версия_2._0
                 max1_x[u] = 1;
                 max1_y[u] = 1;
             }
-            // while (ew<2)
-            while (b0 < b)/////////////поиск опорных точек
-                          // for (int est = 0; est < 120; est = est + 40)
+           
+            while (b0 < b)/////////////поиск опорных точек                         
             {
                 for (int t = 0; t < 200; t++)
                 {
@@ -278,7 +260,6 @@ namespace Спектры_версия_2._0
                         max1_x[maxim] = row1[t + 1 + est, 0];
                         max1_coor[maxim] = t + 1 + est;
                     }
-
                 }
 
                 if (max1_y[maxim] > System.Convert.ToInt64(combobox3) * 10)////////////////////!!!!!!
@@ -288,9 +269,6 @@ namespace Спектры_версия_2._0
                 }
                 est = est + 200;
             }
-          
-
-
           
             ////////////////////////////////////////////////////////////////
             int period = 0;
@@ -315,9 +293,7 @@ namespace Спектры_версия_2._0
             double Shift_065n = 400;
             double Shift_075n = 450;
 
-
             if (period < 400)
-
             {
                 Shift_005n = 0.05 * period;//разные сдвиги
                 Shift_01n = 0.1 * period;
@@ -330,13 +306,7 @@ namespace Спектры_версия_2._0
                 Shift_065n = 0.65 * period;
                 Shift_075n = 0.75 * period;
             }
-
-
-            //     richTextBox2.Text = System.Convert.ToString(period);
-
-            //   int Left_Border = period - System.Convert.ToInt32(Math.Round(Left_shift));
-            //   int Right_Border = period + System.Convert.ToInt32(Math.Round(Right_shift));
-
+            
             int Left_Border = System.Convert.ToInt32(Math.Round(Left_shift));
             int Right_Border = System.Convert.ToInt32(Math.Round(Right_shift));
 
@@ -428,20 +398,16 @@ namespace Спектры_версия_2._0
                 EKG_max[w] = 512;
                 EKG_max_x[w] = 0;
             }
-
-
-
+            
             for (int w = 2; w < ew - 2; w++)//перебираем пики
             {
-                
                 //////////////////////////////ищем начало подъема--2
 
                 osob_x[1, w] = row1[max1_coor[w], 0];
                 osob_y[1, w] = row1[max1_coor[w], reg];// Данные с соответствующего канала (№4)
 
                 for (long i = max1_coor[w]; i > max1_coor[w] - Shift_03; i--)//2
-                {
-                   
+                {                   
                     if (row1[i, reg] < osob_y[1, w])
                     {
                         osob_x[1, w] = row1[i+ shift_B1, 0];
@@ -451,17 +417,7 @@ namespace Спектры_версия_2._0
                         x_min_2[w] = row1[i + shift_B1, 0];
                     }                    
                 }
-
-                ///////////////////////////////////////////--3 - полувысота в начале
-
-            /*    for (long i = max1_coor[w]; i > max1_coor[w] - Shift_03; i--)
-                {
-                    if (row1[i, reg] < y_min_2[w])
-                    {
-                        y_min_2[w] = row1[i, reg];
-                        x_min_2[w] = row1[i, 0];
-                    }
-                }*/
+                            
                 ////////////////////////////////////  // Ищем 1 максимум--7
 
                 for (long i = max1_coor[w]; i < max1_coor[w] + Shift_03; i++)
@@ -484,7 +440,6 @@ namespace Спектры_версия_2._0
                         nomer_local_min_diff[w] = i + 1;
                     }
                 }
-
 
                 //ищем первый локальный минимум---10
 
@@ -586,21 +541,23 @@ namespace Спектры_версия_2._0
                 schet[10, w] = y_min_2[w];
 
                  
-            }
-                  
+            }                 
 
 
             spec_point = schet;
         }
 
-        public void return_osob_point_neural_network()
+        /// <summary>
+        /// Рассчитать особые точки используя нейронную сеть 1000-100-35
+        /// </summary>
+        public void Return_Special_Point_Neural_Network()
         {
 
            long[][] periods = Period_job.get_period();//Конвертируем выбранную поток с рег в массив периодов
 
-           long periods_full_length = Period_job.period_in_data_length();
+           long periods_full_length = Period_job.Find_Length_Period_In_Data();
 
-            long[,] periods_1000 = Period_job.return_periods_1000();//Добавляем 0 в массиве до одинаковой длины=1000
+            long[,] periods_1000 = Period_job.Return_Periods_1000();//Добавляем 0 в массиве до одинаковой длины=1000
 
             int ew = periods.Length;//счетчик найденных максимумов
 
@@ -615,13 +572,10 @@ namespace Спектры_версия_2._0
             long[,] row1 = initial_data.get_row1();
             int reg = initial_data.REG;
 
-            Function_additional functions = new Function_additional();
+            double[,] row0001 = Function_additional.Convert_Long_To_Double(periods_1000, ew, N_nejron_in);
 
-            double[,] row0001 =  functions.convert_long_double(periods_1000, ew, N_nejron_in);
-
-            double[,] row01 = functions.proizvodnaja_massiv(row0001, ew, N_nejron_in);
-
-
+            double[,] row01 = Function_additional.Calculate_Derivative_Array(row0001, ew, N_nejron_in);
+            
 
             double[] sloj2B2 = new double[100];
             double[] sloj3B2 = new double[35];
@@ -637,31 +591,30 @@ namespace Спектры_версия_2._0
             double[] sloj3B4_final = new double[N_nejron_in];
 
             Job_net job_net = new Job_net(N_nejron_in, 100, 35);
-            job_net.read_in_file_bias_1("Сеть1/bias0B2.txt");
-            job_net.read_in_file_bias_2("Сеть1/bias1B2.txt");
+            job_net.Read_From_File_Bias_1("Сеть1/bias0B2.txt");
+            job_net.Read_From_File_Bias_2("Сеть1/bias1B2.txt");
 
-            job_net.read_in_file_weight_1("Сеть1/kernel0B2.txt");
-            job_net.read_in_file_weight_2("Сеть1/kernel1B2.txt");
+            job_net.Read_From_File_Weight_1("Сеть1/kernel0B2.txt");
+            job_net.Read_From_File_Weight_2("Сеть1/kernel1B2.txt");
 
             /////////////////////////////////////////////
             Job_net job_net2 = new Job_net(N_nejron_in, 100, 45);
-            job_net2.read_in_file_bias_1("Сеть1/bias0B3.txt");
-            job_net2.read_in_file_bias_2("Сеть1/bias1B3.txt");
+            job_net2.Read_From_File_Bias_1("Сеть1/bias0B3.txt");
+            job_net2.Read_From_File_Bias_2("Сеть1/bias1B3.txt");
 
-            job_net2.read_in_file_weight_1("Сеть1/kernel0B3.txt");
-            job_net2.read_in_file_weight_2("Сеть1/kernel1B3.txt");
+            job_net2.Read_From_File_Weight_1("Сеть1/kernel0B3.txt");
+            job_net2.Read_From_File_Weight_2("Сеть1/kernel1B3.txt");
 
             /////////////////////////////////////
             Job_net job_net3 = new Job_net(N_nejron_in, 100, 40);
-            job_net3.read_in_file_bias_1("Сеть1/bias0B4.txt");
-            job_net3.read_in_file_bias_2("Сеть1/bias1B4.txt");
+            job_net3.Read_From_File_Bias_1("Сеть1/bias0B4.txt");
+            job_net3.Read_From_File_Bias_2("Сеть1/bias1B4.txt");
 
-            job_net3.read_in_file_weight_1("Сеть1/kernel0B4.txt");
-            job_net3.read_in_file_weight_2("Сеть1/kernel1B4.txt");
+            job_net3.Read_From_File_Weight_1("Сеть1/kernel0B4.txt");
+            job_net3.Read_From_File_Weight_2("Сеть1/kernel1B4.txt");
 
             //////////////////////////////////////////////////////
-
-         
+                     
             for (int i = 0; i < ew; i++)
             {
                 if (periods[i].Length < 240)
@@ -681,46 +634,43 @@ namespace Спектры_версия_2._0
                 else
                 {
                     schet[2, i] = periods[i][0 + shift_B1]; // минимум В1
-                    schet[3, i] = row1[Period_job.return_length_x_zero(i, 0 + shift_B1), 0]; // положение минимума В1 - начала отсчета
+                    schet[3, i] = row1[Period_job.Return_Length_X_Zero(i, 0 + shift_B1), 0]; // положение минимума В1 - начала отсчета
                     schet[10, i] = periods[i][0 + shift_B1];
 
-                    double[] r1 =functions.Get_one_line(row01, i);
+                    double[] r1 = Function_additional.Get_One_Line(row01, i);
 
                     //////////////////////////////////////////////////////
                     //Нейронная сеть
                     ////////////////////////////////////////////////////////                   
-
-
+                    
                     sloj2B2 = job_net.Perzertron_forward(r1, 1000, 100);
-                    sloj3B2 = job_net.Perzertron_forward_softmax(sloj2B2, 100, 35);
-                    sloj3B2_final = functions.layer_1000(sloj3B2, 65);
+                    sloj3B2 = job_net.Perzertron_forward_Softmax(sloj2B2, 100, 35);
+                    sloj3B2_final = Function_additional.layer_1000(sloj3B2, 65);
 
-                    int B2 = functions.return_max_element_neural_network(sloj3B2_final);
+                    int B2 = Function_additional.Return_Max_Element_Neural_Network(sloj3B2_final);
 
-                    schet[5, i] = row1[Period_job.return_length_x_zero( i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
-                    schet[4, i] = row1[Period_job.return_length_x_zero(i, B2), reg] - periods[i][0 + shift_B1]; // максимум В2
-
-
+                    schet[5, i] = row1[Period_job.Return_Length_X_Zero( i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[4, i] = row1[Period_job.Return_Length_X_Zero(i, B2), reg] - periods[i][0 + shift_B1]; // максимум В2
+                    
                     /////////////////////////////////////////////////////////
                     sloj2B3 = job_net2.Perzertron_forward(r1, N_nejron_in, 100);
-                    sloj3B3 = job_net2.Perzertron_forward_softmax(sloj2B3, 100, 45);
-                    sloj3B3_final = functions.layer_1000(sloj3B3, 170);
+                    sloj3B3 = job_net2.Perzertron_forward_Softmax(sloj2B3, 100, 45);
+                    sloj3B3_final = Function_additional.layer_1000(sloj3B3, 170);
 
-                    int B3 = functions.return_max_element_neural_network(sloj3B3_final);
+                    int B3 = Function_additional.Return_Max_Element_Neural_Network(sloj3B3_final);
 
-                    schet[7, i] = row1[Period_job.return_length_x_zero(i, B3), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
-                    schet[6, i] = row1[Period_job.return_length_x_zero( i, B3), reg] - periods[i][0 + shift_B1]; // максимум В2
-
-
+                    schet[7, i] = row1[Period_job.Return_Length_X_Zero(i, B3), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[6, i] = row1[Period_job.Return_Length_X_Zero( i, B3), reg] - periods[i][0 + shift_B1]; // максимум В2
+                    
                     /////////////////////////////////////////////////////////
                     sloj2B4 = job_net3.Perzertron_forward(r1, 1000, 100);
-                    sloj3B4 = job_net3.Perzertron_forward_softmax(sloj2B4, 100, 40);
-                    sloj3B4_final = functions.layer_1000(sloj3B4, 200);
+                    sloj3B4 = job_net3.Perzertron_forward_Softmax(sloj2B4, 100, 40);
+                    sloj3B4_final = Function_additional.layer_1000(sloj3B4, 200);
 
-                    int B4 = functions.return_max_element_neural_network(sloj3B4_final);
+                    int B4 = Function_additional.Return_Max_Element_Neural_Network(sloj3B4_final);
 
-                    schet[9, i] = row1[Period_job.return_length_x_zero(i, B4), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
-                    schet[8, i] = row1[Period_job.return_length_x_zero(i, B4), reg] - periods[i][0 + shift_B1]; // максимум В2
+                    schet[9, i] = row1[Period_job.Return_Length_X_Zero(i, B4), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[8, i] = row1[Period_job.Return_Length_X_Zero(i, B4), reg] - periods[i][0 + shift_B1]; // максимум В2
 
 
                     /////////////////////////////////////////////////////////
@@ -732,13 +682,16 @@ namespace Спектры_версия_2._0
             
         }
 
-        public void return_osob_point_neural_network_10()
+        /// <summary>
+        /// Рассчитать особые точки используя вторую нейронную сеть 1000-100-8 + поиск в 10 элементах
+        /// </summary>
+        public void Return_Special_Point_Neural_Network_10()
         {
 
             long[][] periods = Period_job.get_period();
 
-            long periods_full_length = Period_job.period_in_data_length();
-            long[,] periods_1000 = Period_job.return_periods_1000();//Добавляем 0 в массиве до одинаковой длины=1000
+            long periods_full_length = Period_job.Find_Length_Period_In_Data();
+            long[,] periods_1000 = Period_job.Return_Periods_1000();//Добавляем 0 в массиве до одинаковой длины=1000
 
             int ew = periods.Length;//счетчик найденных максимумов
 
@@ -753,14 +706,10 @@ namespace Спектры_версия_2._0
             long[,] row1 = initial_data.get_row1();
             int reg = initial_data.REG;
 
-            Function_additional functions = new Function_additional();
+            double[,] row0001 = Function_additional.Convert_Long_To_Double(periods_1000, ew, N_nejron_in);
 
-            double[,] row0001 = functions.convert_long_double(periods_1000, ew, N_nejron_in);
-
-            double[,] row01 = functions.proizvodnaja_massiv(row0001, ew, N_nejron_in);
-
-
-
+            double[,] row01 = Function_additional.Calculate_Derivative_Array(row0001, ew, N_nejron_in);
+            
             double[] sloj2B2 = new double[100];
             double[] sloj3B2 = new double[8];
             double[] sloj3fullB2 = new double[80];
@@ -779,27 +728,27 @@ namespace Спектры_версия_2._0
             double[] sloj3B4_final = new double[N_nejron_in];
 
             Job_net job_net = new Job_net(N_nejron_in, 100, 8);
-            job_net.read_in_file_bias_1("Сеть10/bias0B2.txt");
-            job_net.read_in_file_bias_2("Сеть10/bias1B2.txt");
+            job_net.Read_From_File_Bias_1("Сеть10/bias0B2.txt");
+            job_net.Read_From_File_Bias_2("Сеть10/bias1B2.txt");
 
-            job_net.read_in_file_weight_1("Сеть10/kernel0B2.txt");
-            job_net.read_in_file_weight_2("Сеть10/kernel1B2.txt");
+            job_net.Read_From_File_Weight_1("Сеть10/kernel0B2.txt");
+            job_net.Read_From_File_Weight_2("Сеть10/kernel1B2.txt");
 
             /////////////////////////////////////////////
             Job_net job_net2 = new Job_net(N_nejron_in, 100, 10);
-            job_net2.read_in_file_bias_1("Сеть10/bias0B3.txt");
-            job_net2.read_in_file_bias_2("Сеть10/bias1B3.txt");
+            job_net2.Read_From_File_Bias_1("Сеть10/bias0B3.txt");
+            job_net2.Read_From_File_Bias_2("Сеть10/bias1B3.txt");
 
-            job_net2.read_in_file_weight_1("Сеть10/kernel0B3.txt");
-            job_net2.read_in_file_weight_2("Сеть10/kernel1B3.txt");
+            job_net2.Read_From_File_Weight_1("Сеть10/kernel0B3.txt");
+            job_net2.Read_From_File_Weight_2("Сеть10/kernel1B3.txt");
 
             /////////////////////////////////////
             Job_net job_net3 = new Job_net(N_nejron_in, 100, 11);
-            job_net3.read_in_file_bias_1("Сеть10/bias0B4.txt");
-            job_net3.read_in_file_bias_2("Сеть10/bias1B4.txt");
+            job_net3.Read_From_File_Bias_1("Сеть10/bias0B4.txt");
+            job_net3.Read_From_File_Bias_2("Сеть10/bias1B4.txt");
 
-            job_net3.read_in_file_weight_1("Сеть10/kernel0B4.txt");
-            job_net3.read_in_file_weight_2("Сеть10/kernel1B4.txt");
+            job_net3.Read_From_File_Weight_1("Сеть10/kernel0B4.txt");
+            job_net3.Read_From_File_Weight_2("Сеть10/kernel1B4.txt");
 
             //////////////////////////////////////////////////////
 
@@ -822,11 +771,11 @@ namespace Спектры_версия_2._0
                 else
                 {
                     schet[2, i] = periods[i][0 + shift_B1]; // минимум В1
-                    schet[3, i] = row1[Period_job.return_length_x_zero(i, 0), 0 + shift_B1]; // положение минимума В1 - начала отсчета
+                    schet[3, i] = row1[Period_job.Return_Length_X_Zero(i, 0), 0 + shift_B1]; // положение минимума В1 - начала отсчета
                     schet[10, i] = periods[i][0 + shift_B1];
 
-                    double[] r1 = functions.Get_one_line(row01, i);
-                    double[] rxx = functions.Get_one_line_1024(row0001, i, 1000);
+                    double[] r1 = Function_additional.Get_One_Line(row01, i);
+                    double[] rxx = Function_additional.Get_One_Line_1024(row0001, i, 1000);
 
                     //////////////////////////////////////////////////////
                     //Нейронная сеть
@@ -834,62 +783,60 @@ namespace Спектры_версия_2._0
 
 
                     sloj2B2 = job_net.Perzertron_forward(r1, 1000, 100);
-                    sloj3B2 = job_net.Perzertron_forward_softmax(sloj2B2, 100, 8);
+                    sloj3B2 = job_net.Perzertron_forward_Softmax(sloj2B2, 100, 8);
 
-                    sloj3fullB2 = functions.multiple_ten_B2_B4(sloj3B2, rxx, 37);
-                    sloj3B2_final = functions.layer_1000(sloj3fullB2, 37);
+                    sloj3fullB2 = Function_additional.multiple_ten_B2_B4(sloj3B2, rxx, 37);
+                    sloj3B2_final = Function_additional.layer_1000(sloj3fullB2, 37);
 
-                    int B2 = functions.return_max_element_neural_network(sloj3B2_final);
+                    int B2 = Function_additional.Return_Max_Element_Neural_Network(sloj3B2_final);
 
-                    schet[5, i] = row1[Period_job.return_length_x_zero(i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
-                    schet[4, i] = row1[Period_job.return_length_x_zero(i, B2), reg] - periods[i][0 + shift_B1]; // максимум В2
+                    schet[5, i] = row1[Period_job.Return_Length_X_Zero(i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[4, i] = row1[Period_job.Return_Length_X_Zero(i, B2), reg] - periods[i][0 + shift_B1]; // максимум В2
 
 
                     /////////////////////////////////////////////////////////
                     sloj2B3 = job_net2.Perzertron_forward(r1, N_nejron_in, 100);
-                    sloj3B3 = job_net2.Perzertron_forward_softmax(sloj2B3, 100, 10);
+                    sloj3B3 = job_net2.Perzertron_forward_Softmax(sloj2B3, 100, 10);
 
-                    sloj3fullB3 = functions.multiple_ten_B3(sloj3B3, rxx, 127);
-                    sloj3B3_final = functions.layer_1000(sloj3fullB3, 127);
+                    sloj3fullB3 = Function_additional.multiple_ten_B3(sloj3B3, rxx, 127);
+                    sloj3B3_final = Function_additional.layer_1000(sloj3fullB3, 127);
 
-                    int B3 = functions.return_max_element_neural_network(sloj3B3_final);
+                    int B3 = Function_additional.Return_Max_Element_Neural_Network(sloj3B3_final);
 
-                    schet[7, i] = row1[Period_job.return_length_x_zero(i, B3), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
-                    schet[6, i] = row1[Period_job.return_length_x_zero(i, B3), reg] - periods[i][0 + shift_B1]; // максимум В2
+                    schet[7, i] = row1[Period_job.Return_Length_X_Zero(i, B3), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[6, i] = row1[Period_job.Return_Length_X_Zero(i, B3), reg] - periods[i][0 + shift_B1]; // максимум В2
 
 
                     /////////////////////////////////////////////////////////
                     sloj2B4 = job_net3.Perzertron_forward(r1, 1000, 100);
-                    sloj3B4 = job_net3.Perzertron_forward_softmax(sloj2B4, 100, 11);
+                    sloj3B4 = job_net3.Perzertron_forward_Softmax(sloj2B4, 100, 11);
 
 
-                    sloj3fullB4 = functions.multiple_ten_B2_B4(sloj3B4, rxx, 165);
-                    sloj3B4_final = functions.layer_1000(sloj3fullB4, 165);
+                    sloj3fullB4 = Function_additional.multiple_ten_B2_B4(sloj3B4, rxx, 165);
+                    sloj3B4_final = Function_additional.layer_1000(sloj3fullB4, 165);
 
-                    int B4 = functions.return_max_element_neural_network(sloj3B4_final);
+                    int B4 = Function_additional.Return_Max_Element_Neural_Network(sloj3B4_final);
 
-                    schet[9, i] = row1[Period_job.return_length_x_zero(i, B4), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
-                    schet[8, i] = row1[Period_job.return_length_x_zero(i, B4), reg] - periods[i][0 + shift_B1]; // максимум В2
-
-
+                    schet[9, i] = row1[Period_job.Return_Length_X_Zero(i, B4), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[8, i] = row1[Period_job.Return_Length_X_Zero(i, B4), reg] - periods[i][0 + shift_B1]; // максимум В2
+                    
                     /////////////////////////////////////////////////////////
-
-                }              
+                }             
 
             }
-
             spec_point = schet;
         }
 
-
-        public void return_osob_point_neural_network_100()
+        /// <summary>
+        /// Рассчитать особые точки используя вторую нейронную сеть 1000-300-80
+        /// </summary>
+        public void Return_Special_Point_Neural_Network_100()
         {
             long[][] periods = Period_job.get_period();
 
-            long periods_full_length = Period_job.period_in_data_length();
+            long periods_full_length = Period_job.Find_Length_Period_In_Data();
 
-
-             long[,] periods_1000 = Period_job.return_periods_1000();//Добавляем 0 в массиве до одинаковой длины=1000
+             long[,] periods_1000 = Period_job.Return_Periods_1000();//Добавляем 0 в массиве до одинаковой длины=1000
 
             int ew = periods.Length;//счетчик найденных максимумов
 
@@ -903,14 +850,9 @@ namespace Спектры_версия_2._0
 
             long[,] row1 = initial_data.get_row1();
             int reg = initial_data.REG;
-
-            Function_additional functions = new Function_additional();
-                       
-            double[,] row0001 = functions.convert_long_double(periods_1000, ew, N_nejron_in);
-
-            double[,] row01 = functions.proizvodnaja_massiv(row0001, ew, N_nejron_in);
-
-
+          
+            double[,] row0001 = Function_additional.Convert_Long_To_Double(periods_1000, ew, N_nejron_in);
+            double[,] row01 = Function_additional.Calculate_Derivative_Array(row0001, ew, N_nejron_in);
 
             double[] sloj2B2 = new double[300];
             double[] sloj3B2 = new double[80];
@@ -926,30 +868,27 @@ namespace Спектры_версия_2._0
             double[] sloj3B4_final = new double[N_nejron_in];
 
             Job_net job_net = new Job_net(N_nejron_in, 300, 80);
-            job_net.read_in_file_bias_1("Сеть100/bias0B2.txt");
-            job_net.read_in_file_bias_2("Сеть100/bias1B2.txt");
+            job_net.Read_From_File_Bias_1("Сеть100/bias0B2.txt");
+            job_net.Read_From_File_Bias_2("Сеть100/bias1B2.txt");
 
-            job_net.read_in_file_weight_1("Сеть100/kernel0B2.txt");
-            job_net.read_in_file_weight_2("Сеть100/kernel1B2.txt");
+            job_net.Read_From_File_Weight_1("Сеть100/kernel0B2.txt");
+            job_net.Read_From_File_Weight_2("Сеть100/kernel1B2.txt");
 
             /////////////////////////////////////////////
             Job_net job_net2 = new Job_net(N_nejron_in, 300, 100);
-            job_net2.read_in_file_bias_1("Сеть100/bias0B3.txt");
-            job_net2.read_in_file_bias_2("Сеть100/bias1B3.txt");
+            job_net2.Read_From_File_Bias_1("Сеть100/bias0B3.txt");
+            job_net2.Read_From_File_Bias_2("Сеть100/bias1B3.txt");
 
-            job_net2.read_in_file_weight_1("Сеть100/kernel0B3.txt");
-            job_net2.read_in_file_weight_2("Сеть100/kernel1B3.txt");
+            job_net2.Read_From_File_Weight_1("Сеть100/kernel0B3.txt");
+            job_net2.Read_From_File_Weight_2("Сеть100/kernel1B3.txt");
 
             /////////////////////////////////////
             Job_net job_net3 = new Job_net(N_nejron_in, 300, 110);
-            job_net3.read_in_file_bias_1("Сеть100/bias0B4.txt");
-            job_net3.read_in_file_bias_2("Сеть100/bias1B4.txt");
+            job_net3.Read_From_File_Bias_1("Сеть100/bias0B4.txt");
+            job_net3.Read_From_File_Bias_2("Сеть100/bias1B4.txt");
 
-            job_net3.read_in_file_weight_1("Сеть100/kernel0B4.txt");
-            job_net3.read_in_file_weight_2("Сеть100/kernel1B4.txt");
-
-
-
+            job_net3.Read_From_File_Weight_1("Сеть100/kernel0B4.txt");
+            job_net3.Read_From_File_Weight_2("Сеть100/kernel1B4.txt");
             //////////////////////////////////////////////////////
                        
             for (int i = 0; i < ew; i++)
@@ -970,10 +909,10 @@ namespace Спектры_версия_2._0
                 else
                 {
                     schet[2, i] = periods[i][0 + shift_B1]; // минимум В1
-                    schet[3, i] = row1[Period_job.return_length_x_zero(i, 0 + shift_B1), 0]; // положение минимума В1 - начала отсчета
+                    schet[3, i] = row1[Period_job.Return_Length_X_Zero(i, 0 + shift_B1), 0]; // положение минимума В1 - начала отсчета
                     schet[10, i] = periods[i][0 + shift_B1];
 
-                    double[] r1 = functions.Get_one_line(row01, i);
+                    double[] r1 = Function_additional.Get_One_Line(row01, i);
 
                     //////////////////////////////////////////////////////
                     //Нейронная сеть
@@ -981,40 +920,37 @@ namespace Спектры_версия_2._0
 
 
                     sloj2B2 = job_net.Perzertron_forward(r1, 1000, 300);
-                    sloj3B2 = job_net.Perzertron_forward_softmax(sloj2B2, 300, 80);
+                    sloj3B2 = job_net.Perzertron_forward_Softmax(sloj2B2, 300, 80);
 
-                    sloj3B2_final = functions.layer_1000(sloj3B2, 37);
+                    sloj3B2_final = Function_additional.layer_1000(sloj3B2, 37);
 
-                    int B2 = functions.return_max_element_neural_network(sloj3B2_final);
+                    int B2 = Function_additional.Return_Max_Element_Neural_Network(sloj3B2_final);
 
-                    schet[5, i] = row1[Period_job.return_length_x_zero(i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
-                    schet[4, i] = row1[Period_job.return_length_x_zero(i, B2), reg] - periods[i][0 + shift_B1]; // максимум В2
-
-
+                    schet[5, i] = row1[Period_job.Return_Length_X_Zero(i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[4, i] = row1[Period_job.Return_Length_X_Zero(i, B2), reg] - periods[i][0 + shift_B1]; // максимум В2
+                    
                     /////////////////////////////////////////////////////////
                     sloj2B3 = job_net2.Perzertron_forward(r1, N_nejron_in, 300);
-                    sloj3B3 = job_net2.Perzertron_forward_softmax(sloj2B3, 300, 100);
-                    sloj3B3_final = functions.layer_1000(sloj3B3, 128);
+                    sloj3B3 = job_net2.Perzertron_forward_Softmax(sloj2B3, 300, 100);
+                    sloj3B3_final = Function_additional.layer_1000(sloj3B3, 128);
 
-                    int B3 = functions.return_max_element_neural_network(sloj3B3_final);
+                    int B3 = Function_additional.Return_Max_Element_Neural_Network(sloj3B3_final);
 
-                    schet[7, i] = row1[Period_job.return_length_x_zero(i, B3), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
-                    schet[6, i] = row1[Period_job.return_length_x_zero(i, B3), reg] - periods[i][0 + shift_B1]; // максимум В2
-
-
+                    schet[7, i] = row1[Period_job.Return_Length_X_Zero(i, B3), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[6, i] = row1[Period_job.Return_Length_X_Zero(i, B3), reg] - periods[i][0 + shift_B1]; // максимум В2
+                    
                     /////////////////////////////////////////////////////////
                     sloj2B4 = job_net3.Perzertron_forward(r1, 1000, 300);
-                    sloj3B4 = job_net3.Perzertron_forward_softmax(sloj2B4, 300, 110);
+                    sloj3B4 = job_net3.Perzertron_forward_Softmax(sloj2B4, 300, 110);
 
 
-                    sloj3B4_final = functions.layer_1000(sloj3B4, 165);
+                    sloj3B4_final = Function_additional.layer_1000(sloj3B4, 165);
 
-                    int B4 = functions.return_max_element_neural_network(sloj3B4_final);
+                    int B4 = Function_additional.Return_Max_Element_Neural_Network(sloj3B4_final);
 
-                    schet[9, i] = row1[Period_job.return_length_x_zero(i, B4), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
-                    schet[8, i] = row1[Period_job.return_length_x_zero(i, B4), reg] - periods[i][0 + shift_B1]; // максимум В2
-
-
+                    schet[9, i] = row1[Period_job.Return_Length_X_Zero(i, B4), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[8, i] = row1[Period_job.Return_Length_X_Zero(i, B4), reg] - periods[i][0 + shift_B1]; // максимум В2
+                    
                     /////////////////////////////////////////////////////////
 
                 }
@@ -1025,12 +961,14 @@ namespace Спектры_версия_2._0
         }
 
 
-           
-        public void return_osob_point_statistic()
+        /// <summary>
+        /// Рассчитать особые точки используя статистику
+        /// </summary>
+        public void Return_Special_Point_Statistic()
         {
             long[][] periods = Period_job.get_period();
 
-            long periods_full_length = Period_job.period_in_data_length();
+            long periods_full_length = Period_job.Find_Length_Period_In_Data();
 
             int ew = periods.Length;//счетчик найденных максимумов
 
@@ -1042,13 +980,9 @@ namespace Спектры_версия_2._0
 
             long[,] row1 = initial_data.get_row1();
             int reg = initial_data.REG;
-
-            Function_additional functions = new Function_additional();
-            Methods_Statistics methods = new Methods_Statistics();
-
+                       
             for (int i = 0; i < ew; i++)
             {
-
                 if (periods[i].Length < 200)
                 {
                     schet[2, i] = 0;// минимум В1
@@ -1066,22 +1000,21 @@ namespace Спектры_версия_2._0
                 {
 
                     schet[2, i] = periods[i][0 + shift_B1]; // минимум В1
-                    schet[3, i] = row1[Period_job.return_length_x_zero(i, 0 + shift_B1), 0]; // положение минимума В1 - начала отсчета
+                    schet[3, i] = row1[Period_job.Return_Length_X_Zero(i, 0 + shift_B1), 0]; // положение минимума В1 - начала отсчета
                     schet[10, i] = periods[i][0 + shift_B1];
 
-                    int B2 = methods.statistic_point_B2(periods[i].Length);
-                    int B3 = methods.statistic_point_B3(periods[i].Length);
-                    int B4 = methods.statistic_point_B4(periods[i].Length);
+                    int B2 = Methods_Statistics.Statistic_Point_B2(periods[i].Length);
+                    int B3 = Methods_Statistics.Statistic_Point_B3(periods[i].Length);
+                    int B4 = Methods_Statistics.Statistic_Point_B4(periods[i].Length);
 
                     schet[4, i] = periods[i][B2] - periods[i][0 + shift_B1]; // максимум В2
-                    schet[5, i] = row1[Period_job.return_length_x_zero(i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[5, i] = row1[Period_job.Return_Length_X_Zero(i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
 
                     schet[6, i] = periods[i][B3] - periods[i][0 + shift_B1]; // минимум В3
-                    schet[7, i] = row1[Period_job.return_length_x_zero(i, B3), 0]; // положение минимума В3 - начала отсчета- EKG_max_x[w]
+                    schet[7, i] = row1[Period_job.Return_Length_X_Zero(i, B3), 0]; // положение минимума В3 - начала отсчета- EKG_max_x[w]
 
                     schet[8, i] = periods[i][B4] - periods[i][0 + shift_B1]; // максимум В4
-                    schet[9, i] = row1[Period_job.return_length_x_zero(i, B4), 0]; // положение максимума В4 - начала отсчета - EKG_max_x[w]
-
+                    schet[9, i] = row1[Period_job.Return_Length_X_Zero(i, B4), 0]; // положение максимума В4 - начала отсчета - EKG_max_x[w]
 
                 }
 
@@ -1092,12 +1025,14 @@ namespace Спектры_версия_2._0
         }
 
 
-           
-        public void return_osob_point_statistic_num()
+        /// <summary>
+        /// Рассчитать особые точки используя статистику и дополнительные расчеты
+        /// </summary>
+        public void Return_Special_Point_Statistic_Num()
         {
             long[][] periods = Period_job.get_period();
 
-            long periods_full_length = Period_job.period_in_data_length();
+            long periods_full_length = Period_job.Find_Length_Period_In_Data();
 
             int ew = periods.Length;//счетчик найденных максимумов
 
@@ -1110,9 +1045,6 @@ namespace Спектры_версия_2._0
 
             long[,] row1 = initial_data.get_row1();
             int reg = initial_data.REG;
-
-            Function_additional functions = new Function_additional();
-            Methods_Statistics methods = new Methods_Statistics();
 
             for (int i = 0; i < ew; i++)
             {
@@ -1134,21 +1066,21 @@ namespace Спектры_версия_2._0
                 {
 
                     schet[2, i] = periods[i][0 + shift_B1]; // минимум В1
-                    schet[3, i] = row1[Period_job.return_length_x_zero(i, 0 + shift_B1), 0]; // положение минимума В1 - начала отсчета
+                    schet[3, i] = row1[Period_job.Return_Length_X_Zero(i, 0 + shift_B1), 0]; // положение минимума В1 - начала отсчета
                     schet[10, i] = periods[i][0 + shift_B1];
 
-                    int B2 = methods.statistic_point_B2(periods[i].Length);
-                    int B3 = methods.statistic_point_B3(periods[i].Length);
-                    int B4 = methods.statistic_point_B4(periods[i].Length);
+                    int B2 = Methods_Statistics.Statistic_Point_B2(periods[i].Length);
+                    int B3 = Methods_Statistics.Statistic_Point_B3(periods[i].Length);
+                    int B4 = Methods_Statistics.Statistic_Point_B4(periods[i].Length);
 
                     schet[4, i] = periods[i][B2] - periods[i][0 + shift_B1]; // максимум В2
-                    schet[5, i] = row1[Period_job.return_length_x_zero(i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[5, i] = row1[Period_job.Return_Length_X_Zero(i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
 
                     schet[6, i] = periods[i][B3] - periods[i][0 + shift_B1]; // минимум В3
-                    schet[7, i] = row1[Period_job.return_length_x_zero(i, B3), 0]; // положение минимума В3 - начала отсчета- EKG_max_x[w]
+                    schet[7, i] = row1[Period_job.Return_Length_X_Zero(i, B3), 0]; // положение минимума В3 - начала отсчета- EKG_max_x[w]
 
                     schet[8, i] = periods[i][B4] - periods[i][0 + shift_B1]; // максимум В4
-                    schet[9, i] = row1[Period_job.return_length_x_zero(i, B4), 0]; // положение максимума В4 - начала отсчета - EKG_max_x[w]
+                    schet[9, i] = row1[Period_job.Return_Length_X_Zero(i, B4), 0]; // положение максимума В4 - начала отсчета - EKG_max_x[w]
 
                 }
 
@@ -1159,9 +1091,9 @@ namespace Спектры_версия_2._0
 
                 if (periods[i].Length > 150)
                 {
-                    int B2 = methods.statistic_point_B2(periods[i].Length);
-                    int B3 = methods.statistic_point_B3(periods[i].Length);
-                    int B4 = methods.statistic_point_B4(periods[i].Length);
+                    int B2 = Methods_Statistics.Statistic_Point_B2(periods[i].Length);
+                    int B3 = Methods_Statistics.Statistic_Point_B3(periods[i].Length);
+                    int B4 = Methods_Statistics.Statistic_Point_B4(periods[i].Length);
                     //В2
                     long max_B2 = periods[i][B2];
                     int coor_B2 = B2;
@@ -1186,7 +1118,7 @@ namespace Спектры_версия_2._0
 
                     B2 = coor_B2;
                     schet[4, i] = periods[i][B2] - periods[i][0 + shift_B1]; // максимум В2
-                    schet[5, i] = row1[Period_job.return_length_x_zero(i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[5, i] = row1[Period_job.Return_Length_X_Zero(i, B2), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
 
 
                     ////////////////////////////////////////////////////////////////////
@@ -1227,15 +1159,12 @@ namespace Спектры_версия_2._0
                             diff_b4max = diff_B4[d1];
                             max_B4 = periods[i][j];
                             coor_B4 = j;
-
                         }
-
-
                     }
 
                     B4 = coor_B4;
                     schet[8, i] = periods[i][B4] - periods[i][0 + shift_B1]; // максимум В2
-                    schet[9, i] = row1[Period_job.return_length_x_zero(i, B4), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[9, i] = row1[Period_job.Return_Length_X_Zero(i, B4), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
 
 
                     /////////////////////////////////////////////////////////////////////
@@ -1271,19 +1200,21 @@ namespace Спектры_версия_2._0
 
                     B3 = coor_B3;
                     schet[6, i] = periods[i][B3] - periods[i][0 + shift_B1]; // максимум В2
-                    schet[7, i] = row1[Period_job.return_length_x_zero(i, B3), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
+                    schet[7, i] = row1[Period_job.Return_Length_X_Zero(i, B3), 0]; // положение максимума В2 - начала отсчета - EKG_max_x[w]
                     
                 }
             }          
             spec_point = schet;
         }
 
-
-        public void return_osob_point_statistic_num_2()
+        /// <summary>
+        /// Рассчитать особые точки используя статистику
+        /// </summary>
+        public void Return_Special_Point_Statistic_Num_2()
         {
             long[][] periods = Period_job.get_period();
 
-            long periods_full_length = Period_job.period_in_data_length();
+            long periods_full_length = Period_job.Find_Length_Period_In_Data();
 
             int ew = periods.Length;//счетчик найденных максимумов
 
@@ -1296,10 +1227,7 @@ namespace Спектры_версия_2._0
 
             long[,] row1 = initial_data.get_row1();
             int reg = initial_data.REG;
-
-            Function_additional functions = new Function_additional();
-            Methods_Statistics methods = new Methods_Statistics();
-
+                        
             StreamWriter rwx = new StreamWriter("Положение особых точек.txt");
 
             for (int i = 0; i < ew; i++)
@@ -1324,9 +1252,9 @@ namespace Спектры_версия_2._0
                     schet[2, i] = periods[i][0 + shift_B1]; // минимум В1
                     schet[10, i] = periods[i][0 + shift_B1];
 
-                    int B2 = methods.statistic_point_B2(periods[i].Length);
-                    int B3 = methods.statistic_point_B3(periods[i].Length);
-                    int B4 = methods.statistic_point_B4(periods[i].Length);
+                    int B2 = Methods_Statistics.Statistic_Point_B2(periods[i].Length);
+                    int B3 = Methods_Statistics.Statistic_Point_B3(periods[i].Length);
+                    int B4 = Methods_Statistics.Statistic_Point_B4(periods[i].Length);
 
                     schet[4, i] = periods[i][B2] - periods[i][0 + shift_B1]; // максимум В2
                    
@@ -1343,9 +1271,9 @@ namespace Спектры_версия_2._0
 
                 if (periods[i].Length > 150)
                 {
-                    int B2 = methods.statistic_point_B2(periods[i].Length);
-                    int B3 = methods.statistic_point_B3(periods[i].Length);
-                    int B4 = methods.statistic_point_B4(periods[i].Length);
+                    int B2 = Methods_Statistics.Statistic_Point_B2(periods[i].Length);
+                    int B3 = Methods_Statistics.Statistic_Point_B3(periods[i].Length);
+                    int B4 = Methods_Statistics.Statistic_Point_B4(periods[i].Length);
                     //В2
                     long max_B2 = periods[i][B2];
                     int coor_B2 = B2;
@@ -1462,16 +1390,19 @@ namespace Спектры_версия_2._0
             spec_point = schet;
             rwx.Close();
         }
-
+       
+        /// <summary>
+        /// Рассчитать особые точки используя нейронную сеть 1000-100-35 с пересчетом диапазона
+        /// </summary>
         public void return_osob_point_neural_network_2()
         {
             StreamWriter rwx = new StreamWriter("Положение особых точек.txt");
 
             long[][] periods = Period_job.get_period();//Конвертируем выбранную поток с рег в массив периодов
 
-            long periods_full_length = Period_job.period_in_data_length();
+            long periods_full_length = Period_job.Find_Length_Period_In_Data();
 
-            long[,] periods_1000 = Period_job.return_periods_1000();//Добавляем 0 в массиве до одинаковой длины=1000
+            long[,] periods_1000 = Period_job.Return_Periods_1000();//Добавляем 0 в массиве до одинаковой длины=1000
 
             int ew = periods.Length;//счетчик найденных максимумов
 
@@ -1486,12 +1417,9 @@ namespace Спектры_версия_2._0
             long[,] row1 = initial_data.get_row1();
             int reg = initial_data.REG;
 
-            Function_additional functions = new Function_additional();
+            double[,] row0001 = Function_additional.Convert_Long_To_Double(periods_1000, ew, N_nejron_in);
 
-            double[,] row0001 = functions.convert_long_double(periods_1000, ew, N_nejron_in);
-
-            double[,] row01 = functions.proizvodnaja_massiv(row0001, ew, N_nejron_in);
-
+            double[,] row01 = Function_additional.Calculate_Derivative_Array(row0001, ew, N_nejron_in);
 
 
             double[] sloj2B2 = new double[100];
@@ -1508,27 +1436,27 @@ namespace Спектры_версия_2._0
             double[] sloj3B4_final = new double[N_nejron_in];
 
             Job_net job_net = new Job_net(N_nejron_in, 100, 35);
-            job_net.read_in_file_bias_1("Сеть1/bias0B2.txt");
-            job_net.read_in_file_bias_2("Сеть1/bias1B2.txt");
+            job_net.Read_From_File_Bias_1("Сеть1/bias0B2.txt");
+            job_net.Read_From_File_Bias_2("Сеть1/bias1B2.txt");
 
-            job_net.read_in_file_weight_1("Сеть1/kernel0B2.txt");
-            job_net.read_in_file_weight_2("Сеть1/kernel1B2.txt");
+            job_net.Read_From_File_Weight_1("Сеть1/kernel0B2.txt");
+            job_net.Read_From_File_Weight_2("Сеть1/kernel1B2.txt");
 
             /////////////////////////////////////////////
             Job_net job_net2 = new Job_net(N_nejron_in, 100, 45);
-            job_net2.read_in_file_bias_1("Сеть1/bias0B3.txt");
-            job_net2.read_in_file_bias_2("Сеть1/bias1B3.txt");
+            job_net2.Read_From_File_Bias_1("Сеть1/bias0B3.txt");
+            job_net2.Read_From_File_Bias_2("Сеть1/bias1B3.txt");
 
-            job_net2.read_in_file_weight_1("Сеть1/kernel0B3.txt");
-            job_net2.read_in_file_weight_2("Сеть1/kernel1B3.txt");
+            job_net2.Read_From_File_Weight_1("Сеть1/kernel0B3.txt");
+            job_net2.Read_From_File_Weight_2("Сеть1/kernel1B3.txt");
 
             /////////////////////////////////////
             Job_net job_net3 = new Job_net(N_nejron_in, 100, 40);
-            job_net3.read_in_file_bias_1("Сеть1/bias0B4.txt");
-            job_net3.read_in_file_bias_2("Сеть1/bias1B4.txt");
+            job_net3.Read_From_File_Bias_1("Сеть1/bias0B4.txt");
+            job_net3.Read_From_File_Bias_2("Сеть1/bias1B4.txt");
 
-            job_net3.read_in_file_weight_1("Сеть1/kernel0B4.txt");
-            job_net3.read_in_file_weight_2("Сеть1/kernel1B4.txt");
+            job_net3.Read_From_File_Weight_1("Сеть1/kernel0B4.txt");
+            job_net3.Read_From_File_Weight_2("Сеть1/kernel1B4.txt");
 
             //////////////////////////////////////////////////////
 
@@ -1554,7 +1482,7 @@ namespace Спектры_версия_2._0
                     schet[2, i] = periods[i][0 + shift_B1]; // минимум В1
                     schet[10, i] = periods[i][0 + shift_B1];
 
-                    double[] r1 = functions.Get_one_line(row01, i);
+                    double[] r1 = Function_additional.Get_One_Line(row01, i);
 
                     //////////////////////////////////////////////////////
                     //Нейронная сеть
@@ -1562,29 +1490,24 @@ namespace Спектры_версия_2._0
 
 
                     sloj2B2 = job_net.Perzertron_forward(r1, 1000, 100);
-                    sloj3B2 = job_net.Perzertron_forward_softmax(sloj2B2, 100, 35);
-                    sloj3B2_final = functions.layer_1000(sloj3B2, 65);
+                    sloj3B2 = job_net.Perzertron_forward_Softmax(sloj2B2, 100, 35);
+                    sloj3B2_final = Function_additional.layer_1000(sloj3B2, 65);
 
-                    int B2 = functions.return_max_element_neural_network(sloj3B2_final);
-
-                 
+                    int B2 = Function_additional.Return_Max_Element_Neural_Network(sloj3B2_final);
 
                     /////////////////////////////////////////////////////////
                     sloj2B3 = job_net2.Perzertron_forward(r1, N_nejron_in, 100);
-                    sloj3B3 = job_net2.Perzertron_forward_softmax(sloj2B3, 100, 45);
-                    sloj3B3_final = functions.layer_1000(sloj3B3, 170);
+                    sloj3B3 = job_net2.Perzertron_forward_Softmax(sloj2B3, 100, 45);
+                    sloj3B3_final = Function_additional.layer_1000(sloj3B3, 170);
 
-                    int B3 = functions.return_max_element_neural_network(sloj3B3_final);
-
-                  
+                    int B3 = Function_additional.Return_Max_Element_Neural_Network(sloj3B3_final);
 
                     /////////////////////////////////////////////////////////
                     sloj2B4 = job_net3.Perzertron_forward(r1, 1000, 100);
-                    sloj3B4 = job_net3.Perzertron_forward_softmax(sloj2B4, 100, 40);
-                    sloj3B4_final = functions.layer_1000(sloj3B4, 200);
+                    sloj3B4 = job_net3.Perzertron_forward_Softmax(sloj2B4, 100, 40);
+                    sloj3B4_final = Function_additional.layer_1000(sloj3B4, 200);
 
-                    int B4 = functions.return_max_element_neural_network(sloj3B4_final);
-
+                    int B4 = Function_additional.Return_Max_Element_Neural_Network(sloj3B4_final);
 
                     rwx.WriteLine(i + "\t" + periods[i].Length + "\t" + B2 + "\t" + B3 + "\t" + B4);
 
@@ -1598,8 +1521,13 @@ namespace Спектры_версия_2._0
 
         }
 
-
-        public long[,] shift_osob_point(long[,] sche, long ew)
+        /// <summary>
+        /// Рассчитать сдвиг особых точек
+        /// </summary>
+        /// <param name="sche">массив особых точек</param>
+        /// <param name="ew">Число наборов особых точек</param>
+        /// <returns></returns>
+        public long[,] Calculate_Shift_Special_Point(long[,] sche, long ew)
         {
             long[,] schet = sche;
             long test = 0;
@@ -1610,23 +1538,27 @@ namespace Спектры_версия_2._0
                 {
                     test = schet[8, w - 1] - Shift_BX(schet[3, w - 1], schet[3, w], schet[9, w - 1], schet[2, w - 1], schet[2, w]);// максимум В4
                     test2 = schet[8, w - 1];
-
-
-                    schet[4, w - 1] = schet[4, w - 1] - Shift_BX(schet[3, w - 1], schet[3, w], schet[5, w - 1], schet[2, w - 1], schet[2, w]);// максимум В2
-
-                    schet[6, w - 1] = schet[6, w - 1] - Shift_BX(schet[3, w - 1], schet[3, w], schet[7, w - 1], schet[2, w - 1], schet[2, w]); // минимум В3
-
-                    schet[8, w - 1] = schet[8, w - 1] - Shift_BX(schet[3, w - 1], schet[3, w], schet[9, w - 1], schet[2, w - 1], schet[2, w]);// максимум В4
-
                     
+                    schet[4, w - 1] = schet[4, w - 1] - Shift_BX(schet[3, w - 1], schet[3, w], schet[5, w - 1], schet[2, w - 1], schet[2, w]);// максимум В2
+                    schet[6, w - 1] = schet[6, w - 1] - Shift_BX(schet[3, w - 1], schet[3, w], schet[7, w - 1], schet[2, w - 1], schet[2, w]); // минимум В3
+                    schet[8, w - 1] = schet[8, w - 1] - Shift_BX(schet[3, w - 1], schet[3, w], schet[9, w - 1], schet[2, w - 1], schet[2, w]);// максимум В4
+                   
                 }
             }
 
             return schet;
         }
 
-
-        public long Shift_BX(long x1, long x2, long x3_b, long y1, long y2)
+        /// <summary>
+        /// Расчет линейного отклонения
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="x2"></param>
+        /// <param name="x3_b"></param>
+        /// <param name="y1"></param>
+        /// <param name="y2"></param>
+        /// <returns></returns>
+        private long Shift_BX(long x1, long x2, long x3_b, long y1, long y2)
         {
             double shift_y = 0;
 

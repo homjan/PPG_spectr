@@ -11,8 +11,10 @@ namespace Спектры_версия_2._0.Spectr
         public Spectr_Aan(long[,] osob, int b1, int nudft) : base(osob, b1, nudft) {
 
         }
-
-        public override void set_diffrence()//Считаем разницу используемую для построения гистогорамм
+        /// <summary>
+        /// Рассчитать разницу используемую для построения гистогорамм
+        /// </summary>
+        public override void Set_Diffrence()//
         {
             for (int i = 1; i < N_line - 1; i++)
             {

@@ -20,6 +20,12 @@ namespace Спектры_версия_2._0
         int razmer_layer_1_in;
         int razmer_layer_2_in;
 
+        /// <summary>
+        /// Конструктор двухслойной нейронной сети
+        /// </summary>
+        /// <param name="razmer1">Число элементов входного слоя</param>
+        /// <param name="razmer2">Число элементов внутреннего слоя</param>
+        /// <param name="razmer3">Число элементов выходного слоя</param>
         public Job_net(int razmer1, int razmer2, int razmer3)
         {
 
@@ -36,7 +42,11 @@ namespace Спектры_версия_2._0
 
         }
 
-        public void read_in_file_bias_1(String name_file)
+        /// <summary>
+        /// Считать из файла смещение первого слоя
+        /// </summary>
+        /// <param name="name_file">Имя файла</param>
+        public void Read_From_File_Bias_1(String name_file)
         {
 
             StringBuilder buffer = new StringBuilder();
@@ -46,13 +56,9 @@ namespace Спектры_версия_2._0
             string n1;
 
             int l1;
-            int j = 0;// счетчик строк 10         
-
+            int j = 0;// счетчик строк 10 
             int m = 0;//смещение буффера
 
-
-            //  try
-            //  {
             StreamReader sw = new StreamReader(name_file);
 
             while (sw.Peek() != -1)
@@ -96,8 +102,11 @@ namespace Спектры_версия_2._0
             sw.Close();
 
         }
-
-        public void read_in_file_bias_2(String name_file)
+        /// <summary>
+        /// Считать из файла смещение первого слоя
+        /// </summary>
+        /// <param name="name_file">Имя файла</param>
+        public void Read_From_File_Bias_2(String name_file)
         {
 
             StringBuilder buffer = new StringBuilder();
@@ -107,12 +116,9 @@ namespace Спектры_версия_2._0
             string n1;
 
             int l1;
-            int j = 0;// счетчик строк 10         
-
+            int j = 0;// счетчик строк 10   
             int m = 0;//смещение буффера
 
-            //  try
-            //  {
             StreamReader sw = new StreamReader(name_file);
 
             while (sw.Peek() != -1)
@@ -154,8 +160,11 @@ namespace Спектры_версия_2._0
 
         }
 
-
-        public void read_in_file_weight_1(String name_file)
+        /// <summary>
+        /// Считать из файла веса первого слоя
+        /// </summary>
+        /// <param name="name_file">Имя файла</param>
+        public void Read_From_File_Weight_1(String name_file)
         {
             StringBuilder buffer = new StringBuilder();
             int a = 0;
@@ -165,23 +174,17 @@ namespace Спектры_версия_2._0
 
             int l1;
             int j = 0;// счетчик строк 10
-
             int k = 0;//счетчик столбцов 2
-
-
             int m = 0;//смещение буффера
 
 
             long[,] rowx = new long[razmer_layer_1_in, razmer_data_in];
 
-            //  try
-            //  {
             StreamReader sw = new StreamReader(name_file);
 
             while (sw.Peek() != -1)
             {
                 l1 = sw.Read();
-
 
                 if (l1 == 13)
                 {
@@ -224,8 +227,11 @@ namespace Спектры_версия_2._0
             sw.Close();
         }
 
-
-        public void read_in_file_weight_2(String name_file)
+        /// <summary>
+        /// Считать из файла веса второго слоя
+        /// </summary>
+        /// <param name="name_file">Имя файла</param>
+        public void Read_From_File_Weight_2(String name_file)
         {
             StringBuilder buffer = new StringBuilder();
             int a = 0;
@@ -239,15 +245,12 @@ namespace Спектры_версия_2._0
             int m = 0;//смещение буфера
 
             long[,] rowx = new long[razmer_layer_2_in, razmer_layer_1_in];
-
-            //  try
-            //  {
+            
             StreamReader sw = new StreamReader(name_file);
 
             while (sw.Peek() != -1)
             {
                 l1 = sw.Read();
-
 
                 if (l1 == 13)
                 {
@@ -293,6 +296,13 @@ namespace Спектры_версия_2._0
 
         }
 
+        /// <summary>
+        /// Прямое распространение в перцептроне
+        /// </summary>
+        /// <param name="x">Входные данные</param>
+        /// <param name="data_in">Длина входных данных</param>
+        /// <param name="layer_1_in">Длина выходных данных</param>
+        /// <returns></returns>
         public double[] Perzertron_forward(double[] x, int data_in, int layer_1_in)
         {
             double[] y = new double[layer_1_in];
@@ -313,14 +323,21 @@ namespace Спектры_версия_2._0
             for (int i = 0; i < layer_1_in; i++)
             {
 
-                y[i] = sigmoid(y[i]);
+                y[i] = Sigmoid(y[i]);
             }
 
             return y;
 
         }
 
-        public double[] Perzertron_forward_softmax(double[] x, int layer_1_in, int layer_2_in)
+        /// <summary>
+        /// Прямое распространение в перцептроне с функцией активации softmax
+        /// </summary>
+        /// <param name="x">Входные данные</param>
+        /// <param name="layer_1_in">Длина входных данных</param>
+        /// <param name="layer_2_in">Длина выходных данных</param>
+        /// <returns></returns>
+        public double[] Perzertron_forward_Softmax(double[] x, int layer_1_in, int layer_2_in)
         {
             double[] y = new double[layer_2_in];
             double[] z = new double[layer_2_in];
@@ -338,32 +355,39 @@ namespace Спектры_версия_2._0
                 y[i] = y[i] + bias1[i];
             }
 
-            z = softmax(y);
-            /*     for (int i = 0; i < x.Length; i++)
-                 {
-
-                     y[i] = sigmoid(y[i]);
-                 }*/
-
+            z = Softmax(y);
+           
             return z;
 
         }
-
-        public double sigmoid(double x)
+        /// <summary>
+        /// Функция активации Sigmoid
+        /// </summary>
+        /// <param name="x">Входной вектор</param>
+        /// <returns></returns>
+        public double Sigmoid(double x)
         {
 
             double y = 1 / (1 + Math.Exp((-1) * x));
             return y;
         }
 
-
-        public double tanh(double x)
+        /// <summary>
+        /// Функция активации Гиперболический тангенс
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public double Tanh(double x)
         {
 
             double y = (Math.Exp(x) - Math.Exp((-1) * x)) / (Math.Exp(x) + Math.Exp((-1) * x));
             return y;
         }
-
+        /// <summary>
+        /// Функция активации RELU
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         public double RELU(double x)
         {
             double y;
@@ -372,8 +396,12 @@ namespace Спектры_версия_2._0
 
             return y;
         }
-
-        public double[] softmax(double[] x)
+        /// <summary>
+        /// Функция активации softmax
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public double[] Softmax(double[] x)
         {
             double[] y = new double[x.Length];
             double maxi = x.Max();

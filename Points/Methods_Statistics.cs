@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Спектры_версия_2._0
 {
-    class Methods_Statistics
+   static class Methods_Statistics
     {
-
-        public int statistic_point_B2(long x1)
+        /// <summary>
+        /// Расчет среднего положения точки В2
+        /// </summary>
+        /// <param name="x1">Число точек пульсового цикла</param>
+        /// <returns></returns>
+        public static int Statistic_Point_B2(long x1)
         {
 
             double x = System.Convert.ToDouble(x1);
@@ -29,8 +33,12 @@ namespace Спектры_версия_2._0
             return z;
 
         }
-
-        public int statistic_point_B3(long x1)
+        /// <summary>
+        /// Расчет среднего положения точки В3
+        /// </summary>
+        /// <param name="x1">Число точек пульсового цикла</param>
+        /// <returns></returns>
+        public static int Statistic_Point_B3(long x1)
         {
 
             double x = System.Convert.ToDouble(x1);
@@ -50,13 +58,17 @@ namespace Спектры_версия_2._0
             return z;
 
         }
-        public int statistic_point_B4(long x1)
-        {
 
+        /// <summary>
+        /// Расчет среднего положения точки В4
+        /// </summary>
+        /// <param name="x1">Число точек пульсового цикла</param>
+        /// <returns></returns>
+        public static int Statistic_Point_B4(long x1)
+        {
             double x = System.Convert.ToDouble(x1);
             double y;
             int z;
-
 
             const double A_B4 = 1.05273;
             const double B1_X_B4 = 0.86666;

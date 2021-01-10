@@ -180,7 +180,7 @@ namespace Спектры_версия_2._0
         {
             try
             {
-                usergraph.clearAll();
+                usergraph.ClearAll();
                 Inizial();
                 Clear_list_zed();
                 richTextBox2.Clear();
@@ -192,7 +192,7 @@ namespace Спектры_версия_2._0
 
         private void button6_Click(object sender, EventArgs e)//Соханить график
         {
-            usergraph.saveGraph();
+            usergraph.SaveGraph();
         }
 
         private void button5_Click(object sender, EventArgs e)//Сохранить данные
@@ -312,9 +312,9 @@ namespace Спектры_версия_2._0
             try
             {
                 Initial_data init_data = new Initial_data("test.txt", reg, ekg);
-                init_data.row1_shift_time_0();//Сдвигаем время к 0
-                init_data.row1_smothing();// Сглаживаем полученные данные
-                init_data.row1_write_in_file("test3.txt");
+                init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+                init_data.Row1_Smothing();// Сглаживаем полученные данные
+                init_data.Row1_Write_In_File("test3.txt");
 
 
            //     Initial_processing.Divided_by_periods_data didi = new Initial_processing.Divided_by_periods_data(init_data);
@@ -322,11 +322,11 @@ namespace Спектры_версия_2._0
              
 
                 usergraph = new UseZedgraph(zedGraph1);
-                usergraph.clearAll();//Очищаем полотно
-                usergraph.makeGraph_4kanal(init_data.get_row1(), init_data.get_b());//Строим график
-                usergraph.install_pane("t, мc", "R, Ом", "Каналы");//Устанавливаем оси и загавие
-                usergraph.resetGraph();//Обновляем
-                max_time = Convert.ToDouble(init_data.get_row1_x_y(init_data.get_b() - 1, 0));
+                usergraph.ClearAll();//Очищаем полотно
+                usergraph.MakeGraph_4_Canal(init_data.get_row1(), init_data.get_b());//Строим график
+                usergraph.Install_Pane("t, мc", "R, Ом", "Каналы");//Устанавливаем оси и загавие
+                usergraph.ResetGraph();//Обновляем
+                max_time = Convert.ToDouble(init_data.Get_Row1_X_Y(init_data.get_b() - 1, 0));
 
             }
             catch (Exception ex)
@@ -339,7 +339,12 @@ namespace Спектры_версия_2._0
 
         }
 
-        private void button19_Click(object sender, EventArgs e)//Обновить график
+        /// <summary>
+        /// Обновить график
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button19_Click(object sender, EventArgs e)
         {
             Inizial();
             N_shift_axis = 0;
@@ -352,13 +357,17 @@ namespace Спектры_версия_2._0
                 Initial_data init_data = new Initial_data("test3.txt", reg, ekg);
                 //      init_data.row1_shift_time_0();
                 //       init_data.row1_smothing();
+                if (checkBox2.Checked)
+                {init_data.Set_Row_In_Data_row1(
+                    Calculate_Fast_Fourier_Signal_Filtration(init_data.get_row1(), init_data.get_b()), reg);
+                }
               
                 usergraph = new UseZedgraph(zedGraph1);
-                usergraph.clearAll();//Очищаем полотно
-                usergraph.makeGraph_4kanal(init_data.get_row1(), init_data.get_b());//Строим график
-                usergraph.install_pane("t, мc", "R, Ом", "Каналы");//Устанавливаем оси и загавие
-                usergraph.resetGraph();//Обновляем
-                max_time = Convert.ToDouble(init_data.get_row1_x_y(init_data.get_b()-1, 0));
+                usergraph.ClearAll();//Очищаем полотно
+                usergraph.MakeGraph_4_Canal(init_data.get_row1(), init_data.get_b());//Строим график
+                usergraph.Install_Pane("t, мc", "R, Ом", "Каналы");//Устанавливаем оси и загавие
+                usergraph.ResetGraph();//Обновляем
+                max_time = Convert.ToDouble(init_data.Get_Row1_X_Y(init_data.get_b()-1, 0));
             }
             catch (Exception ex)
             {
@@ -452,17 +461,17 @@ namespace Спектры_версия_2._0
             int ekg = System.Convert.ToInt32(this.textBox2.Text);
 
             Initial_data init_data = new Initial_data("test.txt", reg, ekg);
-            init_data.row1_shift_time_0();//Сдвигаем время к 0
-            init_data.row1_smothing();// Сглаживаем полученные данные
-            init_data.row1_write_in_file("test3.txt");
+            init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+            init_data.Row1_Smothing();// Сглаживаем полученные данные
+            init_data.Row1_Write_In_File("test3.txt");
 
 
             usergraph = new UseZedgraph(zedGraph1);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_4kanal(init_data.get_row1(), init_data.get_b());//Строим график
-            usergraph.install_pane("t, мc", "R, Ом", "Каналы");//Устанавливаем оси и загавие
-            usergraph.resetGraph();//Обновляем
-            max_time = Convert.ToDouble(init_data.get_row1_x_y(init_data.get_b() - 1, 0));
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_4_Canal(init_data.get_row1(), init_data.get_b());//Строим график
+            usergraph.Install_Pane("t, мc", "R, Ом", "Каналы");//Устанавливаем оси и загавие
+            usergraph.ResetGraph();//Обновляем
+            max_time = Convert.ToDouble(init_data.Get_Row1_X_Y(init_data.get_b() - 1, 0));
 
 
             Read_Info_pazient();
@@ -480,18 +489,24 @@ namespace Спектры_версия_2._0
 
            
                 Initial_data init_data = new Initial_data("test3.txt", reg, ekg);
-                init_data.row1_shift_time_0();//Сдвигаем время к 0
-                init_data.row1_smothing();// Сглаживаем полученные данные
-                init_data.row2_calculate();
-                init_data.row3_average_kanal_reg();
-                init_data.row4_smoothing_ekg();
-                
-                usergraph = new UseZedgraph(zedGraph1, init_data);
-                usergraph.clearAll();//Очищаем полотно
-                usergraph.makeGraph_on_chosen_canal();
-                usergraph.install_pane("t, мc", "R, Ом", " ");//Устанавливаем оси и заглавие
-                usergraph.resetGraph();//Обновляем
-                max_time = Convert.ToDouble(init_data.get_row1_x_y(init_data.get_b() - 1, 0));
+                init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+                init_data.Row1_Smothing();// Сглаживаем полученные данные
+                init_data.Row2_Calculate();
+                init_data.Row3_Average_Canal_Reg();
+                init_data.Row4_Smoothing_Ekg();
+
+            if (checkBox2.Checked)
+            {
+                init_data.Set_Row_In_Data_row1(
+                   Calculate_Fast_Fourier_Signal_Filtration(init_data.get_row1(), init_data.get_b()), reg);
+            }
+
+            usergraph = new UseZedgraph(zedGraph1, init_data);
+                usergraph.ClearAll();//Очищаем полотно
+                usergraph.MakeGraph_On_Chosen_Canal();
+                usergraph.Install_Pane("t, мc", "R, Ом", " ");//Устанавливаем оси и заглавие
+                usergraph.ResetGraph();//Обновляем
+                max_time = Convert.ToDouble(init_data.Get_Row1_X_Y(init_data.get_b() - 1, 0));
 
 
 
@@ -508,22 +523,27 @@ namespace Спектры_версия_2._0
 
 
             Initial_data init_data = new Initial_data("test3.txt", reg, ekg);
-            init_data.row1_shift_time_0();//Сдвигаем время к 0
-            init_data.row1_smothing();// Сглаживаем полученные данные
-            init_data.row2_calculate();
-            init_data.row3_average_kanal_reg();
-            init_data.row4_smoothing_ekg();
+            init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+            init_data.Row1_Smothing();// Сглаживаем полученные данные
+            init_data.Row2_Calculate();
+            init_data.Row3_Average_Canal_Reg();
+            init_data.Row4_Smoothing_Ekg();
 
-            init_data.row1_2_write_in_file();
+            if (checkBox2.Checked)
+            {
+                init_data.Set_Row_In_Data_row1(
+                   Calculate_Fast_Fourier_Signal_Filtration(init_data.get_row1(), init_data.get_b()), reg);
+            }
+
+            init_data.Row1_2_Write_In_File();
 
             usergraph = new UseZedgraph(zedGraph1, init_data);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_on_chosen_canal();
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_On_Chosen_Canal();
            
             //Разделяем 
             Initial_processing.Divided_by_periods_data divided_row = new Initial_processing.Divided_by_periods_data(init_data, this.comboBox3.Text);
-            divided_row.return_data_in_period();
-         //   divided_row.delete_zero_in_period();
+            divided_row.Calculate_Data_In_Period();         
 
             Special_point osob_point = new Special_point(divided_row, init_data);
 
@@ -534,18 +554,18 @@ namespace Спектры_версия_2._0
             }
             if (radioButton7.Checked)
             {
-                osob_point.return_osob_point_neural_network();
+                osob_point.Return_Special_Point_Neural_Network();
             }
             if (radioButton4.Checked)
             {
-                osob_point.return_osob_point_statistic_num(); 
+                osob_point.Return_Special_Point_Statistic_Num(); 
             }
 
             if (checkBox1.Checked)
             {
-                osob_point.return_point_EKG(this.comboBox3.Text);
+                osob_point.Return_Point_EKG(this.comboBox3.Text);
 
-                osob_point.delete_zero_in_data();
+                osob_point.Delete_Zero_From_Data();
             }
             osob = osob_point.get_spec_point();
 
@@ -591,20 +611,19 @@ namespace Спектры_версия_2._0
                 osob_y[4, i] = osob[8, i] + osob[10, i];
 
             }
-            usergraph.makeGraph_osob_point(osob_x, osob_y, ew);
-            usergraph.install_pane("t, мc", "R, Ом", " ");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
-            max_time = Convert.ToDouble(init_data.get_row1_x_y(init_data.get_b() - 1, 0));
+            usergraph.MakeGraph_Special_Point(osob_x, osob_y, ew);
+            usergraph.Install_Pane("t, мc", "R, Ом", " ");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
+            max_time = Convert.ToDouble(init_data.Get_Row1_X_Y(init_data.get_b() - 1, 0));
 
-
-            Save_data save_data = new Save_data();
+                     
            
-            save_data.save_osob_point_postr(osob, ew);
+            Save_data.Save_Special_Point_For_Plotting(osob, ew);
             /////////////////////////////////////////
 
-            osob = osob_point.shift_osob_point(osob, ew);
+            osob = osob_point.Calculate_Shift_Special_Point(osob, ew);
 
-            save_data.save_osob_point_clear(osob, ew);
+            Save_data.Save_Special_Point_For_File(osob, ew);
 
         }       
         /////////////////////////////////
@@ -621,29 +640,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b+1);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b+1);
  
             int ew = b;
             //Считаем данные для гистограммы
             Gistogramma.Gistogramma_EKG gisto = new Gistogramma.Gistogramma_EKG(osob, ew);
-            gisto.set_diffrence();
-            gisto.delete_probel_diffrence(300000);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
-            gisto.pilliars_gisto(this.textBox5.Text);
+            gisto.Set_Diffrence();
+            gisto.Delete_Space_Diffrence(300000);
+            gisto.Convert_Diffrence_2_3_To_Double();
+            gisto.Find_Diffrence_Max_Min();
+            gisto.Pilliars_Gisto(this.textBox5.Text);
 
             // Строим гистограмму
             usergraph = new UseZedgraph(zedGraph1, gisto);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_gistogramma("RR-интервалы, %");
-            usergraph.install_pane("t, мc", "%", "");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Gistogramma("RR-интервалы, %");
+            usergraph.Install_Pane("t, мc", "%", "");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
             //Считаем дополнительные данные
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, true);
-            data_gisto.calculate_all_parameters();
-            data_gisto.write_result_EKG_in_file("Расчетные данные.txt", false);
-            data_gisto.write_result_EKG_in_richtextbox(richTextBox2);
+            data_gisto.Calculate_All_Parameters();
+            data_gisto.Write_Result_EKG_In_File("Расчетные данные.txt", false);
+            data_gisto.Write_Result_EKG_in_Richtextbox(richTextBox2);
 
 
         }
@@ -659,29 +678,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b + 1);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b + 1);
 
             int ew = b;
             //Считаем данные для гистограммы
             Gistogramma.Gistogramma_B1B1 gisto = new Gistogramma.Gistogramma_B1B1(osob, ew);
-            gisto.set_diffrence();
-            gisto.delete_probel_diffrence(300000);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
-            gisto.pilliars_gisto(this.textBox5.Text);
+            gisto.Set_Diffrence();
+            gisto.Delete_Space_Diffrence(300000);
+            gisto.Convert_Diffrence_2_3_To_Double();
+            gisto.Find_Diffrence_Max_Min();
+            gisto.Pilliars_Gisto(this.textBox5.Text);
 
             // Строим гистограмму
             usergraph = new UseZedgraph(zedGraph1, gisto);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_gistogramma("B1, %");
-            usergraph.install_pane("t, мc", "%", " ");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Gistogramma("B1, %");
+            usergraph.Install_Pane("t, мc", "%", " ");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
             //Считаем дополнительные данные
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, true);
-            data_gisto.calculate_all_parameters();
-            data_gisto.write_result_EKG_in_file("Расчетные данные.txt", false);
-            data_gisto.write_result_EKG_in_richtextbox(richTextBox2);
+            data_gisto.Calculate_All_Parameters();
+            data_gisto.Write_Result_EKG_In_File("Расчетные данные.txt", false);
+            data_gisto.Write_Result_EKG_in_Richtextbox(richTextBox2);
         }
 
         private void button28_Click(object sender, EventArgs e)// Рассчитать гистограммы В2В2
@@ -695,29 +714,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b + 1);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b + 1);
 
             int ew = b;
             //Считаем данные для гистограммы
             Gistogramma.Gistogramma_B2B2 gisto = new Gistogramma.Gistogramma_B2B2(osob, ew);
-            gisto.set_diffrence();
-            gisto.delete_probel_diffrence(300000);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
-            gisto.pilliars_gisto(this.textBox5.Text);
+            gisto.Set_Diffrence();
+            gisto.Delete_Space_Diffrence(300000);
+            gisto.Convert_Diffrence_2_3_To_Double();
+            gisto.Find_Diffrence_Max_Min();
+            gisto.Pilliars_Gisto(this.textBox5.Text);
 
             // Строим гистограмму
             usergraph = new UseZedgraph(zedGraph1, gisto);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_gistogramma("B2, %");
-            usergraph.install_pane("%", "%", "В2");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Gistogramma("B2, %");
+            usergraph.Install_Pane("%", "%", "В2");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
             //Считаем дополнительные данные
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, true);
-            data_gisto.calculate_all_parameters();
-            data_gisto.write_result_EKG_in_file("Расчетные данные.txt", false);
-            data_gisto.write_result_EKG_in_richtextbox(richTextBox2);
+            data_gisto.Calculate_All_Parameters();
+            data_gisto.Write_Result_EKG_In_File("Расчетные данные.txt", false);
+            data_gisto.Write_Result_EKG_in_Richtextbox(richTextBox2);
         }
 
         private void button23_Click(object sender, EventArgs e)//Гистограммы ВРПР
@@ -731,29 +750,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
             //Считаем данные для гистограммы
             Gistogramma.Gistogramma_VRPR gisto = new Gistogramma.Gistogramma_VRPR(osob, ew);
-            gisto.set_diffrence();
-            gisto.delete_probel_diffrence(10000);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
-            gisto.pilliars_gisto(this.textBox5.Text);
+            gisto.Set_Diffrence();
+            gisto.Delete_Space_Diffrence(10000);
+            gisto.Convert_Diffrence_2_3_To_Double();
+            gisto.Find_Diffrence_Max_Min();
+            gisto.Pilliars_Gisto(this.textBox5.Text);
 
             // Строим гистограмму
             usergraph = new UseZedgraph(zedGraph1, gisto);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_gistogramma("ВРПР, %");
-            usergraph.install_pane("%", "%", " ");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Gistogramma("ВРПР, %");
+            usergraph.Install_Pane("%", "%", " ");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
             //Считаем дополнительные данные
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, true);
-            data_gisto.calculate_all_parameters();
-            data_gisto.write_result_ALL_in_file("Расчетные данные.txt", false, "ВРПР");
-            data_gisto.write_result_ALL_in_richtextbox(richTextBox2);
+            data_gisto.Calculate_All_Parameters();
+            data_gisto.Write_Result_ALL_In_File("Расчетные данные.txt", false, "ВРПР");
+            data_gisto.Write_Result_ALL_in_Richtextbox(richTextBox2);
         }
 
         private void button13_Click(object sender, EventArgs e)//Гистограммы анакроты
@@ -767,30 +786,30 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
             //Считаем данные для гистограммы
             Gistogramma.Gistogramma_Ana gisto = new Gistogramma.Gistogramma_Ana(osob, ew);
-            gisto.set_diffrence();
-            gisto.delete_probel_diffrence(1);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
+            gisto.Set_Diffrence();
+            gisto.Delete_Space_Diffrence(1);
+            gisto.Convert_Diffrence_2_3_To_Double();
+            gisto.Find_Diffrence_Max_Min();
             gisto.shift_diffrence();
-            gisto.pilliars_gisto(this.textBox14.Text);
+            gisto.Pilliars_Gisto(this.textBox14.Text);
 
             // Строим гистограмму
             usergraph = new UseZedgraph(zedGraph1, gisto);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_gistogramma_proz("Анакрота, %");
-            usergraph.install_pane("%", "%", "");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Gistogramma_Proz("Анакрота, %");
+            usergraph.Install_Pane("%", "%", "");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
             //Считаем дополнительные данные
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, false);
-            data_gisto.calculate_all_parameters();
-            data_gisto.write_result_ALL_in_file("Расчетные данные.txt", false, " ");
-            data_gisto.write_result_ALL_in_richtextbox(richTextBox2);
+            data_gisto.Calculate_All_Parameters();
+            data_gisto.Write_Result_ALL_In_File("Расчетные данные.txt", false, " ");
+            data_gisto.Write_Result_ALL_in_Richtextbox(richTextBox2);
         }
 
         private void button14_Click(object sender, EventArgs e)//Гистограммы Дикротического индекса
@@ -804,30 +823,30 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
             //Считаем данные для гистограммы
             Gistogramma.Gistogramma_IDV gisto = new Gistogramma.Gistogramma_IDV(osob, ew);
-            gisto.set_diffrence();
-            gisto.delete_probel_diffrence(1);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
+            gisto.Set_Diffrence();
+            gisto.Delete_Space_Diffrence(1);
+            gisto.Convert_Diffrence_2_3_To_Double();
+            gisto.Find_Diffrence_Max_Min();
             gisto.shift_diffrence();
-            gisto.pilliars_gisto(this.textBox14.Text);
+            gisto.Pilliars_Gisto(this.textBox14.Text);
 
             // Строим гистограмму
             usergraph = new UseZedgraph(zedGraph1, gisto);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_gistogramma_proz("Дикротический индекс, %");
-            usergraph.install_pane("%", "%", " ");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Gistogramma_Proz("Дикротический индекс, %");
+            usergraph.Install_Pane("%", "%", " ");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
             //Считаем дополнительные данные
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, false);
-            data_gisto.calculate_all_parameters();
-            data_gisto.write_result_ALL_in_file("Расчетные данные.txt", false, "Дикротический индекс");
-            data_gisto.write_result_ALL_in_richtextbox(richTextBox2);
+            data_gisto.Calculate_All_Parameters();
+            data_gisto.Write_Result_ALL_In_File("Расчетные данные.txt", false, "Дикротический индекс");
+            data_gisto.Write_Result_ALL_in_Richtextbox(richTextBox2);
         }
 
         private void button15_Click(object sender, EventArgs e)//Гистограммы Индекса отражения
@@ -841,30 +860,30 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
             //Считаем данные для гистограммы
             Gistogramma.Gistogramma_IO gisto = new Gistogramma.Gistogramma_IO(osob, ew);
-            gisto.set_diffrence();
-            gisto.delete_probel_diffrence(1);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
+            gisto.Set_Diffrence();
+            gisto.Delete_Space_Diffrence(1);
+            gisto.Convert_Diffrence_2_3_To_Double();
+            gisto.Find_Diffrence_Max_Min();
             gisto.shift_diffrence();
-            gisto.pilliars_gisto(this.textBox14.Text);
+            gisto.Pilliars_Gisto(this.textBox14.Text);
 
             // Строим гистограмму
             usergraph = new UseZedgraph(zedGraph1, gisto);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_gistogramma_proz("Индекс отражения, %");
-            usergraph.install_pane("%", "%", " ");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Gistogramma_Proz("Индекс отражения, %");
+            usergraph.Install_Pane("%", "%", " ");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
             //Считаем дополнительные данные
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, false);
-            data_gisto.calculate_all_parameters();
-            data_gisto.write_result_ALL_in_file("Расчетные данные.txt", false, " ");
-            data_gisto.write_result_ALL_in_richtextbox(richTextBox2);
+            data_gisto.Calculate_All_Parameters();
+            data_gisto.Write_Result_ALL_In_File("Расчетные данные.txt", false, " ");
+            data_gisto.Write_Result_ALL_in_Richtextbox(richTextBox2);
         }
 
         private void button16_Click(object sender, EventArgs e)////Гистограммы индекса жесткости
@@ -878,29 +897,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
             //Считаем данные для гистограммы
             Gistogramma.Gistogramma_IJ gisto = new Gistogramma.Gistogramma_IJ(osob, ew);
             gisto.set_diffrence(this.textBox7.Text);
-            gisto.delete_probel_diffrence(1);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
-            gisto.pilliars_gisto(this.textBox16.Text);
+            gisto.Delete_Space_Diffrence(1);
+            gisto.Convert_Diffrence_2_3_To_Double();
+            gisto.Find_Diffrence_Max_Min();
+            gisto.Pilliars_Gisto(this.textBox16.Text);
 
             // Строим гистограмму
             usergraph = new UseZedgraph(zedGraph1, gisto);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_gistogramma_proz("Индекс жесткости, %");
-            usergraph.install_pane("%", "%", " ");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Gistogramma_Proz("Индекс жесткости, %");
+            usergraph.Install_Pane("%", "%", " ");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
             //Считаем дополнительные данные
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, false);
-            data_gisto.calculate_all_parameters();
-            data_gisto.write_result_ALL_in_file("Расчетные данные.txt", false, " ");
-            data_gisto.write_result_ALL_in_richtextbox(richTextBox2);
+            data_gisto.Calculate_All_Parameters();
+            data_gisto.Write_Result_ALL_In_File("Расчетные данные.txt", false, " ");
+            data_gisto.Write_Result_ALL_in_Richtextbox(richTextBox2);
 
         }
 
@@ -916,30 +935,30 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
             //Считаем данные для гистограммы
             Gistogramma.Gistogramma_IVV gisto = new Gistogramma.Gistogramma_IVV(osob, ew);
-            gisto.set_diffrence();
-            gisto.delete_probel_diffrence(1);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
+            gisto.Set_Diffrence();
+            gisto.Delete_Space_Diffrence(1);
+            gisto.Convert_Diffrence_2_3_To_Double();
+            gisto.Find_Diffrence_Max_Min();
             gisto.shift_diffrence();
-            gisto.pilliars_gisto(this.textBox15.Text);
+            gisto.Pilliars_Gisto(this.textBox15.Text);
 
             // Строим гистограмму
             usergraph = new UseZedgraph(zedGraph1, gisto);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.makeGraph_gistogramma_proz("Индекс восходящей волны, %");
-            usergraph.install_pane("%", "%", " ");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Gistogramma_Proz("Индекс восходящей волны, %");
+            usergraph.Install_Pane("%", "%", " ");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
             //Считаем дополнительные данные
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, false);
-            data_gisto.calculate_all_parameters();
-            data_gisto.write_result_ALL_in_file("Расчетные данные.txt", false, " ");
-            data_gisto.write_result_ALL_in_richtextbox(richTextBox2);
+            data_gisto.Calculate_All_Parameters();
+            data_gisto.Write_Result_ALL_In_File("Расчетные данные.txt", false, " ");
+            data_gisto.Write_Result_ALL_in_Richtextbox(richTextBox2);
         }
         /////////////////////////////////
         //Спектры
@@ -957,30 +976,30 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
 
             Spectr.Spectr_EKG spectr = new Spectr.Spectr_EKG(osob, b, radbutton_spectr);
 
-            spectr.set_diffrence();
-            spectr.delete_probel_diffrence();
-            spectr.delete_0_value();
-            spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
-            spectr.get_data_in_richtextbox(richTextBox3, radbutton);
-            spectr.write_in_file();
-            spectr.Spectr_out_text("спектр ЭКГ.txt", richTextBox2, false, "Спектр ЭКГ");
+            spectr.Set_Diffrence();
+            spectr.Delete_Zero_Diffrence();
+            spectr.Delete_Zero_Value();
+            spectr.Set_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr_Pow();
+            spectr.Get_Data_From_Richtextbox(richTextBox3, radbutton);
+            spectr.Write_In_File();
+            spectr.Spectr_Out_Text("спектр ЭКГ.txt", richTextBox2, false, "Спектр ЭКГ");
 
 
             usergraph = new UseZedgraph(zedGraph1, spectr);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.make_Graph_spectr("спектр ЭКГ", Convert.ToInt32(this.textBox17.Text));
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Spectr("спектр ЭКГ", Convert.ToInt32(this.textBox17.Text));
            
-            usergraph.install_pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.Install_Pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
 
 
         }
@@ -997,30 +1016,30 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
 
             Spectr.Spectr_B1B1 spectr = new Spectr.Spectr_B1B1(osob, b, radbutton_spectr);
 
-            spectr.set_diffrence();
-            spectr.delete_probel_diffrence();
-            spectr.delete_0_value();
-            spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
-            spectr.get_data_in_richtextbox(richTextBox3, radbutton);
-            spectr.write_in_file();
-            spectr.Spectr_out_text("спектр B1B1.txt", richTextBox2, false, "Спектр В1В1");
+            spectr.Set_Diffrence();
+            spectr.Delete_Zero_Diffrence();
+            spectr.Delete_Zero_Value();
+            spectr.Set_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr_Pow();
+            spectr.Get_Data_From_Richtextbox(richTextBox3, radbutton);
+            spectr.Write_In_File();
+            spectr.Spectr_Out_Text("спектр B1B1.txt", richTextBox2, false, "Спектр В1В1");
 
 
             usergraph = new UseZedgraph(zedGraph1, spectr);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.make_Graph_spectr("спектр B1B1", Convert.ToInt32(this.textBox17.Text));
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Spectr("спектр B1B1", Convert.ToInt32(this.textBox17.Text));
 
-            usergraph.install_pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.Install_Pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
         }
 
         private void button29_Click(object sender, EventArgs e)//Рассчитать Спектр В2В2
@@ -1035,30 +1054,30 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
 
             Spectr.Spectr_B2B2 spectr = new Spectr.Spectr_B2B2(osob, b, radbutton_spectr);
 
-            spectr.set_diffrence();
-            spectr.delete_probel_diffrence();
-            spectr.delete_0_value();
-            spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
-            spectr.get_data_in_richtextbox(richTextBox3, radbutton);
-            spectr.write_in_file();
-            spectr.Spectr_out_text("спектр B2B2.txt", richTextBox2, false, "Спектр В2В2");
+            spectr.Set_Diffrence();
+            spectr.Delete_Zero_Diffrence();
+            spectr.Delete_Zero_Value();
+            spectr.Set_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr_Pow();
+            spectr.Get_Data_From_Richtextbox(richTextBox3, radbutton);
+            spectr.Write_In_File();
+            spectr.Spectr_Out_Text("спектр B2B2.txt", richTextBox2, false, "Спектр В2В2");
 
 
             usergraph = new UseZedgraph(zedGraph1, spectr);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.make_Graph_spectr("спектр B2B2", Convert.ToInt32(this.textBox17.Text));
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Spectr("спектр B2B2", Convert.ToInt32(this.textBox17.Text));
 
-            usergraph.install_pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.Install_Pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
         }
 
 
@@ -1074,29 +1093,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
 
             Spectr.Spectr_VRPR spectr = new Spectr.Spectr_VRPR(osob, b, radbutton_spectr);
 
-            spectr.set_diffrence();
-            spectr.delete_probel_diffrence();
-           spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
-            spectr.get_data_in_richtextbox(richTextBox3, radbutton);
-            spectr.write_in_file();
-            spectr.Spectr_out_text("спектр ВРПР.txt", richTextBox2, false, "Спектр ВРПР");
+            spectr.Set_Diffrence();
+            spectr.Delete_Zero_Diffrence();
+           spectr.Set_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr_Pow();
+            spectr.Get_Data_From_Richtextbox(richTextBox3, radbutton);
+            spectr.Write_In_File();
+            spectr.Spectr_Out_Text("спектр ВРПР.txt", richTextBox2, false, "Спектр ВРПР");
 
 
             usergraph = new UseZedgraph(zedGraph1, spectr);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.make_Graph_spectr("спектр ВРПР", Convert.ToInt32(this.textBox17.Text));
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Spectr("спектр ВРПР", Convert.ToInt32(this.textBox17.Text));
 
-            usergraph.install_pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.Install_Pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
         }
 
         private void button10_Click(object sender, EventArgs e)//Рассчитать спектр Аан
@@ -1111,29 +1130,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
 
             Spectr.Spectr_Aan spectr = new Spectr.Spectr_Aan(osob, b, radbutton_spectr);
 
-            spectr.set_diffrence();
-            spectr.delete_probel_diffrence();
-            spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
-            spectr.get_data_in_richtextbox(richTextBox3, radbutton);
-            spectr.write_in_file();
-            spectr.Spectr_out_text("спектр Аан.txt", richTextBox2, false, "Спектр Анакроты");
+            spectr.Set_Diffrence();
+            spectr.Delete_Zero_Diffrence();
+            spectr.Set_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr_Pow();
+            spectr.Get_Data_From_Richtextbox(richTextBox3, radbutton);
+            spectr.Write_In_File();
+            spectr.Spectr_Out_Text("спектр Аан.txt", richTextBox2, false, "Спектр Анакроты");
 
 
             usergraph = new UseZedgraph(zedGraph1, spectr);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.make_Graph_spectr("спектр Аан", Convert.ToInt32(this.textBox17.Text));
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Spectr("спектр Аан", Convert.ToInt32(this.textBox17.Text));
 
-            usergraph.install_pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.Install_Pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
         }
 
         private void button11_Click(object sender, EventArgs e)//Рассчитать спектр ИДВ
@@ -1148,29 +1167,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
 
             Spectr.Spectr_IDV spectr = new Spectr.Spectr_IDV(osob, b, radbutton_spectr);
 
-            spectr.set_diffrence();
-            spectr.delete_probel_diffrence();
-            spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
-            spectr.get_data_in_richtextbox(richTextBox3, radbutton);
-            spectr.write_in_file();
-            spectr.Spectr_out_text("спектр ИДВ.txt", richTextBox2, false, "Спектр Индекса дикротической волны");
+            spectr.Set_Diffrence();
+            spectr.Delete_Zero_Diffrence();
+            spectr.Set_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr_Pow();
+            spectr.Get_Data_From_Richtextbox(richTextBox3, radbutton);
+            spectr.Write_In_File();
+            spectr.Spectr_Out_Text("спектр ИДВ.txt", richTextBox2, false, "Спектр Индекса дикротической волны");
 
 
             usergraph = new UseZedgraph(zedGraph1, spectr);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.make_Graph_spectr("спектр ИДВ", Convert.ToInt32(this.textBox17.Text));
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Spectr("спектр ИДВ", Convert.ToInt32(this.textBox17.Text));
 
-            usergraph.install_pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.Install_Pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
         }
 
         private void button12_Click(object sender, EventArgs e)//Рассчитать спектр ИО
@@ -1185,29 +1204,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
 
             Spectr.Spectr_IO spectr = new Spectr.Spectr_IO(osob, b, radbutton_spectr);
 
-            spectr.set_diffrence();
-            spectr.delete_probel_diffrence();
-            spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
-            spectr.get_data_in_richtextbox(richTextBox3, radbutton);
-            spectr.write_in_file();
-            spectr.Spectr_out_text("спектр ИО.txt", richTextBox2, false, "Спектр Индекса отражения");
+            spectr.Set_Diffrence();
+            spectr.Delete_Zero_Diffrence();
+            spectr.Set_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr_Pow();
+            spectr.Get_Data_From_Richtextbox(richTextBox3, radbutton);
+            spectr.Write_In_File();
+            spectr.Spectr_Out_Text("спектр ИО.txt", richTextBox2, false, "Спектр Индекса отражения");
 
 
             usergraph = new UseZedgraph(zedGraph1, spectr);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.make_Graph_spectr("спектр ИО", Convert.ToInt32(this.textBox17.Text));
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Spectr("спектр ИО", Convert.ToInt32(this.textBox17.Text));
 
-            usergraph.install_pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.Install_Pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
         }
 
         private void button18_Click(object sender, EventArgs e)//Рассчитать спектр ИЖ
@@ -1222,29 +1241,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
 
             Spectr.Spectr_IJ spectr = new Spectr.Spectr_IJ(osob, b, radbutton_spectr);
 
             spectr.set_diffrence(this.textBox7.Text);
-            spectr.delete_probel_diffrence();
-            spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
-            spectr.get_data_in_richtextbox(richTextBox3, radbutton);
-            spectr.write_in_file();
-            spectr.Spectr_out_text("спектр ИЖ.txt", richTextBox2, false, "Спектр Индекса жесткости");
+            spectr.Delete_Zero_Diffrence();
+            spectr.Set_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr_Pow();
+            spectr.Get_Data_From_Richtextbox(richTextBox3, radbutton);
+            spectr.Write_In_File();
+            spectr.Spectr_Out_Text("спектр ИЖ.txt", richTextBox2, false, "Спектр Индекса жесткости");
 
 
             usergraph = new UseZedgraph(zedGraph1, spectr);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.make_Graph_spectr("спектр ИЖ", Convert.ToInt32(this.textBox17.Text));
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Spectr("спектр ИЖ", Convert.ToInt32(this.textBox17.Text));
 
-            usergraph.install_pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.Install_Pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
         }
 
         private void button20_Click(object sender, EventArgs e)//Рассчитать спектр ИВВ
@@ -1259,29 +1278,29 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
 
             Spectr.Spectr_IVV spectr = new Spectr.Spectr_IVV(osob, b, radbutton_spectr);
 
-            spectr.set_diffrence();
-            spectr.delete_probel_diffrence();
-            spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
-            spectr.get_data_in_richtextbox(richTextBox3, radbutton);
-            spectr.write_in_file();
-            spectr.Spectr_out_text("спектр ИВВ.txt", richTextBox2, false, "Спектр Индекса восходящей волны");
+            spectr.Set_Diffrence();
+            spectr.Delete_Zero_Diffrence();
+            spectr.Set_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr_Pow();
+            spectr.Get_Data_From_Richtextbox(richTextBox3, radbutton);
+            spectr.Write_In_File();
+            spectr.Spectr_Out_Text("спектр ИВВ.txt", richTextBox2, false, "Спектр Индекса восходящей волны");
 
 
             usergraph = new UseZedgraph(zedGraph1, spectr);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.make_Graph_spectr("спектр ИВВ", Convert.ToInt32(this.textBox17.Text));
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Spectr("спектр ИВВ", Convert.ToInt32(this.textBox17.Text));
 
-            usergraph.install_pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.Install_Pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
         }
        
         /// ///////////////////////////////////////
@@ -1301,8 +1320,8 @@ namespace Спектры_версия_2._0
             int reg = System.Convert.ToInt32(this.textBox13.Text);
             // считываем особые точки из файла
             Initial_processing.Reader_data reader_data = new Initial_processing.Reader_data("Особые точки чистые.txt");
-            int b = reader_data.return_read_stroki();
-            long[,] osob = reader_data.return_read_massiv_osob_point(b);
+            int b = reader_data.Return_Read_String();
+            long[,] osob = reader_data.Return_Read_Array_Special_Points(b);
 
             int ew = b;
 
@@ -1310,13 +1329,13 @@ namespace Спектры_версия_2._0
             double[] r1;
 
             Gistogramma.Gistogramma_B2B2 gisto8 = new Gistogramma.Gistogramma_B2B2(osob, ew);
-            gisto8.set_diffrence();
-            gisto8.delete_probel_diffrence(300000);
-            gisto8.convert_diffrence_2_3();
-            gisto8.find_diffrence_max_min();
-            gisto8.pilliars_gisto(this.textBox5.Text);
+            gisto8.Set_Diffrence();
+            gisto8.Delete_Space_Diffrence(300000);
+            gisto8.Convert_Diffrence_2_3_To_Double();
+            gisto8.Find_Diffrence_Max_Min();
+            gisto8.Pilliars_Gisto(this.textBox5.Text);
                       
-            double[] r8 = gisto8.get_diffrence_3();
+            double[] r8 = gisto8.Get_Diffrence_3();
 
             
                 r0 = new double[r8.Length];
@@ -1327,75 +1346,75 @@ namespace Спектры_версия_2._0
             {
 
             
-            gisto.set_diffrence();
-            gisto.delete_probel_diffrence(300000);
-            gisto.convert_diffrence_2_3();
-            gisto.find_diffrence_max_min();
-            gisto.pilliars_gisto(this.textBox5.Text);
+            gisto.Set_Diffrence();
+            gisto.Delete_Space_Diffrence(300000);
+            gisto.Convert_Diffrence_2_3_To_Double();
+            gisto.Find_Diffrence_Max_Min();
+            gisto.Pilliars_Gisto(this.textBox5.Text);
 
-            r0 = gisto.get_diffrence();
-            r1 = gisto.get_diffrence_3();
+            r0 = gisto.Get_Diffrence();
+            r1 = gisto.Get_Diffrence_3();
             }
 
             Gistogramma.Gistogramma_VRPR gisto2 = new Gistogramma.Gistogramma_VRPR(osob, ew);
-            gisto2.set_diffrence();
-            gisto2.delete_probel_diffrence(300000);
-            gisto2.convert_diffrence_2_3();
-            gisto2.find_diffrence_max_min();
-            gisto2.pilliars_gisto(this.textBox5.Text);
+            gisto2.Set_Diffrence();
+            gisto2.Delete_Space_Diffrence(300000);
+            gisto2.Convert_Diffrence_2_3_To_Double();
+            gisto2.Find_Diffrence_Max_Min();
+            gisto2.Pilliars_Gisto(this.textBox5.Text);
 
-            double[] r2 = gisto2.get_diffrence_3();
+            double[] r2 = gisto2.Get_Diffrence_3();
 
             //Считаем данные для гистограммы
             Gistogramma.Gistogramma_Ana gisto3 = new Gistogramma.Gistogramma_Ana(osob, ew);
-            gisto3.set_diffrence();
-            gisto3.delete_probel_diffrence(1);
-            gisto3.convert_diffrence_2_3();
-            gisto3.find_diffrence_max_min();
+            gisto3.Set_Diffrence();
+            gisto3.Delete_Space_Diffrence(1);
+            gisto3.Convert_Diffrence_2_3_To_Double();
+            gisto3.Find_Diffrence_Max_Min();
             gisto3.shift_diffrence();
-            gisto3.pilliars_gisto(this.textBox14.Text);
+            gisto3.Pilliars_Gisto(this.textBox14.Text);
 
-            double[] r3 = gisto3.get_diffrence_3();
+            double[] r3 = gisto3.Get_Diffrence_3();
 
             Gistogramma.Gistogramma_IDV gisto4 = new Gistogramma.Gistogramma_IDV(osob, ew);
-            gisto4.set_diffrence();
-            gisto4.delete_probel_diffrence(1);
-            gisto4.convert_diffrence_2_3();
-            gisto4.find_diffrence_max_min();
+            gisto4.Set_Diffrence();
+            gisto4.Delete_Space_Diffrence(1);
+            gisto4.Convert_Diffrence_2_3_To_Double();
+            gisto4.Find_Diffrence_Max_Min();
             gisto4.shift_diffrence();
-            gisto4.pilliars_gisto(this.textBox14.Text);
+            gisto4.Pilliars_Gisto(this.textBox14.Text);
 
-            double[] r4 = gisto4.get_diffrence_3();
+            double[] r4 = gisto4.Get_Diffrence_3();
 
             Gistogramma.Gistogramma_IO gisto5 = new Gistogramma.Gistogramma_IO(osob, ew);
-            gisto5.set_diffrence();
-            gisto5.delete_probel_diffrence(1);
-            gisto5.convert_diffrence_2_3();
-            gisto5.find_diffrence_max_min();
+            gisto5.Set_Diffrence();
+            gisto5.Delete_Space_Diffrence(1);
+            gisto5.Convert_Diffrence_2_3_To_Double();
+            gisto5.Find_Diffrence_Max_Min();
             gisto5.shift_diffrence();
-            gisto5.pilliars_gisto(this.textBox14.Text);
+            gisto5.Pilliars_Gisto(this.textBox14.Text);
 
-            double[] r5 = gisto5.get_diffrence_3();
+            double[] r5 = gisto5.Get_Diffrence_3();
 
             Gistogramma.Gistogramma_IJ gisto6 = new Gistogramma.Gistogramma_IJ(osob, ew);
             gisto6.set_diffrence(this.textBox7.Text);
-            gisto6.delete_probel_diffrence(1);
-            gisto6.convert_diffrence_2_3();
-            gisto6.find_diffrence_max_min();
-            gisto6.pilliars_gisto(this.textBox16.Text);
+            gisto6.Delete_Space_Diffrence(1);
+            gisto6.Convert_Diffrence_2_3_To_Double();
+            gisto6.Find_Diffrence_Max_Min();
+            gisto6.Pilliars_Gisto(this.textBox16.Text);
 
-            double[] r6 = gisto6.get_diffrence_3();
+            double[] r6 = gisto6.Get_Diffrence_3();
 
             Gistogramma.Gistogramma_IVV gisto7 = new Gistogramma.Gistogramma_IVV(osob, ew);
-            gisto7.set_diffrence();
-            gisto7.delete_probel_diffrence(1);
-            gisto7.convert_diffrence_2_3();
-            gisto7.find_diffrence_max_min();
+            gisto7.Set_Diffrence();
+            gisto7.Delete_Space_Diffrence(1);
+            gisto7.Convert_Diffrence_2_3_To_Double();
+            gisto7.Find_Diffrence_Max_Min();
             gisto7.shift_diffrence();
-            gisto7.pilliars_gisto(this.textBox15.Text);
+            gisto7.Pilliars_Gisto(this.textBox15.Text);
             progressBar1.Value = 1;
 
-            double[] r7 = gisto7.get_diffrence_3();
+            double[] r7 = gisto7.Get_Diffrence_3();
 
             string[] Gistogramma_text = new string[8]{ "RR-интервал", "Время распространения пульсовой волны",
                 "Анакрота","Дикротический индекс","Индекс отражения", "Индекс жесткости", "Индекс восходящей волны", "B2B2-интервал"};
@@ -1422,37 +1441,37 @@ namespace Спектры_версия_2._0
             if (checkBox1.Checked)
             {
             Gistogramma.Data_gistogramm data_gisto = new Gistogramma.Data_gistogramm(gisto, true);
-            data_gisto.calculate_all_parameters();
-            data_gisto.write_result_EKG_in_file("Расчетные данные гистограмм.txt", false);
+            data_gisto.Calculate_All_Parameters();
+            data_gisto.Write_Result_EKG_In_File("Расчетные данные гистограмм.txt", false);
             }           
 
             Gistogramma.Data_gistogramm data_gisto2 = new Gistogramma.Data_gistogramm(gisto2, true);
-            data_gisto2.calculate_all_parameters();
-            data_gisto2.write_result_ALL_in_file("Расчетные данные гистограмм.txt", true, Gistogramma_text[1]);
+            data_gisto2.Calculate_All_Parameters();
+            data_gisto2.Write_Result_ALL_In_File("Расчетные данные гистограмм.txt", true, Gistogramma_text[1]);
 
             Gistogramma.Data_gistogramm data_gisto3 = new Gistogramma.Data_gistogramm(gisto3, false);
-            data_gisto3.calculate_all_parameters();
-            data_gisto3.write_result_ALL_in_file("Расчетные данные гистограмм.txt", true, Gistogramma_text[2]);
+            data_gisto3.Calculate_All_Parameters();
+            data_gisto3.Write_Result_ALL_In_File("Расчетные данные гистограмм.txt", true, Gistogramma_text[2]);
 
             Gistogramma.Data_gistogramm data_gisto4 = new Gistogramma.Data_gistogramm(gisto4, false);
-            data_gisto4.calculate_all_parameters();
-            data_gisto4.write_result_ALL_in_file("Расчетные данные гистограмм.txt", true, Gistogramma_text[3]);
+            data_gisto4.Calculate_All_Parameters();
+            data_gisto4.Write_Result_ALL_In_File("Расчетные данные гистограмм.txt", true, Gistogramma_text[3]);
 
             Gistogramma.Data_gistogramm data_gisto5 = new Gistogramma.Data_gistogramm(gisto5, false);
-            data_gisto5.calculate_all_parameters();
-            data_gisto5.write_result_ALL_in_file("Расчетные данные гистограмм.txt", true, Gistogramma_text[4]);
+            data_gisto5.Calculate_All_Parameters();
+            data_gisto5.Write_Result_ALL_In_File("Расчетные данные гистограмм.txt", true, Gistogramma_text[4]);
 
             Gistogramma.Data_gistogramm data_gisto6 = new Gistogramma.Data_gistogramm(gisto6, false);
-            data_gisto6.calculate_all_parameters();
-            data_gisto6.write_result_ALL_in_file("Расчетные данные гистограмм.txt", true, Gistogramma_text[5]);
+            data_gisto6.Calculate_All_Parameters();
+            data_gisto6.Write_Result_ALL_In_File("Расчетные данные гистограмм.txt", true, Gistogramma_text[5]);
 
             Gistogramma.Data_gistogramm data_gisto7 = new Gistogramma.Data_gistogramm(gisto7, false);
-            data_gisto7.calculate_all_parameters();
-            data_gisto7.write_result_ALL_in_file("Расчетные данные гистограмм.txt", true, Gistogramma_text[6]);
+            data_gisto7.Calculate_All_Parameters();
+            data_gisto7.Write_Result_ALL_In_File("Расчетные данные гистограмм.txt", true, Gistogramma_text[6]);
 
             Gistogramma.Data_gistogramm data_gisto8 = new Gistogramma.Data_gistogramm(gisto8, false);
-            data_gisto8.calculate_all_parameters();
-            data_gisto8.write_result_ALL_in_file("Расчетные данные гистограмм.txt", true, Gistogramma_text[7]);
+            data_gisto8.Calculate_All_Parameters();
+            data_gisto8.Write_Result_ALL_In_File("Расчетные данные гистограмм.txt", true, Gistogramma_text[7]);
 
 
             progressBar1.Value = 3;
@@ -1461,15 +1480,15 @@ namespace Спектры_версия_2._0
 
             Spectr.Spectr_B2B2 spectr8 = new Spectr.Spectr_B2B2(osob, b, radbutton_spectr);
 
-            spectr8.set_diffrence();
-            spectr8.delete_probel_diffrence();
-            spectr8.delete_0_value();
-            spectr8.set_amp_spectr();
-            spectr8.calculate_amp_cpectr();
-            spectr8.calculate_amp_spectr_pow();
+            spectr8.Set_Diffrence();
+            spectr8.Delete_Zero_Diffrence();
+            spectr8.Delete_Zero_Value();
+            spectr8.Set_Amplitude_Spectr();
+            spectr8.Calculate_Amplitude_Spectr();
+            spectr8.Calculate_Amplitude_Spectr_Pow();
            // spectr8.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр B2B2");
 
-            double[] s8 = spectr8.get_Amp_spectr_pow();
+            double[] s8 = spectr8.Get_Amplitude_Spectr_Pow();
             double[] s08 = new double[5000];
             if (s8.Length == 0)
             {
@@ -1482,14 +1501,14 @@ namespace Спектры_версия_2._0
             if (checkBox1.Checked)
             {
 
-            spectr.set_diffrence();
-            spectr.delete_probel_diffrence();
-            spectr.delete_0_value();
-            spectr.set_amp_spectr();
-            spectr.calculate_amp_cpectr();
-            spectr.calculate_amp_spectr_pow();
+            spectr.Set_Diffrence();
+            spectr.Delete_Zero_Diffrence();
+            spectr.Delete_Zero_Value();
+            spectr.Set_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr();
+            spectr.Calculate_Amplitude_Spectr_Pow();
          //   spectr.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, false, "Спектр ЭКГ");
-            s1 = spectr.get_Amp_spectr_pow();
+            s1 = spectr.Get_Amplitude_Spectr_Pow();
             }  
            
             
@@ -1499,75 +1518,75 @@ namespace Спектры_версия_2._0
             }
             Spectr.Spectr_VRPR spectr2 = new Spectr.Spectr_VRPR(osob, b, radbutton_spectr);
 
-            spectr2.set_diffrence();
-            spectr2.delete_probel_diffrence();
-            spectr2.set_amp_spectr();
-            spectr2.calculate_amp_cpectr();
-            spectr2.calculate_amp_spectr_pow();
+            spectr2.Set_Diffrence();
+            spectr2.Delete_Zero_Diffrence();
+            spectr2.Set_Amplitude_Spectr();
+            spectr2.Calculate_Amplitude_Spectr();
+            spectr2.Calculate_Amplitude_Spectr_Pow();
           //  spectr2.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр ВРПР");
 
-            double[] s2 = spectr2.get_Amp_spectr_pow();
+            double[] s2 = spectr2.Get_Amplitude_Spectr_Pow();
 
             Spectr.Spectr_Aan spectr3 = new Spectr.Spectr_Aan(osob, b, radbutton_spectr);
 
-            spectr3.set_diffrence();
-            spectr3.delete_probel_diffrence();
-            spectr3.set_amp_spectr();
-            spectr3.calculate_amp_cpectr();
-            spectr3.calculate_amp_spectr_pow();
+            spectr3.Set_Diffrence();
+            spectr3.Delete_Zero_Diffrence();
+            spectr3.Set_Amplitude_Spectr();
+            spectr3.Calculate_Amplitude_Spectr();
+            spectr3.Calculate_Amplitude_Spectr_Pow();
          
            // spectr3.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Анакроты");
 
-            double[] s3 = spectr3.get_Amp_spectr_pow();
+            double[] s3 = spectr3.Get_Amplitude_Spectr_Pow();
 
 
             Spectr.Spectr_IDV spectr4 = new Spectr.Spectr_IDV(osob, b, radbutton_spectr);
 
-            spectr4.set_diffrence();
-            spectr4.delete_probel_diffrence();
-            spectr4.set_amp_spectr();
-            spectr4.calculate_amp_cpectr();
-            spectr4.calculate_amp_spectr_pow();
+            spectr4.Set_Diffrence();
+            spectr4.Delete_Zero_Diffrence();
+            spectr4.Set_Amplitude_Spectr();
+            spectr4.Calculate_Amplitude_Spectr();
+            spectr4.Calculate_Amplitude_Spectr_Pow();
            // spectr4.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Дикротического индекса");
 
-            double[] s4 = spectr4.get_Amp_spectr_pow();
+            double[] s4 = spectr4.Get_Amplitude_Spectr_Pow();
 
             Spectr.Spectr_IO spectr5 = new Spectr.Spectr_IO(osob, b, radbutton_spectr);
 
-            spectr5.set_diffrence();
-            spectr5.delete_probel_diffrence();
-            spectr5.set_amp_spectr();
-            spectr5.calculate_amp_cpectr();
-            spectr5.calculate_amp_spectr_pow();
+            spectr5.Set_Diffrence();
+            spectr5.Delete_Zero_Diffrence();
+            spectr5.Set_Amplitude_Spectr();
+            spectr5.Calculate_Amplitude_Spectr();
+            spectr5.Calculate_Amplitude_Spectr_Pow();
           
          //   spectr5.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Индекса отражения");
 
-            double[] s5 = spectr5.get_Amp_spectr_pow();
+            double[] s5 = spectr5.Get_Amplitude_Spectr_Pow();
 
 
             Spectr.Spectr_IJ spectr6 = new Spectr.Spectr_IJ(osob, b, radbutton_spectr);
 
             spectr6.set_diffrence(this.textBox7.Text);
-            spectr6.delete_probel_diffrence();
-            spectr6.set_amp_spectr();
-            spectr6.calculate_amp_cpectr();
-            spectr6.calculate_amp_spectr_pow();
+            spectr6.Delete_Zero_Diffrence();
+            spectr6.Set_Amplitude_Spectr();
+            spectr6.Calculate_Amplitude_Spectr();
+            spectr6.Calculate_Amplitude_Spectr_Pow();
          //   spectr6.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр индекса жесткости");
 
-            double[] s6 = spectr6.get_Amp_spectr_pow();
+            double[] s6 = spectr6.Get_Amplitude_Spectr_Pow();
 
             Spectr.Spectr_IVV spectr7 = new Spectr.Spectr_IVV(osob, b, radbutton_spectr);
 
-            spectr7.set_diffrence();
-            spectr7.delete_probel_diffrence();
-            spectr7.set_amp_spectr();
-            spectr7.calculate_amp_cpectr();
-            spectr7.calculate_amp_spectr_pow();
+            spectr7.Set_Diffrence();
+            spectr7.Delete_Zero_Diffrence();
+            spectr7.Set_Amplitude_Spectr();
+            spectr7.Calculate_Amplitude_Spectr();
+            spectr7.Calculate_Amplitude_Spectr_Pow();
           //  spectr7.Spectr_out_text("Расчетные данные спектра.txt", richTextBox2, true, "Спектр Индекса восходящей волны");
 
-            double[] s7 = spectr7.get_Amp_spectr_pow();
+            double[] s7 = spectr7.Get_Amplitude_Spectr_Pow();
 
-            double w = spectr7.get_DW();
+            double w = spectr7.Get_DW();
 
             progressBar1.Value = 4;
 
@@ -1845,17 +1864,18 @@ namespace Спектры_версия_2._0
 
 
             Initial_data init_data = new Initial_data("test3.txt", reg, ekg);
-            init_data.row1_shift_time_0();//Сдвигаем время к 0
-            init_data.row1_smothing();// Сглаживаем полученные данные
-            init_data.row2_calculate();
-            init_data.row3_average_kanal_reg();
-            init_data.row4_smoothing_ekg();
+            init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+            init_data.Row1_Smothing();// Сглаживаем полученные данные
+            init_data.Row2_Calculate();
+            init_data.Row3_Average_Canal_Reg();
+            init_data.Row4_Smoothing_Ekg();
             long[,] row1 = init_data.get_row1();
 
             long[] row3 = init_data.get_row3();
 
 
            int b = init_data.get_b();// Считаем число строк
+            int b2 = init_data.get_b();// Считаем число строк
 
             int stepen = 2;
 
@@ -1877,6 +1897,7 @@ namespace Спектры_версия_2._0
                 row_y[r] = System.Convert.ToDouble(row1[r, reg]);
             }
             Jenyay.Mathematics.Complex[] sp_dft = Fourier.FFT(row_y);
+            
 
             double T_BIG = 0;//Длительность отсчета
            
@@ -1923,11 +1944,11 @@ namespace Спектры_версия_2._0
 
 
             Initial_data init_data = new Initial_data("test3.txt", reg, ekg);
-            init_data.row1_shift_time_0();//Сдвигаем время к 0
-            init_data.row1_smothing();// Сглаживаем полученные данные
-            init_data.row2_calculate();
-            init_data.row3_average_kanal_reg();
-            init_data.row4_smoothing_ekg();
+            init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+            init_data.Row1_Smothing();// Сглаживаем полученные данные
+            init_data.Row2_Calculate();
+            init_data.Row3_Average_Canal_Reg();
+            init_data.Row4_Smoothing_Ekg();
             long[,] row1 = init_data.get_row1();
 
             long[] row3 = init_data.get_row3();
@@ -1946,67 +1967,23 @@ namespace Спектры_версия_2._0
                 row_y[r] = System.Convert.ToDouble(row1[r, reg]);
             }
 
-            Spectr.Fourier_fast fourier = new Spectr.Fourier_fast(row_x, row_y, b);
-            fourier.calculate_all();
+            Spectr.Fourier_Fast fourier = new Spectr.Fourier_Fast(row_x, row_y, b);
+            fourier.Calculate_All();
             fourier.Spectr_09();
 
-            double dw = fourier.get_DW();
-            double[] row_yy = fourier.get_amplituda_spectr();
+            double dw = fourier.Get_DW();
+            double[] row_yy = fourier.Get_Amplituda_Spectr();
 
             usergraph = new UseZedgraph(zedGraph1);
-            usergraph.clearAll();//Очищаем полотно
-            usergraph.make_Graph_spectr_fast("Спектр Фурье", Convert.ToInt32(this.textBox17.Text), dw, row_yy);
-            usergraph.install_pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
-            usergraph.resetGraph();//Обновляем
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_Spectr_Fast("Спектр Фурье", Convert.ToInt32(this.textBox17.Text), dw, row_yy);
+            usergraph.Install_Pane("W, Гц", "P, Вт", "Данные");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
 
 
         }
-
-        private void button32_Click(object sender, EventArgs e)
-        {
-            /*   StreamWriter test = new StreamWriter("test3.txt");
-               long time = 0;
-
-               for (int i = 0; i < 144000; i++) {
-                   // test.WriteLine(time + "\t" + fun(time) + "\t" + fun(2*time) + "\t" + fun(4*time) + "\t" + fun(8*time));
-                    test.WriteLine(time + "\t" + 0 + "\t" + 0 + "\t" + 0 + "\t" + 0);
-
-                   time = time + 3333;
-
-               }
-
-
-               test.Close();
-               */
-
-            int reg = System.Convert.ToInt32(this.textBox13.Text);
-            int ekg = System.Convert.ToInt32(this.textBox2.Text);
-
-
-            Initial_data init_data = new Initial_data("test3.txt", reg, ekg);
-            init_data.row1_shift_time_0();//Сдвигаем время к 0
-            
-            long[,] row1 = init_data.get_row1();
-
-            for (int i = 0; i < 144000; i++)
-            {
-                row1[i, 1] =Convert.ToInt64( Convert.ToDouble(row1[i, 1]) / 4);
-                row1[i, 2] = Convert.ToInt64(Convert.ToDouble(row1[i, 2]) / 4);
-
-            }
-
-            init_data.row1_write_in_file("test3.txt");
-        }
-
-        private long fun(long time2) {
-            double time = Convert.ToDouble(time2) / 1000000;
-            Random ran = new Random();
-            int value = ran.Next(-1000, 1000);
-            Thread.Sleep(1);
-            double y = 2000 * Math.Sin(2*3.14*time)+2000+value;
-            long y1 = Convert.ToInt64(y);
-                return y1;
-        }
+              
+       
 
         private void radioButton9_CheckedChanged(object sender, EventArgs e)
         {
@@ -2056,26 +2033,24 @@ namespace Спектры_версия_2._0
 
      
                 Initial_data init_data = new Initial_data("test3.txt", reg, ekg);
-            init_data.row1_shift_time_0();//Сдвигаем время к 0
-            init_data.row1_smothing();// Сглаживаем полученные данные
-            init_data.row2_calculate();
-            init_data.row3_average_kanal_reg();
-            init_data.row4_smoothing_ekg();
+            init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+            init_data.Row1_Smothing();// Сглаживаем полученные данные
+            init_data.Row2_Calculate();
+            init_data.Row3_Average_Canal_Reg();
+            init_data.Row4_Smoothing_Ekg();
 
                 bx = init_data.get_b();
-                max_x = init_data.get_row1_x_y(bx - 1, 0);
+                max_x = init_data.Get_Row1_X_Y(bx - 1, 0);
                 max_x1 = Convert.ToString(max_x/1000);
 
                 Initial_processing.Divided_by_periods_data divided_row = new Initial_processing.Divided_by_periods_data(init_data, this.comboBox3.Text);
-                divided_row.return_data_in_period();
+                divided_row.Calculate_Data_In_Period();
             //    divided_row.delete_zero_in_period();
                 osob_x = divided_row.get_period_number_element();
                 osob_X = Convert.ToString(osob_x);
 
            Form2 newForm = new Form2(max_x1, osob_X, this.comboBox3.Text, reg, ekg);
             newForm.Show();
-            
-
 
         }
 
@@ -2088,7 +2063,7 @@ namespace Спектры_версия_2._0
             double value_Max = N_shift_axis + 10000.0;
            
             usergraph = new UseZedgraph(zedGraph1);
-            usergraph.shift_axis(value_Min, value_Max);
+            usergraph.Shift_Axis(value_Min, value_Max);
            
             progressBar1.Maximum = Convert.ToInt32(max_time / 1000000.0);
             progressBar1.Minimum = 0;
@@ -2118,7 +2093,7 @@ namespace Спектры_версия_2._0
             double value_Max = N_shift_axis + 10000.0;
 
             usergraph = new UseZedgraph(zedGraph1);
-            usergraph.shift_axis(value_Min, value_Max);
+            usergraph.Shift_Axis(value_Min, value_Max);
 
             progressBar1.Maximum = Convert.ToInt32(max_time / 1000000.0);
             progressBar1.Minimum = 0;
@@ -2138,6 +2113,106 @@ namespace Спектры_версия_2._0
           
 
         }
-               
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+            {
+                textBox18.Enabled = true;
+                textBox19.Enabled = true;
+                label23.Enabled = true;
+                label24.Enabled = true;
+                label25.Enabled = true;
+            }
+
+            if (!checkBox2.Checked)
+            {
+                textBox18.Enabled = false;
+                textBox19.Enabled = false;
+                label23.Enabled = false;
+                label24.Enabled = false;
+                label25.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Отфильтровать сигнал в выбранном диапазоне используя БПФ
+        /// </summary>
+        /// <param name="r1">массив с данными</param>
+        /// <param name="b1">Число строк массива</param>
+        /// <returns></returns>
+        private long[] Calculate_Fast_Fourier_Signal_Filtration(long[,] r1, int b1) {
+
+            long[] result = new long[b1];
+            int reg = System.Convert.ToInt32(this.textBox13.Text);
+            int ekg = System.Convert.ToInt32(this.textBox2.Text);
+
+            int b = b1;
+            int stepen = 2;
+            long[,] row1 = r1;
+
+            for (int qs = 0; qs < 30; qs++)
+            {
+                if (stepen < b)
+                {
+                    stepen = stepen * 2;
+                }
+            }
+            b = stepen;
+
+            double[] row_x = new double[b];
+            double[] row_y = new double[b];
+
+            for (int r = 0; r < b - 10; r++)
+            {
+                row_x[r] = System.Convert.ToDouble(row1[r, 0]) / 1000000;
+                row_y[r] = System.Convert.ToDouble(row1[r, reg]);
+            }
+            Jenyay.Mathematics.Complex[] sp_dft = Fourier.FFT(row_y);
+            //////////////////////////////////////////////
+            double T_BIG = 0;//Длительность отсчета
+
+            for (int i = 1; i < b / 2; i++)
+            {
+                T_BIG = T_BIG + (row_x[i] - row_x[i - 1]);
+            }
+            T_BIG = T_BIG + 0.001;
+            double DW = (PI_ * 2.00) / T_BIG;
+            double DT = (row_x[20] - row_x[19]);
+
+
+            //////////////////////////////////////////////////////////
+            //Фильтрация
+
+            if (checkBox2.Checked)
+            {
+                double left_border = Convert.ToDouble(textBox18.Text.Replace('.', ','));
+                double right_border = Convert.ToDouble(textBox19.Text.Replace('.', ','));
+
+                for (int j = 1; j < b1 - 1; j++)
+                {
+                    if (Math.Round((DW * (j)) / (4 * 3.14), 3) > left_border && Math.Round((DW * (j)) / (4 * 3.14), 3) < right_border)
+                    {
+                    }
+                    else
+                    {
+                        sp_dft[j].Re = 0.0;
+                        sp_dft[j].Im = 0.0;
+                    }
+                }
+
+            }
+            ////////////////////////////////////////////////////////////////
+            Jenyay.Mathematics.Complex[] signal = Fourier.IFFT(sp_dft);
+
+            for (int j = 0; j < b1; j++)
+            {
+                result[j] = Convert.ToInt64(signal[j].Abs);
+            }
+            
+            return result;
+
+        }
+
     }
 }

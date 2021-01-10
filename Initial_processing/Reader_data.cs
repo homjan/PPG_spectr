@@ -10,14 +10,26 @@ namespace Спектры_версия_2._0.Initial_processing
     public class Reader_data
     {
         const int time_numerical = 60;
+        int time_numerical2;
         private String name;
+        private long size;
 
-       public Reader_data(String s) {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s">Имя файла</param>
+        public Reader_data(String s) {
             this.name = s;
+            System.IO.FileInfo file = new System.IO.FileInfo(s);
+            size = file.Length;
+            time_numerical2 = Convert.ToInt32(Convert.ToDouble(size) / 30.0);
         }
 
-
-        public long[,] return_read_massiv() //Считывает файл и записывает в массив (только цифры)
+        /// <summary>
+        /// Считывает файл и записывает в массив (только цифры)
+        /// </summary>
+        /// <returns></returns>
+        public long[,] Return_Read_Array()
         {
             StringBuilder buffer = new StringBuilder();
             int a = 0;
@@ -27,16 +39,13 @@ namespace Спектры_версия_2._0.Initial_processing
 
             int l1;
             int j = 0;// счетчик строк 10
-
             int k = 0;//счетчик столбцов 2
-
-
             int m = 0;//смещение буффера
 
-            int potok = 5;
+            //int potok = 5;
             int potok2 = 12;
-            int ckor = time_numerical * (230400 / 400) * (10 + potok2 * potok / 3);
-
+            // int ckor = time_numerical * (230400 / 400) * (10 + potok2 * potok / 3);
+            int ckor = time_numerical2;
             long[,] row11 = new long[ckor, 1 + potok2];
 
             StreamReader sw = new StreamReader(name);
@@ -75,31 +84,30 @@ namespace Спектры_версия_2._0.Initial_processing
                     a++;
                 }
 
-
             }
             sw.Close();
             return row11;
 
         }
 
-        public int return_read_stroki() // Выдает число строк в считанном файле
+        /// <summary>
+        /// Вернуть число строк в считанном файле
+        /// </summary>
+        /// <returns></returns>
+        public int Return_Read_String() // 
         {
-            //  StringBuilder buffer = new StringBuilder();
             int a = 0;
             int b = 0;//счетчик строк
-
             
             int l1;
             int j = 0;// счетчик строк 10
-
             int k = 0;//счетчик столбцов 2
-
-
             int m = 0;//смещение буффера
 
-            int potok = 5;
+           // int potok = 5;
             int potok2 = 12;
-            int ckor = time_numerical * (230400 / 400) * (10 + potok2 * potok / 3);
+            // int ckor = time_numerical * (230400 / 400) * (10 + potok2 * potok / 3);
+            int ckor = time_numerical2;
 
             long[,] row11 = new long[ckor, 1 + potok2];
 
@@ -108,7 +116,6 @@ namespace Спектры_версия_2._0.Initial_processing
             while (sw.Peek() != -1)
             {
                 l1 = sw.Read();
-
 
                 if (l1 == 13)
                 {                 
@@ -136,7 +143,12 @@ namespace Спектры_версия_2._0.Initial_processing
 
         }
 
-        public long[,] return_read_massiv_osob_point(int ckor) //Считывает файл и записывает в массив (только цифры)
+        /// <summary>
+        /// Считывает файл особых точек и записывает их в массив 
+        /// </summary>
+        /// <param name="ckor">Число особых точек</param>
+        /// <returns></returns>
+        public long[,] Return_Read_Array_Special_Points(int ckor) 
         {
             StringBuilder buffer = new StringBuilder();
             int a = 0;
@@ -146,17 +158,12 @@ namespace Спектры_версия_2._0.Initial_processing
 
             int l1;
             int j = 0;// счетчик строк 10
-
             int k = 0;//счетчик столбцов 2
-
-
             int m = 0;//смещение буффера
 
              int potok2 = 12;
-          //  int ckor = time_numerical * (230400 / 400) * (10 + potok2 * potok / 3);
-
+         
             long[,] row11 = new long[1 + potok2, ckor];
-
             long[,] row22 = new long[1 + potok2, ckor];
 
             StreamReader sw = new StreamReader(name);
@@ -164,7 +171,6 @@ namespace Спектры_версия_2._0.Initial_processing
             while (sw.Peek() != -1)
             {
                 l1 = sw.Read();
-
 
                 if (l1 == 13)
                 {
@@ -195,7 +201,6 @@ namespace Спектры_версия_2._0.Initial_processing
                     a++;
                 }
 
-
             }
             sw.Close();
 
@@ -216,11 +221,13 @@ namespace Спектры_версия_2._0.Initial_processing
             }           
 
             return row22;
-
         }
 
-
-        public long[][] return_read_massiv_divided_data() //Считывает файл и записывает в массив (только цифры)
+        /// <summary>
+        /// Считывает файл и записывает в массив
+        /// </summary>
+        /// <returns></returns>
+        public long[][] Return_Read_Array_Divided_Data() 
     {
         StringBuilder buffer = new StringBuilder();
         int a = 0;
@@ -230,28 +237,21 @@ namespace Спектры_версия_2._0.Initial_processing
 
         int l1;
         int j = 0;// счетчик строк 10
-
         int k = 0;//счетчик столбцов 2
-
-
         int m = 0;//смещение буффера
 
-        int potok = 5;
-        int potok2 = 12;
         int ckor = 1363;
 
         long[][] row11 = new long[ckor][];
-            for (int i = 0; i < ckor; i++) {
+            for (int i = 0; i < ckor; i++)
+            {
                 row11[i] = new long[1000];
             }
 
-
         StreamReader sw = new StreamReader(name);
-
         while (sw.Peek() != -1)
         {
             l1 = sw.Read();
-
                
                     if (l1 == 13)
                     {
@@ -284,7 +284,6 @@ namespace Спектры_версия_2._0.Initial_processing
                     {
                         a++;
                     }
-
                
         }
         sw.Close();

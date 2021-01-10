@@ -8,12 +8,16 @@ using System.Threading.Tasks;
 
 namespace Спектры_версия_2._0
 {
-    class Save_data
+    static class Save_data
     {
-        public Save_data() {
-         }
-
-        public long compression(long[,] osob, long ew1) {
+        
+        /// <summary>
+        /// Удалить нули из массива особых точек
+        /// </summary>
+        /// <param name="osob">массив особых точек</param>
+        /// <param name="ew1">Число элементов</param>
+        /// <returns></returns>
+        public static long Compression(long[,] osob, long ew1) {
 
             int a = 5;
             long ew = ew1;
@@ -46,16 +50,16 @@ namespace Спектры_версия_2._0
                     ew--;
                     
                 }
-
-              //  ew--;
             }
-
             return ew;
-
         }
-
-        public void save_osob_point_clear(long[,] osob, long ew) {
-            ew = compression(osob, ew);
+        /// <summary>
+        /// Сохранить данные для обработки данных графика
+        /// </summary>
+        /// <param name="osob">массив особых точек</param>
+        /// <param name="ew">Число элементов</param>
+        public static void Save_Special_Point_For_File(long[,] osob, long ew) {
+            ew = Compression(osob, ew);
             StreamWriter rw = new StreamWriter("Особые точки чистые.txt");
 
             for (int i = 0; i < ew - 1; i++)
@@ -69,10 +73,14 @@ namespace Спектры_версия_2._0
 
         }
 
-
-        public void save_osob_point_postr(long[,] osob, long ew)
+        /// <summary>
+        /// Сохранить данные для построения графика
+        /// </summary>
+        /// <param name="osob">массив особых точек</param>
+        /// <param name="ew">Число элементов</param>
+        public static void Save_Special_Point_For_Plotting(long[,] osob, long ew)
         {
-            ew = compression(osob, ew);
+            ew = Compression(osob, ew);
            
             StreamWriter rw2 = new StreamWriter("Особые точки - построение.txt");
 
@@ -87,8 +95,11 @@ namespace Спектры_версия_2._0
         }
 
 
-
-        public void clearDataINFile(String adres)
+        /// <summary>
+        /// Очистить файл
+        /// </summary>
+        /// <param name="adres">адрес файла</param>
+        public static void Clear_Data_In_File(String adres)
         {
             StreamWriter file = new StreamWriter(adres, false);       //ofstream
             file.Close();

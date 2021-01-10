@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Спектры_версия_2._0.Gistogramma
 {
-    class Gistogramma_B1B1 : Gistogramma_numeric
+    class Gistogramma_B1B1 : Gistogramma_Numeric
     {
         public Gistogramma_B1B1(long[,] osob, int b1) : base(osob, b1) {
 
         }
 
-        public override void set_diffrence()//Считаем разницу используемую для построения гистогорамм
+        public override void Set_Diffrence()//Считаем разницу используемую для построения гистогорамм
         {
 
             for (int i = 1; i < N_line - 1; i++)

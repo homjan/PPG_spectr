@@ -22,7 +22,7 @@ namespace Спектры_версия_2._0
 
         Initial_data initdata;
 
-        Gistogramma.Gistogramma_numeric gisto;
+        Gistogramma.Gistogramma_Numeric gisto;
 
         Spectr.Spectr_numeric spect;
 
@@ -33,7 +33,11 @@ namespace Спектры_версия_2._0
             pane = zedd.GraphPane;
 
         }
-
+        /// <summary>
+        /// Конструктор для построения обычноого сигнала
+        /// </summary>
+        /// <param name="zedd"></param>
+        /// <param name="data"></param>
         public UseZedgraph(ZedGraphControl zedd, Initial_data data)
         {
             this.zedgraph = zedd;
@@ -42,14 +46,23 @@ namespace Спектры_версия_2._0
             this.initdata = data;
 
         }
-
-        public UseZedgraph(ZedGraphControl zedd,Gistogramma.Gistogramma_numeric gist) {
+        /// <summary>
+        /// Конструктор для построения гистограмм
+        /// </summary>
+        /// <param name="zedd"></param>
+        /// <param name="gist"></param>
+        public UseZedgraph(ZedGraphControl zedd,Gistogramma.Gistogramma_Numeric gist) {
 
             this.zedgraph = zedd;
             pane = zedd.GraphPane;
             this.gisto = gist;
         }
 
+        /// <summary>
+        /// Конструктор для построения спектров
+        /// </summary>
+        /// <param name="zedd"></param>
+        /// <param name="spec"></param>
         public UseZedgraph(ZedGraphControl zedd, Spectr.Spectr_numeric spec)
         {
 
@@ -57,13 +70,19 @@ namespace Спектры_версия_2._0
             pane = zedd.GraphPane;
             this.spect = spec;
         }
-
+        /// <summary>
+        /// Очистить кривые
+        /// </summary>
         public void clearGraph()
         {
             pane.CurveList.Clear();
         }
-
-        public void makeGraph_4kanal(long[,] xxx, int b)
+        /// <summary>
+        /// Построить график со всех 4 каналов
+        /// </summary>
+        /// <param name="xxx">Массив с сигналом</param>
+        /// <param name="b">Число точек</param>
+        public void MakeGraph_4_Canal(long[,] xxx, int b)
         { 
             PointPairList f1_list = new PointPairList();
             PointPairList f2_list = new PointPairList();
@@ -84,7 +103,7 @@ namespace Спектры_версия_2._0
             LineItem myCurve4 = pane.AddCurve("Канал4", f4_list, Color.Black, SymbolType.None);
 
         }
-        public void install_pane(String Xaxis, String Yaxis, String Title_text)
+        public void Install_Pane(String Xaxis, String Yaxis, String Title_text)
         {
             pane.Title.Text = Title_text;
             pane.XAxis.Title.Text = Xaxis;
@@ -92,8 +111,10 @@ namespace Спектры_версия_2._0
         }
 
        
-
-        public void makeGraph_on_chosen_canal() {
+        /// <summary>
+        /// Построить график ФПГ и е производной
+        /// </summary>
+        public void MakeGraph_On_Chosen_Canal() {
 
             long[,] row_1 = initdata.get_row1();
             long[] row_3 = initdata.get_row3();
@@ -166,8 +187,13 @@ namespace Спектры_версия_2._0
 
 
         }
-
-        public void makeGraph_osob_point(long[,] osob_x, long[,] osob_y, int ew) {
+        /// <summary>
+        /// Построить график особых точек
+        /// </summary>
+        /// <param name="osob_x">Координаты х</param>
+        /// <param name="osob_y">Координаты y</param>
+        /// <param name="ew">Число наборов точек</param>
+        public void MakeGraph_Special_Point(long[,] osob_x, long[,] osob_y, int ew) {
 
             // Выводим точки на экран
             PointPairList list5 = new PointPairList();
@@ -233,8 +259,11 @@ namespace Спектры_версия_2._0
             pane.YAxis.MajorGrid.IsZeroLine = false;
 
         }
-
-        public void makeGraph_gistogramma(String text)//int[] Gis, int[] Gis_num, double shag, int tu, int gis_su, int Num_knop)//Гистограмма экг
+        /// <summary>
+        /// Построение гистограммы
+        /// </summary>
+        /// <param name="text">Подпись гистограммы</param>
+        public void MakeGraph_Gistogramma(String text)
         {  
             ///////////////////////////////////////////////
             // Версия с нулевыми столбиками
@@ -281,9 +310,13 @@ namespace Спектры_версия_2._0
             pane.XAxis.Scale.TextLabels = names;
                        
 
-        }//Построение гистограммы
+        }
 
-        public void makeGraph_gistogramma_proz(String text)//int[] Gis, int[] Gis_num, double shag, int tu, int gis_su, int Num_knop)//Гистограмма экг
+        /// <summary>
+        /// Построение гистограммы с процентами
+        /// </summary>
+        /// <param name="text">Подпись гистограммы</param>
+        public void MakeGraph_Gistogramma_Proz(String text)
         {
             ///////////////////////////////////////////////
             // Версия с нулевыми столбиками
@@ -324,11 +357,15 @@ namespace Спектры_версия_2._0
         }//Построение гистограммы
 
 
-
-        public void make_Graph_spectr(String name_curve, int N_point) {
+        /// <summary>
+        /// Построить график спектра
+        /// </summary>
+        /// <param name="name_curve">Имя кривой</param>
+        /// <param name="N_point">Число точек</param>
+        public void MakeGraph_Spectr(String name_curve, int N_point) {
 
             int n = N_point;
-            double[] y = spect.get_Amp_spectr_pow();
+            double[] y = spect.Get_Amplitude_Spectr_Pow();
 
             if (y.Length < N_point) {
                 n = y.Length;
@@ -339,15 +376,20 @@ namespace Спектры_версия_2._0
             // Заполним массив точек для кривой f1-3(x)
             for (int i = 0; i < n; i++)
             {
-                f1_list.Add(Math.Round(spect.get_DW() * (i) / (2 * 3.14), 3), Math.Round(y[i], 3));
-
+                f1_list.Add(Math.Round(spect.Get_DW() * (i) / (2 * 3.14), 3), Math.Round(y[i], 3));
             }
 
             LineItem f1_curve = pane.AddCurve(name_curve, f1_list, Color.Blue, SymbolType.None);
 
         }
-
-        public void make_Graph_spectr_fast(String name_curve, int N_point, double dw, double[] y1)
+        /// <summary>
+        /// Построить график спектра для быстрого Фурье
+        /// </summary>
+        /// <param name="name_curve">Имя кривой</param>
+        /// <param name="N_point">Число точек</param>
+        /// <param name="dw"></param>
+        /// <param name="y1"></param>
+        public void MakeGraph_Spectr_Fast(String name_curve, int N_point, double dw, double[] y1)
         {
 
             int n = N_point;
@@ -370,21 +412,27 @@ namespace Спектры_версия_2._0
             LineItem f1_curve = pane.AddCurve(name_curve, f1_list, Color.Blue, SymbolType.None);
 
         }
-
-        public void resetGraph()
+        /// <summary>
+        /// Обновить график
+        /// </summary>
+        public void ResetGraph()
         {
-            zedgraph.AxisChange();
-
-            // Обновляем график
+            zedgraph.AxisChange();            
             zedgraph.Invalidate();
         }
 
-        public void saveGraph()
+        /// <summary>
+        /// Сохранить график
+        /// </summary>
+        public void SaveGraph()
         {
             zedgraph.SaveAsBitmap();
         }
 
-        public void clearAll()
+        /// <summary>
+        /// Очистить график
+        /// </summary>
+        public void ClearAll()
         {
 
             pane.CurveList.Clear();
@@ -400,7 +448,12 @@ namespace Спектры_версия_2._0
 
         }
 
-        public void shift_axis(double value_min, double value_max ) {
+        /// <summary>
+        /// Устанавливаем интересующий нас интервал в диапазоне value_min-value_mах
+        /// </summary>
+        /// <param name="value_min"></param>
+        /// <param name="value_max"></param>
+        public void Shift_Axis(double value_min, double value_max ) {
             // Устанавливаем интересующий нас интервал по оси Y
             pane.XAxis.Scale.Min = value_min;
             pane.XAxis.Scale.Max = value_max;

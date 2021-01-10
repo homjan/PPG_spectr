@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Спектры_версия_2._0.Gistogramma
 {
-    class Gistogramma_IJ : Gistogramma_numeric
+    class Gistogramma_IJ : Gistogramma_Numeric
     {
         public Gistogramma_IJ(long[,] osob, int b1) : base(osob, b1) {
 
@@ -25,7 +25,7 @@ namespace Спектры_версия_2._0.Gistogramma
             }
         }
 
-        public override void delete_probel_diffrence(int limit)
+        public override void Delete_Space_Diffrence(int limit)
         {
             int ze = 0;
             for (int i = 0; i < N_line - 1; i++)
@@ -49,7 +49,7 @@ namespace Спектры_версия_2._0.Gistogramma
             N_line_new = N_line - ze + 1;
         }
 
-        public override void convert_diffrence_2_3()
+        public override void Convert_Diffrence_2_3_To_Double()
         {          
             for (int i = 0; i < N_line_new; i++)
             {
@@ -61,7 +61,7 @@ namespace Спектры_версия_2._0.Gistogramma
 
       
 
-        public override void pilliars_gisto(string textbox5)
+        public override void Pilliars_Gisto(string textbox5)
         {
             int gist = 0;
             GIST_SUM = 0;

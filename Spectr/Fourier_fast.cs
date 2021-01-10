@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Спектры_версия_2._0.Spectr
 {
-    class Fourier_fast
+    class Fourier_Fast
     {
         const double PI_ = 3.1415926;
 
@@ -22,15 +22,18 @@ namespace Спектры_версия_2._0.Spectr
         double[] time_diff_2;//непрерывная шкала
 
         double[] Amplituda;
-
-       
-
         double DT;
 
         double T_BIG = 0;//Длительность отсчета
         double DW = 0;
 
-        public Fourier_fast(long[] diffrence1, double[] diffrence2, int N_new1) {
+        /// <summary>
+        /// Конструктор для быстрого преобразования фурье
+        /// </summary>
+        /// <param name="diffrence1">Временные промежутки</param>
+        /// <param name="diffrence2">Непрерывная шкала</param>
+        /// <param name="N_new1"></param>
+        public Fourier_Fast(long[] diffrence1, double[] diffrence2, int N_new1) {
             this.diffrence_1 = diffrence1;
             this.diffrence_2 = diffrence2;
             this.N_new = N_new1;
@@ -44,29 +47,34 @@ namespace Спектры_версия_2._0.Spectr
              Amplituda = new double[N_new];
         }
 
-        public double[] get_amplituda_spectr() {
+        public double[] Get_Amplituda_Spectr() {
 
             return Amplituda;
         }
 
-        public double get_DW() {
+        public double Get_DW() {
             return DW;
         }
-        public double get_DT()
+        public double Get_DT()
         {
             return DT;
         }
-
-        public void calculate_all() {
-            set_Amp_spectr();
-            calculate_Dt();
-            calculate_T_big();
-            calculate_DW();
-            calculate_time_diff();
+        /// <summary>
+        /// Рассщитать ВСЕ
+        /// </summary>
+        public void Calculate_All() {
+            Set_Amplituda_Spectr();
+            Calculate_Dt();
+            Calculate_T_big();
+            Calculate_DW();
+            Calculate_Time_Diffrence();
 
         }
 
-        public void set_Amp_spectr() {
+        /// <summary>
+        /// Установить амплитуды спектра
+        /// </summary>
+        public void Set_Amplituda_Spectr() {
 
             for (int i = 0; i < N_new - 1; i++)
             {              
@@ -74,23 +82,26 @@ namespace Спектры_версия_2._0.Spectr
             }
         }
 
-        public void calculate_Dt() {
+        /// <summary>
+        /// Рассщитать минимальный шаг
+        /// </summary>
+        public void Calculate_Dt() {
             DT = diffrence_1[5];
             for (int i = 5; i < N_new - 1; i++)
-            {
-             //   if (diffrence_1[i] > 300000)
-              //  {
+            {            
                     if (DT > diffrence_1[i])
                     {
                       DT = diffrence_1[i];
                     }
-              //  }
-            }
-           // DT = diffrence_1[5];
+             
+            }           
             DT = DT / 1000000;
         }
 
-        public void calculate_T_big() {
+        /// <summary>
+        /// Рассщитать длительность сигнала
+        /// </summary>
+        public void Calculate_T_big() {
             for (int i = 0; i < N_new - 1; i++)
             {
                 T_BIG = T_BIG + diffrence_1[i];
@@ -98,19 +109,22 @@ namespace Спектры_версия_2._0.Spectr
             T_BIG = T_BIG / 1000000;
         }
 
-        public void calculate_DW() {
+        /// <summary>
+        /// Рассщитать минимальную частоту
+        /// </summary>
+        public void Calculate_DW() {
             DW = (PI_ * 2.00) / T_BIG;
         }
-
-        public void calculate_time_diff() {
+        /// <summary>
+        /// Рассщитать временные метки
+        /// </summary>
+        public void Calculate_Time_Diffrence() {
             for (int i = 0; i < N_new - 1; i++)
             {
                 time_diff_1[i] = System.Convert.ToDouble(diffrence_1[i]) / 1000000;
-
             }
             for (int i = 0; i < N_new - 1; i++)
             {
-
                 for (int l = 0; l < i; l++)
                 {
                     time_diff_2[i] = time_diff_2[i] + time_diff_1[l];
@@ -118,7 +132,10 @@ namespace Спектры_версия_2._0.Spectr
             }
         }
 
-        public void Spectr_09()//Расчет спектра
+        /// <summary>
+        /// Расчет спектра
+        /// </summary>
+        public void Spectr_09()
         {
             double Dt2 = DT;// промежуток времени
             double Dw2 = DW;// промежуток пространства
@@ -146,18 +163,12 @@ namespace Спектры_версия_2._0.Spectr
             }
 
             StreamWriter POWER = new StreamWriter("Проверка 3.txt");
-
-            /*  for (int i = 0; i < N_line_1_big - 1; i++)
-              {
-                  POWER.WriteLine((i + 1) + "\t" + (Diffrence_big[i]) + "\t" + Diffrence_2_big[i]);
-              }*/
-
+                      
             for (int i = 0; i < N_new - 1; i++)
             {
                 POWER.WriteLine((i + 1) + "\t" + (RE_W[i]) + "\t" + IN_W[i]);
             }
-            POWER.WriteLine();
-           
+            POWER.WriteLine();           
 
             POWER.Close();
 

@@ -12,7 +12,10 @@ namespace Спектры_версия_2._0.Spectr
 
         }
 
-        public override void set_diffrence()//Считаем разницу используемую для построения гистогорамм
+        /// <summary>
+        /// Считать разницу используемую для построения гистогорамм
+        /// </summary>
+        public override void Set_Diffrence()//
         {
 
             for (int i = 1; i < N_line - 1; i++)
@@ -24,8 +27,10 @@ namespace Спектры_версия_2._0.Spectr
                 }
             }
         }
-
-        public override void calculate_amp_spectr_pow()
+        /// <summary>
+        /// Рассщитать мощность спектра
+        /// </summary>
+        public override void Calculate_Amplitude_Spectr_Pow()
         {
             for (int i = 0; i < N_line_new - 1; i++)
             {

@@ -14,9 +14,11 @@ namespace Спектры_версия_2._0.Spectr
             this.reg1 = Reg;
         }
 
-        public override void set_diffrence()//Считаем разницу используемую для построения гистогорамм
+        /// <summary>
+        /// Рассчитать разницу используемую для построения гистогорамм
+        /// </summary>
+        public override void Set_Diffrence()//
         {
-
             for (int i = 1; i < N_line - 1; i++)
             {
                
@@ -25,8 +27,10 @@ namespace Спектры_версия_2._0.Spectr
                 
             }
         }
-
-        public override void delete_probel_diffrence()
+        /// <summary>
+        /// Удалить промежутки нулевой длительности
+        /// </summary>
+        public override void Delete_Zero_Diffrence()
         {
            
         }

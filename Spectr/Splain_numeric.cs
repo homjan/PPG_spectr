@@ -51,8 +51,10 @@ namespace Спектры_версия_2._0.Spectr
                 }
             }
         }
-
-        private void calculate_diff() {
+        /// <summary>
+        /// Рассчитать производные
+        /// </summary>
+        private void Calculate_Diff() {
             Diffrence_2_diff[0] = (4 * Diffrence_2[1] - Diffrence_2[2] -3*Diffrence_2[0])/ (Convert.ToDouble(2 * Diffrence[1]));
             Diffrence_2_diff[N_line_1 - 1] = (3 * Diffrence_2[N_line_1 - 1] - Diffrence_2[N_line_1 - 3] - 3 * Diffrence_2[N_line_1 - 2]) / (Convert.ToDouble(2 * Diffrence[1]));
 
@@ -63,28 +65,32 @@ namespace Спектры_версия_2._0.Spectr
 
         }
 
-        public long[] get_Diffrence_final() {
+        public long[] Get_Diffrence_Final() {
             return Diffrence_final;
         }
 
-        public double[] get_Diffrence_2_final()
+        public double[] Get_Diffrence_2_Final()
         {
             return Diffrence_2_final;
         }
 
-        public int get_N_line_1_final()
+        public int Get_N_Line_1_Final()
         {
             return N_line_1_final;
         }
-
-        public void calculate_all() {
-            calculate_diff();
-            time_full_calculate();
-            expand_data();
-            calculate_final_data();
+        /// <summary>
+        /// Рассчитать все
+        /// </summary>
+        public void Calculate_All() {
+            Calculate_Diff();
+            Calculate_Time_Full();
+            Expand_Data();
+            Calculate_Final_Data();
         }
-
-        public void time_full_calculate() {
+        /// <summary>
+        /// Рассчичитать время
+        /// </summary>
+        public void Calculate_Time_Full() {
             long full_time = 0;
 
             for (int i = 0; i < N_line_1; i++)
@@ -98,8 +104,10 @@ namespace Спектры_версия_2._0.Spectr
 
 
         }
-
-        public void expand_data() {
+        /// <summary>
+        /// Заполнить данными равномерно
+        /// </summary>
+        public void Expand_Data() {
 
             Diffrence_big = new long [N_line_1_big];
             Diffrence_2_big = new double[N_line_1_big];
@@ -122,7 +130,6 @@ namespace Спектры_версия_2._0.Spectr
                 if (Diffrence_sum[s] > Diffrence_big[i] && Diffrence_sum[s] <= Diffrence_big[i + 1])
                 {
                     Diffrence_2_big[i] = Diffrence_2[s];
-                   // diff_N[s] = i;
                     s++;
                     
                 }
@@ -147,13 +154,12 @@ namespace Спектры_версия_2._0.Spectr
                 {
                     Diffrence_2_big[i] = Math.Abs(Diffrence_2_big[i]);
                 }
-
             }
-
-
         }
-
-        public void calculate_final_data() {
+        /// <summary>
+        /// Рассчитать финальные данные
+        /// </summary>
+        public void Calculate_Final_Data() {
 
             Diffrence_final = new long[N_line_1_final+1];
             Diffrence_2_final = new double[N_line_1_final+1];
@@ -183,8 +189,7 @@ namespace Спектры_версия_2._0.Spectr
 
             for (int i = 0; i < N_line_1_final; i++)
             {
-                Diffrence_final[i] = time_mas;              
-
+                Diffrence_final[i] = time_mas;  
             }
 
             for (int i = 0; i < N_line_1_final; i++)
@@ -193,16 +198,10 @@ namespace Спектры_версия_2._0.Spectr
                 {
                     Diffrence_final[i] = Math.Abs(Diffrence_final[i]);
                 }
-
             }
-
 
             StreamWriter POWER = new StreamWriter("Проверка 2.txt");
 
-      /*      for (int i = 0; i < N_line_1_big - 1; i++)
-            {
-                POWER.WriteLine((i + 1) + "\t" + (Diffrence_big[i]) + "\t" + Diffrence_2_big[i]);
-            }*/
 
             for (int i = 0; i < N_line_1_final - 1; i++)
             {
@@ -210,18 +209,19 @@ namespace Спектры_версия_2._0.Spectr
             }
             POWER.WriteLine();
             POWER.WriteLine();
-    /*        for (int i = 0; i < N_line_1 - 1; i++)
-            {
-                POWER.WriteLine((i + 1) + "\t" + (Diffrence[i]) + "\t" + Diffrence_2[i]);
-            }*/
-
+  
             POWER.Close();
-
-
-
         }
 
-
+        /// <summary>
+        /// Расчет сплайна 1 порядка
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="x2"></param>
+        /// <param name="x3_b"></param>
+        /// <param name="y1"></param>
+        /// <param name="y2"></param>
+        /// <returns></returns>
         public double Shift_X(long x1, long x2, long x3_b, double y1, double y2)
         {
             double shift_y = 0;
@@ -234,12 +234,21 @@ namespace Спектры_версия_2._0.Spectr
             {
                 shift_y = (System.Convert.ToDouble(x3_b - x1) / System.Convert.ToDouble(x2 - x1)) * (y2 - y1);
             }
-
-           // long shift_2 = System.Convert.ToInt64(shift_y);
-
+           
             return shift_y;
         }
 
+        /// <summary>
+        /// Рассчет сплайна 3 порядка
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="x2"></param>
+        /// <param name="x3_b"></param>
+        /// <param name="y1"></param>
+        /// <param name="y2"></param>
+        /// <param name="y1_diff"></param>
+        /// <param name="y2_diff"></param>
+        /// <returns></returns>
         public double Shift_Splain(long x1, long x2, long x3_b, double y1, double y2, double y1_diff, double y2_diff) {
 
             long h = x2 - x1;

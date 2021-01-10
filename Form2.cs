@@ -70,8 +70,8 @@ namespace Спектры_версия_2._0
             int maximum_i = 0;
 
             Initial_data init_data = new Initial_data("test3.txt", reg1, ekg1);
-            init_data.row1_shift_time_0();//Сдвигаем время к 0
-            init_data.row1_smothing();// Сглаживаем полученные данные  
+            init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+            init_data.Row1_Smothing();// Сглаживаем полученные данные  
 
             long[,] row_1new = init_data.get_row1();
             int b_new = init_data.get_b();
@@ -125,7 +125,7 @@ namespace Спектры_версия_2._0
                               
                 init_data.set_row1(row_11new);
                 init_data.set_b(b_new);
-                init_data.row1_write_in_file("test3.txt");
+                init_data.Row1_Write_In_File("test3.txt");
             }
 
             if (radioButton2.Checked) {
@@ -158,7 +158,7 @@ namespace Спектры_версия_2._0
 
                 init_data.set_row1(row_11new);
                 init_data.set_b(b_new_del);
-                init_data.row1_write_in_file("test3.txt");
+                init_data.Row1_Write_In_File("test3.txt");
             }            
         }
 
@@ -203,20 +203,20 @@ namespace Спектры_версия_2._0
             int maximum_i = 0;
 
             Initial_data init_data = new Initial_data("test3.txt", reg1, ekg1);
-            init_data.row1_shift_time_0();//Сдвигаем время к 0
-            init_data.row1_smothing();// Сглаживаем полученные данные
-            init_data.row2_calculate();
-            init_data.row3_average_kanal_reg();
+            init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+            init_data.Row1_Smothing();// Сглаживаем полученные данные
+            init_data.Row2_Calculate();
+            init_data.Row3_Average_Canal_Reg();
 
             long[,] row_1new = init_data.get_row1();
             int b_new = init_data.get_b();
 
             Initial_processing.Divided_by_periods_data divided_row = new Initial_processing.Divided_by_periods_data(init_data, combobox_3);
-            divided_row.return_data_in_period();
+            divided_row.Calculate_Data_In_Period();
             //  divided_row.delete_zero_in_period();
            
-            minimum_i = Convert.ToInt32(divided_row.return_length_x_zero(minimum_delete_period, 0));
-            maximum_i = Convert.ToInt32(divided_row.return_length_x_zero(maximum_delete_period, 0));
+            minimum_i = Convert.ToInt32(divided_row.Return_Length_X_Zero(minimum_delete_period, 0));
+            maximum_i = Convert.ToInt32(divided_row.Return_Length_X_Zero(maximum_delete_period, 0));
 
             int diff_i = maximum_i - minimum_i;
             int b_new_del = b_new - diff_i;
@@ -252,7 +252,7 @@ namespace Спектры_версия_2._0
             
                 init_data.set_row1(row_11new);
                 init_data.set_b(b_new);
-                init_data.row1_write_in_file("test3.txt");
+                init_data.Row1_Write_In_File("test3.txt");
             }
 
             if (radioButton3.Checked)
@@ -286,7 +286,7 @@ namespace Спектры_версия_2._0
 
                 init_data.set_row1(row_11new);
                 init_data.set_b(b_new_del);
-                init_data.row1_write_in_file("test3.txt");
+                init_data.Row1_Write_In_File("test3.txt");
             }
 
             label11.Text = "Готово";
@@ -331,19 +331,19 @@ namespace Спектры_версия_2._0
             int maximum_i = 0;
 
             Initial_data init_data = new Initial_data("test3.txt", reg1, ekg1);
-            init_data.row1_shift_time_0();//Сдвигаем время к 0
-            init_data.row1_smothing();// Сглаживаем полученные данные
-            init_data.row2_calculate();
-            init_data.row3_average_kanal_reg();
+            init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+            init_data.Row1_Smothing();// Сглаживаем полученные данные
+            init_data.Row2_Calculate();
+            init_data.Row3_Average_Canal_Reg();
 
             long[,] row_1new = init_data.get_row1();
             int b_new = init_data.get_b();
 
             Initial_processing.Divided_by_periods_data divided_row = new Initial_processing.Divided_by_periods_data(init_data, combobox_3);
-            divided_row.return_data_in_period();
+            divided_row.Calculate_Data_In_Period();
          
-            minimum_i = Convert.ToInt32(divided_row.return_length_x_zero(minimum_delete_period, 0));
-            maximum_i = Convert.ToInt32(divided_row.return_length_x_zero(maximum_delete_period, 0));
+            minimum_i = Convert.ToInt32(divided_row.Return_Length_X_Zero(minimum_delete_period, 0));
+            maximum_i = Convert.ToInt32(divided_row.Return_Length_X_Zero(maximum_delete_period, 0));
                      
             textBox9.Text = Convert.ToString(row_1new[minimum_i, 0]/1000);
             textBox10.Text = Convert.ToString(row_1new[maximum_i, 0] / 1000);

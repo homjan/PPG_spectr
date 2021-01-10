@@ -11,8 +11,10 @@ namespace Спектры_версия_2._0.Spectr
         public Spectr_B2B2(long[,] osob, int b1, int nudft) : base(osob, b1, nudft) {
 
         }
-
-        public override void set_diffrence()//Считаем разницу используемую для построения гистогорамм
+        /// <summary>
+        /// Рассчитать разницу используемую для построения гистогорамм
+        /// </summary>
+        public override void Set_Diffrence()//
         {
 
             for (int i = 1; i < N_line - 1; i++)
@@ -25,13 +27,14 @@ namespace Спектры_версия_2._0.Spectr
             }
         }
 
-        public override void calculate_amp_spectr_pow()
+        /// <summary>
+        /// Рассчитать мощность спектра
+        /// </summary>
+        public override void Calculate_Amplitude_Spectr_Pow()
         {
             for (int i = 0; i < N_line_new - 1; i++)
             {
                 Amp_spectr[i] = Amp_spectr[i] / 1000000;
-
-                //  Amp_spectr_pow[i] = Amp_spectr[i] * Amp_spectr[i] * N_line_new / 2;
 
                 Amp_spectr_pow[i] = Amp_spectr[i] * Amp_spectr[i];
             }

@@ -11,7 +11,7 @@ namespace Спектры_версия_2._0.Gistogramma
 {
     class Data_gistogramm
     {
-        Gistogramma_numeric gisto;
+        Gistogramma_Numeric gisto;
 
        private double dX = 0;//Вариационный размах
         private double IVR = 0;// Индекс вегетативного равновесия
@@ -37,16 +37,18 @@ namespace Спектры_версия_2._0.Gistogramma
 
         bool x;
 
-        public Data_gistogramm(Gistogramma_numeric gist, bool xxx) {
+        public Data_gistogramm(Gistogramma_Numeric gist, bool xxx) {
 
             this.gisto = gist;
 
             this.x = xxx;
         }
+        /// <summary>
+        /// Рассчитать все парамеры
+        /// </summary>
+        public void Calculate_All_Parameters() {
 
-        public void calculate_all_parameters() {
-
-            Amplitude_mod();
+            Amplitude_Mod();
             Mod_();
             DX_razmax();
             IVR_();
@@ -58,14 +60,18 @@ namespace Спектры_версия_2._0.Gistogramma
             M_SREDNEKVADRA();
             CHSS();
             M_num();
-            variacia();
-            viborka();
-            reset_diffrence();
+            Variacia();
+            Sampling_error();
+            Reset_Diffrence();
             M_SREDNEKUB();
             M_SREDNEFOUR();
         }
-
-        public void write_result_EKG_in_file(String name_file, bool x) {
+        /// <summary>
+        /// Записать данные об ЭКГ в файл
+        /// </summary>
+        /// <param name="name_file"></param>
+        /// <param name="x"></param>
+        public void Write_Result_EKG_In_File(String name_file, bool x) {
             StreamWriter rust = new StreamWriter(name_file, x);
             rust.WriteLine();
             rust.WriteLine("Результаты");
@@ -91,8 +97,13 @@ namespace Спектры_версия_2._0.Gistogramma
             rust.Close();
         }
 
-
-        public void write_result_ALL_in_file(String name_file, bool x, String text) {
+        /// <summary>
+        /// Записать данные в файл
+        /// </summary>
+        /// <param name="name_file"></param>
+        /// <param name="x"></param>
+        /// <param name="text"></param>
+        public void Write_Result_ALL_In_File(String name_file, bool x, String text) {
             StreamWriter rust = new StreamWriter(name_file,x);
             rust.WriteLine();
             rust.WriteLine("Результаты");
@@ -115,8 +126,11 @@ namespace Спектры_версия_2._0.Gistogramma
         }
 
 
-
-        public void write_result_EKG_in_richtextbox(System.Windows.Forms.RichTextBox richtext) {
+        /// <summary>
+        /// Вывести данные об ЭКГ в RichTextBox
+        /// </summary>
+        /// <param name="richtext"></param>
+        public void Write_Result_EKG_in_Richtextbox(System.Windows.Forms.RichTextBox richtext) {
             richtext.AppendText("Результаты" + "\n");
 
             richtext.AppendText("Амплитуда моды" + "\t" + Convert.ToString((Math.Round(AMo_sum * 100, 3))) + "%" + "\n");
@@ -138,8 +152,11 @@ namespace Спектры_версия_2._0.Gistogramma
 
 
         }
-
-        public void write_result_ALL_in_richtextbox(System.Windows.Forms.RichTextBox richtext)
+        /// <summary>
+        /// Вывести данные в RichTextBox
+        /// </summary>
+        /// <param name="richtext"></param>
+        public void Write_Result_ALL_in_Richtextbox(System.Windows.Forms.RichTextBox richtext)
         {
             richtext.AppendText("Результаты" + "\n");
 
@@ -157,7 +174,10 @@ namespace Спектры_версия_2._0.Gistogramma
 
         }
 
-        public void Amplitude_mod()//Расчет амплитуды моды
+        /// <summary>
+        /// Расчет амплитуды моды
+        /// </summary>
+        public void Amplitude_Mod()
         {
             double AMo = 0;//Амплитуда моды 
             double AMo_sum_2 = 0;
@@ -174,12 +194,14 @@ namespace Спектры_версия_2._0.Gistogramma
 
             }
             AMo_sumx = AMo / AMo_sum_2;
-
             AMo_sum = AMo_sumx;
 
-
         }
-        public void Mod_()//Расчет моды
+
+        /// <summary>
+        /// Расчет моды
+        /// </summary>
+        public void Mod_()
         {
             double AMo = 0;//Амплитуда моды 
             double Mo = 0;// Мода
@@ -202,11 +224,14 @@ namespace Спектры_версия_2._0.Gistogramma
                     Mo_sumx = Mo * gisto.Shag_mod_d - gisto.Shag_mod_d * 0.5;
                     Mo_sum = Mo_sumx;
                 }
-            }
-         
+            }         
            
            }
-        public void DX_razmax()//Вариационный размах
+
+        /// <summary>
+        /// Вариационный размах
+        /// </summary>
+        public void DX_razmax()//
         {
             if (gisto.diffrence_max > 10000)
             {
@@ -215,70 +240,89 @@ namespace Спектры_версия_2._0.Gistogramma
             else {
                 dX = gisto.diffrence_max - gisto.diffrence_min;
 
-            }
-            
+            }            
         }
-        public void IVR_()// Индекс вегетативного равновесия
+
+        /// <summary>
+        /// Индекс вегетативного равновесия
+        /// </summary>
+        public void IVR_()// 
         {
             IVR = AMo_sum / dX;
-
             
         }
-        public void VPR_()// Вегетативный показатель ритма сердца
+        /// <summary>
+        /// Вегетативный показатель ритма сердца
+        /// </summary>
+        public void VPR_()// 
         {
             double vpr_ = 0;//Вариационный размах
             vpr_ = 1 / (Mo_sum * dX);
 
             VPR = vpr_;            
         }
-        public void PAPR_()//Показатель адекватности процессов регуляции ритма сердца
+        /// <summary>
+        /// Показатель адекватности процессов регуляции ритма сердца
+        /// </summary>
+        public void PAPR_()//
         {
             double papr_ = 0;//Вариационный размах
             papr_ = AMo_sum / Mo_sum;
 
             PAPR = papr_;
         }
-        public void IN_()// Индекс напряжения регуляторных систем
+        /// <summary>
+        /// Индекс напряжения регуляторных систем
+        /// </summary>
+        public void IN_()// 
         {
             double inik_ = 0;//Вариационный размах
 
             inik_ = AMo_sum / (2 * Mo_sum * dX);
             IN = inik_;
         }
+
+        /// <summary>
+        /// ЧСС
+        /// </summary>
         public void CHSS() {
 
             CSHSS = 60 * 1000000 / M_sred;
         }
-
+        /// <summary>
+        /// Максимальная и Минимальная величина кардиоинтервала
+        /// </summary>
         public void max_min() {
-            VKmax = gisto.diffrence_max; //Максимальная величина кардиоинтервала
-            VKmin = gisto.diffrence_min; //Минимальная величина кардиоинтервала
+            VKmax = gisto.diffrence_max; 
+            VKmin = gisto.diffrence_min; 
 
         }
-
-        public void M_SREDNEE()// Среднее
+        /// <summary>
+        /// Среднее
+        /// </summary>
+        public void M_SREDNEE()
         {
             double M_sred_ = 0;//Вариационный размах
-            double[] dif = gisto.get_diffrence_3();
-
+            double[] dif = gisto.Get_Diffrence_3();
 
             for (int i = 0; i < gisto.N_line - 1; i++)// считаем среднее
             {
-
                 M_sred_ = M_sred_ + dif[i];
-
             }
 
             M_sred_ = M_sred_ / (gisto.N_line - 1);
-
             M_sred = M_sred_;
 
         }
-        public void M_SREDNEKVADRA()// Среднеквадратичное
+
+        /// <summary>
+        /// Среднеквадратичное
+        /// </summary>
+        public void M_SREDNEKVADRA() 
         {
             double M_sredkvad_ = 0;
             double M_sredkvad_sum = 0;
-            double[] dif = gisto.get_diffrence_3();
+            double[] dif = gisto.Get_Diffrence_3();
 
             for (int i = 0; i < gisto.N_line - 1; i++)// считаем среднее
             {
@@ -300,19 +344,24 @@ namespace Спектры_версия_2._0.Gistogramma
             
 
         }
+        /// <summary>
+        /// Коэффициент вариации
+        /// </summary>
+        public void Variacia() {
 
-        public void variacia() {
-
-            V = M_sigma / M_sred;//Коэффициент вариации
+            V = M_sigma / M_sred;//
         }
-        public void viborka() {
+        /// <summary>
+        /// Ошибка выборки
+        /// </summary>
+        public void Sampling_error() {
 
-            Y = V / Math.Sqrt(gisto.N_line - 1);// Ошибка выборки
+            Y = V / Math.Sqrt(gisto.N_line - 1); 
         }
 
-        public void reset_diffrence() {
+        public void Reset_Diffrence() {
 
-            double[] diff3 = gisto.get_diffrence_3();
+            double[] diff3 = gisto.Get_Diffrence_3();
             for (int i = 0; i < gisto.N_line; i++)
             {
                 if (diff3[i] > 10000)
@@ -322,14 +371,16 @@ namespace Спектры_версия_2._0.Gistogramma
 
             }
 
-            gisto.set_diffrence_3(diff3);
+            gisto.Set_Diffrence_3(diff3);
         }
-
-        public void M_SREDNEKUB()// асимметрия
+        /// <summary>
+        /// Коэффициент асимметрии
+        /// </summary>
+        public void M_SREDNEKUB()// 
         {           
            
             double M_sredkub_sum = 0;
-            double[] dif3 = gisto.get_diffrence_3();
+            double[] dif3 = gisto.Get_Diffrence_3();
 
             for (int i = 0; i < gisto.N_line - 1; i++)// считаем среднее
             {
@@ -340,11 +391,15 @@ namespace Спектры_версия_2._0.Gistogramma
             A_s = M_sredkub_sum / Math.Pow(M_sigma, 3);
 
         }
-        public void M_SREDNEFOUR()// эксцесс
+
+        /// <summary>
+        /// Коэффициент эксцесса
+        /// </summary>
+        public void M_SREDNEFOUR() 
         {           
            
             double M_sredfour_sum = 0;
-            double[] dif3 = gisto.get_diffrence_3();
+            double[] dif3 = gisto.Get_Diffrence_3();
 
             for (int i = 0; i < gisto.N_line - 1; i++)// считаем среднее
             {

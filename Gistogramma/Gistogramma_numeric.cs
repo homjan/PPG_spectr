@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Спектры_версия_2._0.Gistogramma
 {
-    abstract class Gistogramma_numeric
+    abstract class Gistogramma_Numeric
     {
        protected long[,] osob_p;
        public int N_line;
@@ -28,26 +28,26 @@ namespace Спектры_версия_2._0.Gistogramma
         public double Shag_mod_d;
         public int GIST_SUM;
 
-        public double[] get_diffrence() {
+        public double[] Get_Diffrence() {
             return diffrence;
         }
 
-        public long[] get_diffrence_2()
+        public long[] Get_Diffrence_2()
         {
             return diffrence_2;
         }
 
-        public double[] get_diffrence_3()
+        public double[] Get_Diffrence_3()
         {
             return diffrence_3;
         }
 
-        public void set_diffrence_3(double[] diff) {
+        public void Set_Diffrence_3(double[] diff) {
 
             diffrence_3 = diff;
         }
 
-        public Gistogramma_numeric(long[,] osob, int b1)
+        public Gistogramma_Numeric(long[,] osob, int b1)
         {
             this.osob_p = osob;
             this.N_line = b1;
@@ -58,7 +58,10 @@ namespace Спектры_версия_2._0.Gistogramma
             this.turr = 0;
         }
 
-        public virtual void set_diffrence()//Считаем разницу используемую для построения гистогорамм
+        /// <summary>
+        /// Рассчитать разницу используемую для построения гистогорамм
+        /// </summary>
+        public virtual void Set_Diffrence()//
         {
 
             for (int i = 1; i < N_line - 1; i++)
@@ -70,8 +73,11 @@ namespace Спектры_версия_2._0.Gistogramma
             }
         }
 
-   
-        public virtual void delete_probel_diffrence(int limit)//Удаляем возможные нули
+   /// <summary>
+   /// Удалить возможные нули
+   /// </summary>
+   /// <param name="limit"></param>
+        public virtual void Delete_Space_Diffrence(int limit)//
         {
             int ze = 0;
             for (int i = 0; i < N_line - 1; i++)
@@ -95,8 +101,10 @@ namespace Спектры_версия_2._0.Gistogramma
             N_line_new = N_line - ze+1;
         }
 
-     
-        public virtual void convert_diffrence_2_3()//Переводим в double
+     /// <summary>
+     /// Перевести в double
+     /// </summary>
+        public virtual void Convert_Diffrence_2_3_To_Double()//
         {
 
             for (int i = 0; i < N_line_new; i++)
@@ -105,8 +113,10 @@ namespace Спектры_версия_2._0.Gistogramma
                 diffrence_3[i] = System.Convert.ToDouble(diffrence_2[i]);
             }
         }
-
-        public void find_diffrence_max_min()//Находим максимальное и минимальное значение
+        /// <summary>
+        /// Найти максимальное и минимальное значение
+        /// </summary>
+        public void Find_Diffrence_Max_Min()//
         {
             //Находим минимум и максимум
              diffrence_min = diffrence[0];
@@ -127,8 +137,11 @@ namespace Спектры_версия_2._0.Gistogramma
             }
         }
 
-
-        public virtual void pilliars_gisto(String textbox5)//Находим число и высоту столбцов гистограммы
+        /// <summary>
+        /// Найти число и высоту столбцов гистограммы
+        /// </summary>
+        /// <param name="textbox5"></param>
+        public virtual void Pilliars_Gisto(String textbox5)//
         {          
             int gist = 0;
             GIST_SUM = 0;
