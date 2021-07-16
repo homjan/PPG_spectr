@@ -8,9 +8,9 @@ namespace Спектры_версия_2._0.Initial_processing
 {
     class Divided_by_periods_data
     {
-        String combobox_3;
+        protected String combobox_3;
 
-        private long[][] period;
+        protected long[][] period;
 
         public long[][] get_period() {
             return period;
@@ -34,7 +34,7 @@ namespace Спектры_версия_2._0.Initial_processing
         }
 
 
-        Initial_data init_data;
+        protected Initial_data init_data;
 
         public Divided_by_periods_data(Initial_data init_data2, String text ) {
 
@@ -45,7 +45,7 @@ namespace Спектры_версия_2._0.Initial_processing
         /// <summary>
         /// Перевести данные в массив пульсовых циклов
         /// </summary>
-        public void Calculate_Data_In_Period()
+        public virtual void Calculate_Data_In_Period()
         {
             int b = init_data.get_b();
 
@@ -205,25 +205,35 @@ namespace Спектры_версия_2._0.Initial_processing
         /// </summary>
         public void Delete_Zero_In_Period()
         {
-            for (int i = 1; i < period.Length; i++)
+            for (int i = 0; i < period.Length; i++)
             {
                 if (period[i].Length == 0)
                 {
-                    for (int j = i; j < period.Length - 1; i++)
+                    for (int j = i; j < period.Length - 1; j++)
                     {
                         period[j] = period[j + 1];
                     }
                 }
             }
-            int s = 1;
 
-            for (int i = 1; i < period.Length; i++)
+            for (int i = 0; i < period.Length; i++)
             {
-                s++;
-
                 if (period[i].Length == 0)
                 {
-                    break;
+                    for (int j = i; j < period.Length - 1; j++)
+                    {
+                        period[j] = period[j + 1];
+                    }
+                }
+            }
+
+            int s = 1;
+
+            for (int i = 0; i < period.Length; i++)
+            {               
+                if (period[i].Length != 0)
+                {
+                    s++;                  
                 }
             }
 

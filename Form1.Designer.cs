@@ -130,10 +130,15 @@
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.button32 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // zedGraph1
@@ -162,9 +167,9 @@
             // 
             // button22
             // 
-            this.button22.Location = new System.Drawing.Point(563, 510);
+            this.button22.Location = new System.Drawing.Point(563, 501);
             this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(97, 56);
+            this.button22.Size = new System.Drawing.Size(97, 50);
             this.button22.TabIndex = 110;
             this.button22.Text = "Вывод промежуточных данных";
             this.button22.UseVisualStyleBackColor = true;
@@ -174,7 +179,7 @@
             // 
             this.button21.Location = new System.Drawing.Point(563, 447);
             this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(97, 57);
+            this.button21.Size = new System.Drawing.Size(97, 51);
             this.button21.TabIndex = 108;
             this.button21.Text = "Рассчитать особые точки";
             this.button21.UseVisualStyleBackColor = true;
@@ -182,9 +187,9 @@
             // 
             // button19
             // 
-            this.button19.Location = new System.Drawing.Point(472, 583);
+            this.button19.Location = new System.Drawing.Point(472, 558);
             this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(85, 72);
+            this.button19.Size = new System.Drawing.Size(85, 45);
             this.button19.TabIndex = 107;
             this.button19.Text = "Обновить график";
             this.button19.UseVisualStyleBackColor = true;
@@ -193,19 +198,19 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(577, 613);
+            this.label18.Location = new System.Drawing.Point(556, 597);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(66, 13);
+            this.label18.Size = new System.Drawing.Size(108, 13);
             this.label18.TabIndex = 106;
-            this.label18.Text = "Канал ФПГ";
+            this.label18.Text = "Канал ФПГ / Спиро";
             // 
             // textBox13
             // 
-            this.textBox13.Location = new System.Drawing.Point(563, 628);
+            this.textBox13.Location = new System.Drawing.Point(562, 613);
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(100, 20);
             this.textBox13.TabIndex = 105;
-            this.textBox13.Text = "4";
+            this.textBox13.Text = "2";
             // 
             // label17
             // 
@@ -219,7 +224,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(577, 569);
+            this.label15.Location = new System.Drawing.Point(561, 554);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(61, 13);
             this.label15.TabIndex = 103;
@@ -290,9 +295,9 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(472, 511);
+            this.button6.Location = new System.Drawing.Point(472, 501);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(85, 55);
+            this.button6.Size = new System.Drawing.Size(85, 50);
             this.button6.TabIndex = 95;
             this.button6.Text = "Сохранить график";
             this.button6.UseVisualStyleBackColor = true;
@@ -322,7 +327,7 @@
             // 
             this.button3.Location = new System.Drawing.Point(472, 447);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(85, 58);
+            this.button3.Size = new System.Drawing.Size(85, 52);
             this.button3.TabIndex = 92;
             this.button3.Text = "Очистить график";
             this.button3.UseVisualStyleBackColor = true;
@@ -340,7 +345,7 @@
             // 
             this.richTextBox4.Location = new System.Drawing.Point(203, 469);
             this.richTextBox4.Name = "richTextBox4";
-            this.richTextBox4.Size = new System.Drawing.Size(139, 134);
+            this.richTextBox4.Size = new System.Drawing.Size(139, 187);
             this.richTextBox4.TabIndex = 90;
             this.richTextBox4.Text = "";
             // 
@@ -459,7 +464,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(563, 585);
+            this.textBox2.Location = new System.Drawing.Point(564, 570);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 76;
@@ -619,9 +624,9 @@
             // 
             // button25
             // 
-            this.button25.Location = new System.Drawing.Point(1072, 581);
+            this.button25.Location = new System.Drawing.Point(1079, 581);
             this.button25.Name = "button25";
-            this.button25.Size = new System.Drawing.Size(100, 74);
+            this.button25.Size = new System.Drawing.Size(93, 74);
             this.button25.TabIndex = 143;
             this.button25.Text = "Рассчитать данные гистограмм и спектров";
             this.button25.UseVisualStyleBackColor = true;
@@ -670,7 +675,7 @@
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(62, 21);
             this.comboBox3.TabIndex = 140;
-            this.comboBox3.Text = "50";
+            this.comboBox3.Text = "200";
             // 
             // label10
             // 
@@ -836,7 +841,7 @@
             this.panel2.Controls.Add(this.radioButton4);
             this.panel2.Controls.Add(this.radioButton7);
             this.panel2.Controls.Add(this.radioButton8);
-            this.panel2.Location = new System.Drawing.Point(666, 449);
+            this.panel2.Location = new System.Drawing.Point(672, 450);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(168, 90);
             this.panel2.TabIndex = 150;
@@ -936,7 +941,7 @@
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(837, 599);
+            this.button30.Location = new System.Drawing.Point(863, 599);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(115, 56);
             this.button30.TabIndex = 157;
@@ -958,9 +963,9 @@
             // 
             // button31
             // 
-            this.button31.Location = new System.Drawing.Point(958, 599);
+            this.button31.Location = new System.Drawing.Point(984, 599);
             this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(108, 56);
+            this.button31.Size = new System.Drawing.Size(89, 56);
             this.button31.TabIndex = 159;
             this.button31.Text = "Полное Фурье (Осторожно!)";
             this.button31.UseVisualStyleBackColor = true;
@@ -1059,7 +1064,7 @@
             // textBox18
             // 
             this.textBox18.Enabled = false;
-            this.textBox18.Location = new System.Drawing.Point(3, 31);
+            this.textBox18.Location = new System.Drawing.Point(6, 31);
             this.textBox18.Name = "textBox18";
             this.textBox18.Size = new System.Drawing.Size(41, 20);
             this.textBox18.TabIndex = 166;
@@ -1068,7 +1073,7 @@
             // textBox19
             // 
             this.textBox19.Enabled = false;
-            this.textBox19.Location = new System.Drawing.Point(85, 31);
+            this.textBox19.Location = new System.Drawing.Point(94, 31);
             this.textBox19.Name = "textBox19";
             this.textBox19.Size = new System.Drawing.Size(41, 20);
             this.textBox19.TabIndex = 167;
@@ -1078,7 +1083,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Enabled = false;
-            this.label23.Location = new System.Drawing.Point(46, 34);
+            this.label23.Location = new System.Drawing.Point(53, 34);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(19, 13);
             this.label23.TabIndex = 168;
@@ -1088,7 +1093,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Enabled = false;
-            this.label24.Location = new System.Drawing.Point(69, 34);
+            this.label24.Location = new System.Drawing.Point(78, 34);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(10, 13);
             this.label24.TabIndex = 169;
@@ -1098,7 +1103,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Enabled = false;
-            this.label25.Location = new System.Drawing.Point(132, 34);
+            this.label25.Location = new System.Drawing.Point(141, 34);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(19, 13);
             this.label25.TabIndex = 170;
@@ -1113,16 +1118,59 @@
             this.panel4.Controls.Add(this.label24);
             this.panel4.Controls.Add(this.textBox19);
             this.panel4.Controls.Add(this.label23);
-            this.panel4.Location = new System.Drawing.Point(669, 599);
+            this.panel4.Location = new System.Drawing.Point(675, 597);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(165, 59);
             this.panel4.TabIndex = 171;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.radioButton5);
+            this.panel5.Controls.Add(this.radioButton3);
+            this.panel5.Location = new System.Drawing.Point(553, 639);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(116, 22);
+            this.panel5.TabIndex = 172;
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Location = new System.Drawing.Point(59, 3);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(28, 17);
+            this.radioButton5.TabIndex = 1;
+            this.radioButton5.Text = "t";
+            this.radioButton5.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Checked = true;
+            this.radioButton3.Location = new System.Drawing.Point(3, 3);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(32, 17);
+            this.radioButton3.TabIndex = 0;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "S";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // button32
+            // 
+            this.button32.Location = new System.Drawing.Point(472, 607);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(84, 54);
+            this.button32.TabIndex = 173;
+            this.button32.Text = "Рассчитать особые точки спиро";
+            this.button32.UseVisualStyleBackColor = true;
+            this.button32.Click += new System.EventHandler(this.button32_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 667);
+            this.Controls.Add(this.button32);
+            this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.button35);
             this.Controls.Add(this.button34);
@@ -1220,6 +1268,8 @@
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1327,6 +1377,10 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.Button button32;
     }
 }
 

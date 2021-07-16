@@ -98,6 +98,8 @@
     <Compile Include="Initial_processing\Initial_data.cs" />
     <Compile Include="Points\Job_net.cs" />
     <Compile Include="Points\Methods_Statistics.cs" />
+    <Compile Include="Points\N_Net.cs" />
+    <Compile Include="Points\Statistic_Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Save_data.cs" />
@@ -116,6 +118,10 @@
     <Compile Include="Spectr\spectrForButton\Spectr_VRPR.cs" />
     <Compile Include="Spectr\Spectr_numeric.cs" />
     <Compile Include="Spectr\Splain_numeric.cs" />
+    <Compile Include="Spirogramm\Divided_by_periods_data_spiro.cs" />
+    <Compile Include="Spirogramm\Spirogramm_Additional_Function.cs" />
+    <Compile Include="Spirogramm\Spirogramm_Special_point.cs" />
+    <Compile Include="Spirogramm\Spirogramm_calculated_data.cs" />
     <Compile Include="UseZedgraph.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

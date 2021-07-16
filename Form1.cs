@@ -292,8 +292,13 @@ namespace Спектры_версия_2._0
                 buffer2.Remove(da5 - 8, 8);
                 adres2 = buffer2.ToString();
                 datapath = Path.Combine(Application.StartupPath);
-         
-                System.IO.File.Copy(Path.Combine(qqq.InitialDirectory, qqq.FileName), Path.Combine(datapath, "test.txt"), true);
+                try
+               {
+                    System.IO.File.Copy(Path.Combine(qqq.InitialDirectory, qqq.FileName), Path.Combine(datapath, "test.txt"), true);
+               }
+                catch 
+                {                    
+                }
                 try
                 {
                     System.IO.File.Copy(adres2 + "Информация о пациенте.txt", Path.Combine(datapath, "Информация о пациенте.txt"), true);
@@ -329,9 +334,9 @@ namespace Спектры_версия_2._0
                 max_time = Convert.ToDouble(init_data.Get_Row1_X_Y(init_data.get_b() - 1, 0));
 
             }
-            catch (Exception ex)
+           catch (Exception ex)
             {
-                MessageBox.Show("Выбран неправильный файл");
+               MessageBox.Show("Выбран неправильный файл");
             }
 
             Read_Info_pazient();
@@ -542,12 +547,14 @@ namespace Спектры_версия_2._0
             usergraph.MakeGraph_On_Chosen_Canal();
            
             //Разделяем 
+            ///////////////////////////////////
+
             Initial_processing.Divided_by_periods_data divided_row = new Initial_processing.Divided_by_periods_data(init_data, this.comboBox3.Text);
             divided_row.Calculate_Data_In_Period();         
 
             Special_point osob_point = new Special_point(divided_row, init_data);
 
-            long[,] osob = null;
+          
             if (radioButton8.Checked)
             {
                 osob_point.return_osob_point(this.comboBox3.Text);
@@ -567,7 +574,9 @@ namespace Спектры_версия_2._0
 
                 osob_point.Delete_Zero_From_Data();
             }
-            osob = osob_point.get_spec_point();
+
+            ///////////////////////////////////////////
+            long[,] osob = osob_point.get_spec_point();
 
             int arre = osob.Length;
             int ew = arre / 15;//счетчик найденных максимумов
@@ -2214,5 +2223,133 @@ namespace Спектры_версия_2._0
 
         }
 
+        /// <summary>
+        /// Рассчитать особые точки спиро
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button32_Click(object sender, EventArgs e)
+        {
+            
+            Inizial();
+            N_shift_axis = 0;
+            progressBar1.Value = 0;
+
+            int reg = System.Convert.ToInt32(this.textBox13.Text);
+            int ekg = System.Convert.ToInt32(this.textBox2.Text);
+
+
+            Initial_data init_data = new Initial_data("test3.txt", reg, ekg);
+            init_data.Row1_Shift_Time_To_0();//Сдвигаем время к 0
+            init_data.Row1_Smothing();// Сглаживаем полученные данные
+            init_data.Row2_Calculate();
+            init_data.Row3_Average_Canal_Reg();
+            init_data.Row4_Smoothing_Ekg();
+
+            if (checkBox2.Checked)
+            {
+                init_data.Set_Row_In_Data_row1(
+                   Calculate_Fast_Fourier_Signal_Filtration(init_data.get_row1(), init_data.get_b()), reg);
+            }
+
+         //   init_data.Row1_2_Write_In_File();
+
+            usergraph = new UseZedgraph(zedGraph1, init_data);
+            usergraph.ClearAll();//Очищаем полотно
+            usergraph.MakeGraph_On_Chosen_Canal();
+           
+            //Разделяем 
+            ///////////////////////////////////
+
+            Spirogramm.Divided_by_periods_data_spiro divided_row = new Spirogramm.Divided_by_periods_data_spiro(init_data, this.comboBox3.Text);
+            divided_row.Calculate_Data_In_Period();
+            divided_row.Delete_Zero_In_Period();       
+
+            Spirogramm.Spirogramm_Special_point osob_point = new Spirogramm.Spirogramm_Special_point(divided_row, init_data);
+            if (radioButton3.Checked)
+            {
+            osob_point.Calculate_Square_Special_Point();
+            }
+
+            if (radioButton5.Checked)
+            {
+                osob_point.Calculate_Time_Special_Point();
+            }
+           
+
+            ///////////////////////////////////////////
+            long[,] osob = osob_point.get_spec_point();
+
+            int arre = osob.Length;
+            int ew = arre / 15;//счетчик найденных максимумов
+
+
+            /////////////////////////
+            /////////////////////////
+            // новое
+            //ЭКГ мах -     0
+            //ЭКГ мах -х -  1
+            // В1, В5 -     2
+            // В1x, В5x -   3
+            // В2 -         4
+            // В2x -        5
+            // В1-4 -       6
+            // В1-4x -      7
+            // В2-4 -       8  
+            // В2-4x -      9
+            // В3-4 -       10
+            // В3-4x -      11
+            // В4-4 -       12  
+            // В4-4x -      13
+            //osob_10  -    Изначальная высота
+
+            ////////////////////////
+
+            long[,] osob_x = new long[7, ew];// список особых точек для вывода на график
+            long[,] osob_y = new long[7, ew];
+
+            for (int i = 0; i < ew - 1; i++)
+            {
+                osob_x[0, i] = osob[1, i];
+                osob_y[0, i] = osob[0, i];
+
+                osob_x[1, i] = osob[3, i];
+                osob_y[1, i] = osob[2, i];
+
+                osob_x[2, i] = osob[5, i];
+                osob_y[2, i] = osob[4, i] + osob[14, i];
+
+                osob_x[3, i] = osob[7, i];
+                osob_y[3, i] = osob[6, i] + osob[14, i];
+
+                osob_x[4, i] = osob[9, i];
+                osob_y[4, i] = osob[8, i] + osob[14, i];
+
+                osob_x[5, i] = osob[11, i];
+                osob_y[5, i] = osob[10, i] + osob[14, i];
+
+                osob_x[6, i] = osob[13, i];
+                osob_y[6, i] = osob[12, i] + osob[14, i];
+
+            }
+            usergraph.MakeGraph_Special_Point_Spirogramm(osob_x, osob_y, ew);
+            usergraph.Install_Pane("t, мc", "R, Ом", " ");//Устанавливаем оси и заглавие
+            usergraph.ResetGraph();//Обновляем
+            max_time = Convert.ToDouble(init_data.Get_Row1_X_Y(init_data.get_b() - 1, 0));
+                     
+           
+            Save_data.Save_Special_Point_Spirogramma_For_Plotting(osob, ew);
+            /////////////////////////////////////////
+
+           // osob = osob_point.Calculate_Shift_Special_Point(osob, ew);
+
+            Save_data.Save_Special_Point_Spirogramma_For_File(osob, ew);
+
+            Spirogramm.Spirogramm_calculated_data calculated_Data = new Spirogramm.Spirogramm_calculated_data(osob_point);
+            calculated_Data.Calculate_All();
+            calculated_Data.Save_Special_Point_Spirogramma();
+
+
+        }
     }
 }

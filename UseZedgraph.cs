@@ -470,5 +470,90 @@ namespace Спектры_версия_2._0
         }
 
 
+        public void MakeGraph_Special_Point_Spirogramm(long[,] osob_x, long[,] osob_y, int ew)
+        {
+
+            // Выводим точки на экран
+            PointPairList list11 = new PointPairList();
+
+            PointPairList list5 = new PointPairList();
+            PointPairList list6 = new PointPairList();
+            PointPairList list7 = new PointPairList();
+            PointPairList list8 = new PointPairList();
+            PointPairList list9 = new PointPairList();
+            PointPairList list10 = new PointPairList();
+
+            for (int w = 1; w < ew - 2; w++)
+            {
+                list11.Add(osob_x[0, w] / 1000, osob_y[0, w]/10-300);
+
+                list5.Add(osob_x[1, w] / 1000, osob_y[1, w]);
+                list6.Add(osob_x[2, w] / 1000, osob_y[2, w]);
+                list7.Add(osob_x[3, w] / 1000, osob_y[3, w]);
+                list8.Add(osob_x[4, w] / 1000, osob_y[4, w]);
+                list8.Add(osob_x[5, w] / 1000, osob_y[5, w]);
+                list8.Add(osob_x[6, w] / 1000, osob_y[6, w]);
+                                
+
+            }
+            LineItem myCurve11 = pane.AddCurve("MAX_diff", list11, Color.Blue, SymbolType.Diamond);
+
+            LineItem myCurve5 = pane.AddCurve("B1", list5, Color.Blue, SymbolType.Diamond);
+            LineItem myCurve6 = pane.AddCurve("B2", list6, Color.Black, SymbolType.Diamond);
+            LineItem myCurve7 = pane.AddCurve("B1_4", list7, Color.DarkRed, SymbolType.Diamond);
+            LineItem myCurve8 = pane.AddCurve("B2_4", list8, Color.DarkRed, SymbolType.Diamond);
+            LineItem myCurve9 = pane.AddCurve("В3_4", list9, Color.DarkRed, SymbolType.Diamond);
+            LineItem myCurve10 = pane.AddCurve("В4_4", list10, Color.DarkRed, SymbolType.Diamond);
+
+
+            // !!!
+            // У кривой линия будет невидимой
+            myCurve11.Line.IsVisible = false;
+
+            myCurve5.Line.IsVisible = false;
+            myCurve6.Line.IsVisible = false;
+            myCurve7.Line.IsVisible = false;
+            myCurve8.Line.IsVisible = false;
+            myCurve9.Line.IsVisible = false;
+            myCurve10.Line.IsVisible = false;
+
+            // !!!
+            // Цвет заполнения отметок (ромбиков) - голубой
+            myCurve11.Symbol.Fill.Color = Color.Blue;
+
+            myCurve5.Symbol.Fill.Color = Color.Blue;
+            myCurve6.Symbol.Fill.Color = Color.Black;
+            myCurve7.Symbol.Fill.Color = Color.DarkRed;
+            myCurve8.Symbol.Fill.Color = Color.DarkRed;
+            myCurve9.Symbol.Fill.Color = Color.DarkRed;
+            myCurve10.Symbol.Fill.Color = Color.DarkRed;
+
+            // !!!
+            // Тип заполнения - сплошная заливка
+            myCurve11.Symbol.Fill.Type = FillType.Solid;
+
+            myCurve5.Symbol.Fill.Type = FillType.Solid;
+            myCurve6.Symbol.Fill.Type = FillType.Solid;
+            myCurve7.Symbol.Fill.Type = FillType.Solid;
+            myCurve8.Symbol.Fill.Type = FillType.Solid;
+            myCurve9.Symbol.Fill.Type = FillType.Solid;
+            myCurve10.Symbol.Fill.Type = FillType.Solid;
+
+            // !!!
+            // Размер ромбиков
+            myCurve11.Symbol.Size = 8;
+
+            myCurve5.Symbol.Size = 8;
+            myCurve6.Symbol.Size = 8;
+            myCurve7.Symbol.Size = 8;
+            myCurve8.Symbol.Size = 8;
+            myCurve9.Symbol.Size = 8;
+            myCurve10.Symbol.Size = 8;
+
+            pane.YAxis.MajorGrid.IsZeroLine = false;
+
+        }
+
+
     }
 }

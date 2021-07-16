@@ -94,6 +94,52 @@ namespace Спектры_версия_2._0
 
         }
 
+        public static void Save_Special_Point_Spirogramma_For_File(long[,] osob, long ew)
+        {
+            ew = Compression(osob, ew);
+            StreamWriter rw = new StreamWriter("Особые точки чистые.txt");
+
+            rw.WriteLine("max-diff" + "\t" + "max-diff-X" + "\t" + "B1-X" + "\t" +
+                   "B1" + "\t" + "B2-X" + "\t" + "B2" + "\t" + "B1-4-X" + "\t" +
+                     "B1-4" + "\t" + "B2-4-X" + "\t" + "B2-4" + "\t" +
+                    "B3-4-X" + "\t" + "B3-4" + "\t" + "B4-4-X" + "\t" + "B4-4" + "\t" + "0-Level");
+            rw.WriteLine();
+
+            for (int i = 0; i < ew - 1; i++)
+            {
+
+                rw.WriteLine(osob[1, i] + "\t" + osob[0, i] + "\t" + osob[3, i] + "\t" +
+                    osob[2, i] + "\t" + osob[5, i] + "\t" + osob[4, i] + "\t" + osob[7, i] + "\t" +
+                    osob[6, i] + "\t" + osob[9, i] + "\t" + osob[8, i] + "\t" +
+                    osob[11, i] + "\t" + osob[10, i] + "\t" + osob[13, i] + "\t" + osob[12, i] + "\t" + osob[14, i]);
+            }
+            rw.Close();
+
+        }
+
+        public static void Save_Special_Point_Spirogramma_For_Plotting(long[,] osob, long ew)
+        {
+            ew = Compression(osob, ew);
+
+            StreamWriter rw2 = new StreamWriter("Особые точки спирограммы - построение.txt");
+
+            rw2.WriteLine("max-diff" + "\t" + "max-diff-X" + "\t" + "B1-X" + "\t" +
+                  "B1" + "\t" + "B2-X" + "\t" + "B2" + "\t" + "B1-4-X" + "\t" +
+                    "B1-4" + "\t" + "B2-4-X" + "\t" + "B2-4" + "\t" +
+                   "B3-4-X" + "\t" + "B3-4" + "\t" + "B4-4-X" + "\t" + "B4-4" + "\t" + "0-Level");
+            rw2.WriteLine();
+
+            for (int i = 0; i < ew - 1; i++)
+            {
+                rw2.WriteLine(osob[1, i] + "\t" + osob[0, i] + "\t" + osob[3, i] + "\t" +
+                    osob[2, i] + "\t" + osob[5, i] + "\t" + (osob[4, i] + osob[14, i]) + "\t" + osob[7, i]
+                    + "\t" + (osob[6, i] + osob[14, i]) + "\t" + osob[9, i] + "\t" + (osob[8, i] + osob[14, i])
+                    + osob[11, i] + "\t" + (osob[10, i] + osob[14, i]) + osob[13, i] + "\t" + (osob[12, i] + osob[14, i]));
+            }
+            rw2.Close();
+
+        }
+
 
         /// <summary>
         /// Очистить файл
